@@ -1,0 +1,4 @@
+<%= form_for :user_part, @user_part, :url => {:controller => "user_parts", :action => "index"} , :html => { :multipart => true } do |form| %>
+      <%= form.text_area :body,:id => "kindeditor" %>
+<% end %>
+

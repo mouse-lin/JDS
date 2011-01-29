@@ -1,0 +1,34 @@
+<div id="x-desktop">
+    <dl id="x-shortcuts">
+        <dt id="orderWindow-shortcut">
+            <a href="#"><img src="images/s.gif" /><div>用户资料填写</div></a>
+        </dt>
+        <dt id="orderWindowLook-shortcut">
+            <a href="#"><img src="images/s.gif" /><div>用户资料查看</div></a>
+        </dt>
+         <dt id="clothPartWin-shortcut">
+             <a href="#"><img src="images/s.gif" /><div>用户小组新建</div></a>
+         </dt>
+         <dt id="clothPartShow-shortcut">
+             <a href="#"><img src="images/s.gif" /><div>用户小组查看</div></a>
+         </dt>
+         <dt id="purchasing-win-shortcut">
+             <a href="#"><img src="images/s.gif" /><div>个人资料填写与修改</div></a>
+         </dt>
+          <dt id="processing-win-shortcut">
+             <a href="#"><img src="images/s.gif" /><div>报表统计</div></a>
+         </dt>
+    </dl>
+</div>
+<div id="ux-taskbar">
+	<div id="ux-taskbar-start"></div>
+	<div id="ux-taskbuttons-panel">
+    <%  if current_user %>
+        <div id = "user"><font color="white">欢迎<font color="red"> <b> <%= current_user.email%> </b> </font>
+          登录图书馆用户管理系统
+        <%= link_to '退出', :controller => "devise/sessions", :action => "destroy" %>
+    <% end %>
+    </div>
+  </div>
+	<div class="x-clear"></div>
+</div>
