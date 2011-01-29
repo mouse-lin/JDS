@@ -1,4 +1,4 @@
-<% unless current_user.user_part.image.nil? %>
+<% unless current_user.try(:user_part).try(:image).nil? %>
   <% @action = "update_image"%>
 <% end %>
 <div id="flash_error">
