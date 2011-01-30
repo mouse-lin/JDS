@@ -12,6 +12,10 @@ gem "mongrel", "1.2.0.pre2"
 gem "cgi_multipart_eof_fix"
 gem "fastthread"
 gem 'formtastic', '~> 1.1.0'
+#gem "meta_search" 
+#gem "searchlogic"
+gem 'rd_searchlogic', :require => 'searchlogic', :git => 'git://github.com/railsdog/searchlogic.git'
+
 
 #待用
 gem 'annotate-models'

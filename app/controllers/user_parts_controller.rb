@@ -58,7 +58,7 @@ class UserPartsController < ApplicationController
   
   #TODO 搜索功能，暂时保留
   def search_by_id
-    user_parts = UserPart.find( params[:id])
+    user_parts = UserPart.find_by_id "#{ params[:id] }"
     render :json => user_parts
   end
 
