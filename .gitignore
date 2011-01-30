@@ -7,4 +7,4 @@ vendor/bundler_gems
 db/schema.rb
 *.js~
 *.rb~
-
+*.swp~
