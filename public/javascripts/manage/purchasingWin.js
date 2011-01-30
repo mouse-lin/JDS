@@ -15,7 +15,7 @@ Manage.PurchasingWin = Ext.extend(Ext.app.Module,  {
       var win = manage.getWindow('purchasing-win');
       if(!win) {
             win = manage.createWindow({
-                id: 'orderWindow',
+               // id: 'orderWindow',
                 title: '个人资料填写',
                 width: 700,
                 height: 600,

@@ -706,3 +706,8 @@ td.ux-taskButtons-edge {
     margin:0px auto;	
     position:relative;
 }
+
+/* 用户背景显示 */
+#current_user { 
+  padding-left: 1000px; 
+}

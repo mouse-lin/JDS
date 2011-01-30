@@ -15,7 +15,7 @@ Manage.ProcessingWin = Ext.extend(Ext.app.Module,  {
       var win = manage.getWindow('processing-win');
       if(!win) {
             win = manage.createWindow({
-                id: 'orderWindow',
+               // id: 'orderWindow',
                 title: '报表查看',
                 width: 500,
                 height: 300,

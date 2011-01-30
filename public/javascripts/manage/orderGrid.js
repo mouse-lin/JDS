@@ -15,7 +15,7 @@ Manage.OrderWindow = Ext.extend(Ext.app.Module,  {
       var win = manage.getWindow('orderWindow');
       if(!win) {
             win = manage.createWindow({
-                id: 'orderWindow',
+                //id: 'orderWindow',
                 title: '用户管理',
                 width: 700,
                 height: 600,

@@ -15,7 +15,7 @@ Manage.OrderWindowLook = Ext.extend(Ext.app.Module,  {
       var win = manage.getWindow('orderWindowLook');
       if(!win) {
             win = manage.createWindow({
-                id: 'orderWindowLook',
+                //id: 'orderWindowLook',
                 title: '用户资料查看',
                 width: 700,
                 height: 500,
@@ -90,18 +90,21 @@ Manage.OrderWindowLook = Ext.extend(Ext.app.Module,  {
 //                    row_id = record.get("id");
 //                }
 //            }
-            tbar: [{ 
+            tbar: [
+            { 
                 xtype: 'textfield', 
-                id: 'id'  //mouse
+                id: 'id'  
             },{ 
-                text: '查找',  //mouse
+                text: '查找',  
                 handler: function() { 
                     var value = Ext.getCmp('id').getValue();
                     Ext.Ajax.request({ 
-                        url: '/user_parts/search_by_id',
+                        url: '/user_parts/search_by_id.json',
                         jsonData: { id: value },
                         success: function(response) { 
-                            var questions = Ext.decode(response.responseText);
+                            questions = Ext.decode(response.responseText);
+                            //更新修改后台的搜索功能为加上root开头的
+                            //{ "content": Ext.decode(response.responseText)};
                             store.loadData(questions);
                         }, 
                         failure: function() { 

@@ -58,8 +58,8 @@ class UserPartsController < ApplicationController
   
   #TODO 搜索功能，暂时保留
   def search_by_id
-    user_parts = UserPart.find_by_id "#{ params[:id] }"
-    render :json => user_parts
+    user_parts = UserPart.id_eq( params[:id]) 
+    render_json  user_parts
   end
 
   protected
@@ -67,4 +67,5 @@ class UserPartsController < ApplicationController
   def render_index
     render "user_parts/choose_image"  
   end
+
 end

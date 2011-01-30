@@ -1,5 +1,10 @@
 <div id="x-desktop">
     <dl id="x-shortcuts">
+      <%  if current_user %>
+        <div id="current_user">
+          <font size="3" color="white">欢迎<%= current_user.email%>登录本系统</font><br>
+        </div>
+      <% end %>
         <dt id="orderWindow-shortcut">
             <a href="#"><img src="images/s.gif" /><div>用户资料填写</div></a>
         </dt>
@@ -23,12 +28,6 @@
 <div id="ux-taskbar">
 	<div id="ux-taskbar-start"></div>
 	<div id="ux-taskbuttons-panel">
-    <%  if current_user %>
-        <div id = "user"><font color="white">欢迎<font color="red"> <b> <%= current_user.email%> </b> </font>
-          登录图书馆用户管理系统
-        <%= link_to '退出', :controller => "devise/sessions", :action => "destroy" %>
-    <% end %>
-    </div>
   </div>
 	<div class="x-clear"></div>
 </div>

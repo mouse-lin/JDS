@@ -1,19 +1,17 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
   <title>图书馆用户管理系统</title>
   <link rel="shortcut icon" href="../images/head.png"></link>
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
-  <%= csrf_meta_tag %>
 </head>
 <body>
 <!DOCTYPE html>
   <!--主界面环境 -->
   <%= stylesheet_link_tag "css/ext-all.css" %>
   <%= stylesheet_link_tag "css/desktop.css" %>
-  <%= javascript_include_tag '/javascripts/js/ext-base.js' %>
-  <%= javascript_include_tag '/javascripts/js/ext-all.js' %>
+  <script type="text/javascript" src="javascripts/js/ext-base.js"></script>
+  <script type="text/javascript" src="javascripts/js/ext-all.js"></script>
   <%= javascript_include_tag '/javascripts/js/App.js' %>	
   <%= javascript_include_tag '/javascripts/js/TaskBar.js'%>
   <%= javascript_include_tag '/javascripts/js/StartMenu.js'%>
@@ -30,7 +28,6 @@
   <%= javascript_include_tag '/javascripts/manage/processingWin.js'%>
   
 </head>
-<body>
   <!-- 可以修改后面背景图 -->
   <% desktop = "orange.jpg"%>
   <body scroll="no" style="background:#3d71b8 url(../images/wallpapers/<%= desktop%>) no-repeat left top ";>
