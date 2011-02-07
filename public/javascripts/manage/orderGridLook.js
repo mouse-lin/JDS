@@ -15,7 +15,7 @@ Manage.OrderWindowLook = Ext.extend(Ext.app.Module,  {
       var win = manage.getWindow('orderWindowLook');
       if(!win) {
             win = manage.createWindow({
-                //id: 'orderWindowLook',
+                id: 'orderWindowLook',
                 title: '用户资料查看',
                 width: 700,
                 height: 500,
@@ -51,7 +51,7 @@ Manage.OrderWindowLook = Ext.extend(Ext.app.Module,  {
         //var pageToolbar = Wando.createPagingToolbar(store);
         var addOperator = function(value, mataData, record, rowIndex, colIndex, store){ 
             var link = String.format('<a href="#" onclick="_this.makeSure( {0} )">确定入馆</a>', record.data.id) + '&nbsp;';
-           // link += String.format('<a href="#" onclick="_this.searchDetail({0})">查看入馆信息</a>', record.data.id) + '&nbsp;';
+                link += String.format('<a href="#" onclick="_this.searchDetail({0})">查看入馆信息</a>', record.data.id) + '&nbsp;';
             return link;
         };
 
@@ -115,6 +115,7 @@ Manage.OrderWindowLook = Ext.extend(Ext.app.Module,  {
             }]
         });
     },
+
     makeSure: function(id) { 
      Ext.Msg.confirm("提示", "确认记录入馆时间？", function(btn) {
       if (btn == 'yes') {
@@ -136,7 +137,18 @@ Manage.OrderWindowLook = Ext.extend(Ext.app.Module,  {
 
   //查看详细信息
   searchDetail: function(id) { 
-      var win = getJobWin();
+      var _this = Manage.clothPartShow;
+        var win = new Ext.Window({
+          title: '查看出入馆时间记录',
+          id: 'Win',
+          //closeAction: 'hide',
+          width: 640,
+          height: 350,
+          layout: 'fit',
+          frame: true,
+          items: this.grid
+      });
+   
    //     Ext.Ajax.request({ 
    //         url: String.format('/jobs/{0}/get_job.json', id),
    //         method: 'GET',
@@ -147,20 +159,5 @@ Manage.OrderWindowLook = Ext.extend(Ext.app.Module,  {
    //     });
       win.show();
   },
-
-   getJobWin: function() { 
-     var win = new Ext.Window({
-          title: '查看出入馆时间记录',
-          id: 'Win',
-          closeAction: 'hide',
-          width: 640,
-          height: 350,
-          layout: 'fit',
-          frame: true,
-          //items: this.grid
-      });
-      return win;
-    },
-
 })
 

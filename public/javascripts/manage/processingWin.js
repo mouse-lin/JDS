@@ -10,24 +10,25 @@ Manage.ProcessingWin = Ext.extend(Ext.app.Module,  {
     },
 
     createWindow: function() {
-      _this = Manage.processingWin;
-      var manage = _this.app.getDesktop();
-      var win = manage.getWindow('processing-win');
-      if(!win) {
-            win = manage.createWindow({
-               // id: 'orderWindow',
-                title: '报表查看',
-                width: 500,
-                height: 300,
-                iconCls: 'bogus',
-                shim: false,
-                animCollapse: false,
-                constrainHeader: true,
-                items: _this.createTabPanel()
-            });
-          }
-        win.show();
-    },
+         _this = Manage.processingWin;
+         var manage = _this.app.getDesktop();
+         var win = manage.getWindow('processing-win');
+         if(!win) {
+               win = manage.createWindow({
+                   id: 'processing-win',
+                   title: '报表查看',
+                   width: 500,
+                   height: 300,
+                   iconCls: 'bogus',
+                   shim: false,
+                   animCollapse: false,
+                   constrainHeader: true,
+                   items: _this.createTabPanel()
+               });
+             }
+           win.show();
+  },
+
      createTabPanel: function(){ 
      return new Ext.TabPanel({ 
        frame: true,
@@ -50,5 +51,3 @@ Manage.ProcessingWin = Ext.extend(Ext.app.Module,  {
    })
   }
 })
-
-

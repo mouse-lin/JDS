@@ -15,7 +15,7 @@ Manage.ClothPartWin = Ext.extend(Ext.app.Module,  {
       var win = manage.getWindow('clothPartWin');
       if(!win) {
             win = manage.createWindow({
-                //id: 'orderWindow',
+                id: 'ClothPartWin',
                 title: '用户小组新建',
                 width: 600,
                 height: 450,
@@ -47,6 +47,7 @@ Manage.ClothPartWin = Ext.extend(Ext.app.Module,  {
         ]
       })
   },
+
     createForm: function(){ 
         // form 的形式
         return new Ext.form.FormPanel({ 

@@ -16,7 +16,7 @@ Manage.ClothPartShow = Ext.extend(Ext.app.Module,  {
       var win = manage.getWindow('clothPartShow');
       if(!win) {
             win = manage.createWindow({
-                //id: 'orderWindow',
+                id: 'clothPartShow',
                 title: '用户小组查看',
                 width: 600,
                 height: 450,
