@@ -1,4 +1,8 @@
 class GroupsController < ApplicationController
+  #comment this ation scaffold for a while. 
+  #TODO find a new way to instead
+  layout"application", :except => [ :scaffold ]
+
   def index
     @group = Group.all
     respond_to do |format|
@@ -19,5 +23,8 @@ class GroupsController < ApplicationController
     group = params[:id]
     Group.delete(group)
     render :json => group
+  end
+
+  def scaffold
   end
 end

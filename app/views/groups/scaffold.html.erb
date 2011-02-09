@@ -1,2 +1,287 @@
-<h1>Groups#scaffold</h1>
-<p>Find me in app/views/groups/scaffold.html.erb</p>
+<DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head><title>复合搜索test</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf8">
+<%= javascript_include_tag '/javascripts/js/ext-base.js'%>
+<%= javascript_include_tag '/javascripts/js/ext-all.js'%>
+<%= javascript_include_tag '/javascripts/js/ext-lang-zh_CN.js'%>
+<%= stylesheet_link_tag "css/ext-all.css" %>
+
+
+
+<script type="text/javascript">
+Ext.BLANK_IMAGE_URL = 'resources/images/default/s.gif';
+Ext.onReady(function () {
+
+var dsPQ=new Ext.data.JsonStore({
+   fields:["idx","relation","leftParenthesis","fieldname","operator","value","rightParenthesis"] 
+});
+var fieldsDef = new Ext.data.JsonStore({
+    fields: ['value','text','type'],
+    data:[
+        {value:'A.Billno',text:'预约单号',type:'string'},
+        {value:'A.Date',text:'时间',type:'date'},
+        {value:'A.boolean',text:'布尔',type:'boolean'},
+        {value:'A.int',text:'整形',type:'int'},
+        {value:'A.float',text:'浮点',type:'float'},
+        {value:'A.lookup',text:'Lookup',type:'lookup',data:[[1,'list1'],[2,'list2'],[3,'list3']]}
+    ]
+});
+
+var numericOp = datetimeOp = new Ext.data.SimpleStore({
+    fields: ['value','text'],
+    data : [['=','='],['<>','<>'],['<','<'],['<=','<='],['<','>'],['>=','>='],['is null','空白'],['is not null','非空白']]
+});
+var stringOp = new Ext.data.SimpleStore({
+    fields: ['value','text'],
+    data : [['=','='],['<>','<>'],['<','<'],['<','>'],
+    ['like |%','以...开头'],['like %|','以...结尾'],['like %|%','包含字符'],['not like %|%','不包含字符'],
+    ['is null','空白'],['is not null','非空白']]
+});
+var lookupOp = booleanOp = new Ext.data.SimpleStore({
+    fields: ['value','text'],
+    data : [['=','='],['<>','<>'],['is null','空白'],['is not null','非空白']]
+});
+
+var objGridTextEditor = new Ext.grid.GridEditor(new Ext.form.TextField());
+//var objGridMemoEditor = new Ext.grid.GridEditor(new Ext.form.TextArea());
+var objGridDateEditor = new Ext.grid.GridEditor(new Ext.form.DateField({format:'Y-m-d'}));
+var objGridIntegerEditor = new Ext.grid.GridEditor(new Ext.form.NumberField({allowBlank:false,allowNegative:false,allowDecimals:false}));
+var objGridFloatEditor = new Ext.grid.GridEditor(new Ext.form.NumberField({allowBlank:false,allowNegative:false}));
+var objGridBooleanEditor = new Ext.grid.GridEditor(new Ext.form.ComboBox({
+    store: [[true,'是'],[false,'否']],
+    mode: 'local',
+    readOnly: true,
+    triggerAction: 'all',
+    allowBlank: false,
+    editable: false,
+    forceSelection: true,
+    blankText:'请选择...'
+}));
+var objGridLookupEditor = new Ext.grid.GridEditor(new Ext.form.ComboBox({
+    //store: [],
+    mode: 'local',
+    readOnly: true,
+    triggerAction: 'all',
+    allowBlank: false,
+    editable: false,
+    forceSelection: true,
+    blankText:'请选择...'
+}));
+
+function fileListChange(field,newValue,oldValue){
+    //alert(field);
+}
+function findRecordValue(store,prop, propValue,field){
+    var record;
+    if(store.getCount() > 0){
+        store.each(function(r){
+            if(r.data[prop] == propValue){
+                rrecord = r;
+                return false;
+            }
+        });
+    }
+    return record ? record.data[field] : '';
+}
+function displayOperator(v){
+    switch(v){
+        case 'is null': return '空白';
+        case 'is not null': return '非空白';
+        case 'like |%': return '以...开头';
+        case 'like %|': return '以...结尾';
+        case 'like %|%': return '包含字符';
+        case 'not like %|%': return '不包含字符';
+        default: return v;
+    }
+}
+function displayValue(v, params, record){
+    var dataType = findRecordValue(fieldsDef,'value',record.get('fieldname'),'type');
+    var operator = record.get('operator');
+    if (operator=='is null'||operator=='is not null') return '';
+    switch(dataType){
+        case 'date': return v ? v.dateFormat('Y-m-d'): '';
+        case 'boolean': return (v?'是':'否');
+        default: return v;
+    }
+}
+
+var qRowData = Ext.data.Record.create([
+    {name:'idx',type:'int'},
+    {name:'relation',type:'string'},
+    {name:'leftParenthesis',type:'string'},
+    {name:'fieldname',type:'string'},
+    {name:'operator',type:'string'},
+    {name:'value',type:'string'},
+    {name:'rightParenthesis',type:'string'}
+]);
+
+var dsPQ=new Ext.data.JsonStore({
+   data:[],
+   fields:["idx","relation","leftParenthesis","fieldname","operator","value","rightParenthesis"] 
+});
+
+var colM=new Ext.grid.ColumnModel([
+    {
+        header:"关系",
+        dataIndex:"relation",
+        width:50,
+        renderer: function(v){return (v=='and'?'并且':'或者')},
+        editor:new Ext.form.ComboBox({ 
+            store: [['and','并且'],['or','或者']],
+            mode: 'local',
+            readOnly: true,
+            triggerAction: 'all',
+            allowBlank: false,
+            editable: false,
+            forceSelection: true,
+            blankText:'请选择'
+        })
+    },{
+        header:"括号",
+        dataIndex:"leftParenthesis",
+        width:40,
+        editor:new Ext.form.ComboBox({
+            store: ['(','((','((','(((','(((('],
+            mode: 'local',
+            triggerAction: 'all',
+            valueField: 'value',
+            displayField: 'text',
+            editable: false
+        })
+    },{
+        header:"字段名",
+        dataIndex:"fieldname",
+        width:130,
+        renderer: function(v){return findRecordValue(fieldsDef,'value',v,'text');},
+        editor:new Ext.form.ComboBox({
+            store: fieldsDef,
+            mode: 'local',
+            triggerAction: 'all',
+            valueField: 'value',
+            displayField: 'text',
+            editable: false,
+            listeners:{change:fileListChange}
+        })
+    },{
+        header:"运算符",
+        width:80,
+        dataIndex:"operator",
+        renderer: displayOperator
+    },{
+        header:"内容",
+        dataIndex:"value",
+        width:130,
+        renderer: displayValue
+    },{
+        header:"括号",
+        width:40,
+        dataIndex:"rightParenthesis",
+        editor:new Ext.form.ComboBox({
+            store: [')','))',')))','))))'],
+            mode: 'local',
+            triggerAction: 'all',
+            valueField: 'value',
+            displayField: 'text',
+            editable: false
+        })
+    }
+]);
+
+var grdDPQuery = new Ext.grid.EditorGridPanel({
+    height:500,
+    width:490,
+    renderTo:"hello",   
+    cm:colM,
+    sm:new Ext.grid.RowSelectionModel({singleSelect:false}),
+    store:dsPQ,
+    region:'center',
+    border: false,
+    enableColumnMove: false,
+    enableHdMenu: false,
+    loadMask: {msg:'加载数据...'},
+    clicksToEdit:1,
+    tbar:[
+        {text:'添加',handler:function(){
+                var count = dsPQ.getCount();
+                var r = new qRowData({idx:dsPQ.getCount(),relation:'and',leftParenthesis:'',fieldname:'',operator:'=',value:'',rightParenthesis:''});
+                dsPQ.commitChanges();
+                dsPQ.insert(count,r);
+            }
+        },
+        {text:'删除',handler:function(){
+                //store = grid.getStore();
+                var selections = grdDPQuery.getSelectionModel().getSelections();
+                for(var i = 0; i < selections.length; i++){ 
+                    dsPQ.remove(selections[i]); 
+                }
+            }
+        },
+        {text:'全部清除',handler:function(){dsPQ.removeAll();}}
+    ],
+    listeners: {
+        afteredit: function(e){
+            if (e.column==2/*e.field=='fieldname'*/){
+                var oldDataType = findRecordValue(fieldsDef,'value',e.originalValue,'type');
+                var newDataType = findRecordValue(fieldsDef,'value',e.value,'type');
+                if (oldDataType!=newDataType){
+                    e.record.set('operator', '=');
+                    e.record.set('value', '');
+                }
+            }
+        },
+        cellclick: function(grid, rowIndex, columnIndex, e){
+            if (columnIndex!=3&&columnIndex!=4) return;
+            var record = grid.getStore().getAt(rowIndex);  // Get the Record
+            //var fieldName = grid.getColumnModel().getDataIndex(columnIndex); // Get field name
+            //var data = record.get(fieldName);
+            var dataType = findRecordValue(fieldsDef,'value',record.get('fieldname'),'type');
+            if (dataType=='') return;//未选定字段，退出
+            if (columnIndex==3){//绑定运算符
+                var grdEditor = grid.colModel.getCellEditor(columnIndex,rowIndex);
+                if (grdEditor) grdEditor.destroy();
+                var _store;
+                switch(dataType){
+                    case 'string': _store = stringOp; break;
+                    case 'date': _store = datetimeOp; break;
+                    case 'boolean': _store = booleanOp; break;
+                    case 'int':
+                    case 'float': _store = numericOp; break;
+                    case 'lookup': _store = lookupOp; break;
+                }
+                grdEditor = new Ext.form.ComboBox({
+                    store: _store,
+                    mode: 'local',
+                    triggerAction: 'all',
+                    valueField: 'value',
+                    displayField: 'text',
+                    editable: false
+                })
+                grid.colModel.setEditor(columnIndex, new Ext.grid.GridEditor(grdEditor));
+            }
+            else if (columnIndex==4){//绑定编辑器
+                var operator = record.get('operator');
+                if (operator=='is null'||operator=='is not null'){
+                    grid.colModel.setEditor(columnIndex, null);
+                    return;
+                }
+                var grdEditor;
+                switch(dataType){
+                    case 'string': grdEditor = objGridTextEditor; break;
+                    case 'date': grdEditor = objGridDateEditor; break;
+                    case 'boolean': grdEditor = objGridBooleanEditor; break;
+                    case 'int': grdEditor = objGridIntegerEditor; break;
+                    case 'float': grdEditor = objGridFloatEditor; break;
+                    case 'lookup': grdEditor = objGridLookupEditor; break;
+                }
+                if (grid.colModel.getCellEditor(columnIndex,rowIndex)!=grdEditor){
+                    grid.colModel.setEditor(columnIndex, grdEditor);
+                }
+            }
+        }
+    }
+});
+
+});
+</script>
+</head><div id="hello"></div><body>
+</body></html>

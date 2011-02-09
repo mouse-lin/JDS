@@ -651,31 +651,31 @@ td.ux-taskButtons-edge {
 #orderWindowLook-shortcut img {
     width:48px;
     height:48px;
-    background-image: url(../../images/im48x48.png);
-    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/im48x48.png', sizingMethod='scale');
+    background-image: url(../../images/grid48x48.png);
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/grid48x48.png', sizingMethod='scale');
 }
 #clothPartWin-shortcut img {
     width:48px;
     height:48px;
-    background-image: url(../../images/部位算纱.png);
+    background-image: url(../../images/group.png);
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/grid48x48.png', sizingMethod='scale');
 }
 #clothPartShow-shortcut img {
     width:48px;
     height:48px;
-    background-image: url(../../images/部位算纱.png);
+    background-image: url(../../images/group.png);
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/grid48x48.png', sizingMethod='scale');
 }
 #purchasing-win-shortcut img { 
     width:48px;
     height:48px;
-    background-image: url(../../images/采购.png);
+    background-image: url(../../images/personal_datail.png);
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/grid48x48.png', sizingMethod='scale');
 }
 #processing-win-shortcut img { 
     width:48px;
     height:48px;
-    background-image: url(../../images/后整.png);
+    background-image: url(../../images/report.png);
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/grid48x48.png', sizingMethod='scale');
 }
 #inbound-win-shortcut img { 

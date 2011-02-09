@@ -1,15 +1,16 @@
 class UserPartsController < ApplicationController
   layout"login"
   before_filter :authenticate_user!
+
   #protect_from_forgery :except => :upload
   #skip_before_filter :verify_authenticity_token
 
   def index
-    user_parts = UserPart.find_normal_user
-      respond_to do |format| 
-      format.html
-      format.json { render_json  user_parts }
-    end
+    #user_parts = UserPart.find_normal_user
+    default_params = {:offset => params[:offset].to_i, :limit => params[:limit].to_i}
+    user_parts = UserPart.find_normal_user(default_params)
+    count = UserPart.count
+    render_json user_parts,count
   end
 
   #创建个人的资料
@@ -57,9 +58,12 @@ class UserPartsController < ApplicationController
   end
   
   #TODO 搜索功能，暂时保留
-  def search_by_id
-    user_parts = UserPart.id_eq( params[:id]) 
-    render_json  user_parts
+  #Comment: change the old search action to search_user_parts
+  def search_user_parts
+    result_data = UserPart.search( params[:search]) 
+    user_parts = result_data.current_scope
+    count = user_parts.count
+    render_json  user_parts, count
   end
 
   protected

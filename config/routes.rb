@@ -15,8 +15,6 @@ Mytest::Application.routes.draw do
   get 'kindeditor/images_list'
   post 'kindeditor/upload'
 
-  get "user_parts/index"
-
   resources :user_parts do
     collection do 
       get "choose_image"
@@ -25,8 +23,10 @@ Mytest::Application.routes.draw do
       get "edit_user_part_index"
       post "update_image"
       post "create_user_part"
-      post "search_by_id"
-      get "search_by_id"
+      post "index"
+      get "index"
+      post "search_user_parts"
+      get "search_user_parts"
     end
   end
 

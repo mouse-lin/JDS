@@ -22,13 +22,16 @@ class UserPart < ActiveRecord::Base
   has_attached_file :image, :styles => { :normal => "150x150" }
   belongs_to  :user
   has_many    :log_users
+
   #TODO 检验 等待rails3
   validates_presence_of     :identity_card
   #validates_length_of       :identity_card,    :within => 18..18
   #validates_attachment_size :image, :less_than => 1.megabytes
   #validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/gif'], 
+
   #查找非管理员用户
-  def self.find_normal_user
-    UserPart.find(:all, :conditions => "up_type = '1'")
+  def self.find_normal_user page_conditions = nil
+    UserPart.find(:all, page_conditions, :conditions => "up_type = '1'")
   end
+
 end
