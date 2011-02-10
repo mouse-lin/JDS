@@ -224,9 +224,21 @@ html, body {
 .icon-grid {
     background-image:url( ../../images/grid.png ) !important;
 }
+
+
+/* tbar button begin */
 .add {
-    background-image:url(../../../shared/icons/fam/add.gif) !important;
+    background-image:url(../../images/tbar_button/add.gif) !important;
 }
+.drop{ 
+    background-image:url(../../images/tbar_button/drop.gif) !important;
+}
+.search{ 
+  background-image:url(../../images/tbar_button/search.gif) !important;
+}
+/* tbar end */
+
+
 .option {
     background-image:url(../../../shared/icons/fam/plugin.gif) !important;
 }
@@ -642,7 +654,7 @@ td.ux-taskButtons-edge {
     text-decoration:underline;
 }
 /* shortcuts */
-#orderWindow-shortcut img {
+#userRegisterWin-shortcut img {
     width:48px;
     height:48px;
     background-image: url(../../images/im48x48.png);
@@ -654,7 +666,7 @@ td.ux-taskButtons-edge {
     background-image: url(../../images/grid48x48.png);
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/grid48x48.png', sizingMethod='scale');
 }
-#clothPartWin-shortcut img {
+#userGroupWin-shortcut img {
     width:48px;
     height:48px;
     background-image: url(../../images/group.png);

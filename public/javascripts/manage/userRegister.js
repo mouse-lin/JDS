@@ -1,8 +1,8 @@
-Manage.OrderWindow = Ext.extend(Ext.app.Module,  {
-    id: 'orderWindow',
+Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
+    id: 'userRegisterWin',
     init: function() {
         this.launcher = {
-            text: '用户管理',
+            text: '用户登记',
             iconCls: 'bogus',
             handler: this.createWindow,
             scope: this
@@ -10,12 +10,12 @@ Manage.OrderWindow = Ext.extend(Ext.app.Module,  {
     },
 
     createWindow: function() {
-         _this = Manage.orderWindow;
+         _this = Manage.userRegisterWin;
          var manage = _this.app.getDesktop();
-         var win = manage.getWindow('orderWindow');
+         var win = manage.getWindow('userRegisterWin');
          if(!win) {
                win = manage.createWindow({
-                   id: 'orderWindow',
+                   id: 'userRegisterWin',
                    title: '用户管理',
                    width: 750,
                    height: 530,
@@ -31,7 +31,7 @@ Manage.OrderWindow = Ext.extend(Ext.app.Module,  {
     },
 
     createTabpanel: function(){ 
-        _this = Manage.orderWindow;
+        _this = Manage.userRegisterWin;
         return new Ext.TabPanel({ 
             frame: true,
             activeTab: 0,
@@ -121,7 +121,7 @@ Manage.OrderWindow = Ext.extend(Ext.app.Module,  {
   //Comment: Mouse
   //user detail view 
       createGrid: function(){ 
-        var _this = Manage.clothPartShow;
+        var _this = Manage.userRegisterWin;
         store = new Ext.data.JsonStore({ 
             fields: [
                 'id',
@@ -148,6 +148,10 @@ Manage.OrderWindow = Ext.extend(Ext.app.Module,  {
         };
 
         var pageToolbar = Page.createPagingToolbar(store);
+        var tbar = [ 
+            { iconCls: 'search', text: '查询', handler: function(){ _this.searchUserPartsData() }}, '-',
+            { iconCls: 'drop', text: '重置', handler: function(){ _this.resetData() }}, 
+        ];
 
         var cm = new Ext.grid.ColumnModel([
             { header: '编号'      ,sortable: true, dataIndex: 'id', width:50},
@@ -158,7 +162,8 @@ Manage.OrderWindow = Ext.extend(Ext.app.Module,  {
             { header: '地址'      ,sortable: true, dataIndex: 'address'},
             { header: '操作'        , dataIndex: '#', renderer: addOperator, width: 200 }
         ]);
-        return new Ext.grid.EditorGridPanel({ 
+
+        return grid = new Ext.grid.EditorGridPanel({ 
             viewConfig: { forceFit: true },
             anchor: "100%, 100%",
             height:400,
@@ -168,7 +173,10 @@ Manage.OrderWindow = Ext.extend(Ext.app.Module,  {
             store: store,
             loadMask: {msg:"读取中..."},
             cm: cm,
-            tbar: pageToolbar,
+            tbar: tbar ,
+            listeners:{  'render'　:　function()　{
+　　　　　　　　　pageToolbar.render(grid.tbar);
+            }}
 /*
            listeners: { 
                cellclick: function(grid, rowIndex, columnIndex) { 
@@ -230,9 +238,10 @@ Manage.OrderWindow = Ext.extend(Ext.app.Module,  {
         return new Ext.form.FormPanel({ 
             frame: true,
             layout: 'form',
-            buttons: [{ 
-                text: '查询', handler: _this.searchUserPartsData
-            },{ text: '重置', handler: _this.resetData }],
+            //此处button 的两个功能移到下面 grid 的 tabr
+            // buttons: [{ 
+            //     text: '查询', handler: _this.searchUserPartsData
+            // },{ text: '重置', handler: _this.resetData }],
             items: [{ 
                 layout: 'column',
                 xtype: 'fieldset',
@@ -261,7 +270,7 @@ Manage.OrderWindow = Ext.extend(Ext.app.Module,  {
 
   //reset the textfield values
   resetData: function(){ 
-      Ext.getCmp('number').setValue('');
+      Ext.getCmp('id').setValue('');
       Ext.getCmp('identity_card').setValue('');
       Ext.getCmp('name').setValue('');
       Ext.getCmp('birthday').setValue('');

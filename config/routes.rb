@@ -3,10 +3,18 @@ Mytest::Application.routes.draw do
   resources :reports
 
   #groups
-  get "groups/scaffold"
-  post 'groups/create'
-  post "groups/destroy"
-  resources :groups
+  #get "groups/scaffold"
+  #post 'groups/create'
+  #post "groups/destroy"
+
+  resources :groups do
+    collection do
+      post "delete_all"
+      post "create"
+      post "destroy"
+      get "scaffold"
+    end
+  end
 
   #log_users
   resources :log_users

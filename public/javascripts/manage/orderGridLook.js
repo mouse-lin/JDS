@@ -1,8 +1,8 @@
 Manage.OrderWindowLook = Ext.extend(Ext.app.Module,  {
-    id: 'orderWindowLook',
+    id: 'orderWindowLook_s',
     init: function() {
         this.launcher = {
-            text: '用户资料查看',
+            text: '设置',
             iconCls: 'bogus',
             handler: this.createWindowLook,
             scope: this
@@ -12,11 +12,11 @@ Manage.OrderWindowLook = Ext.extend(Ext.app.Module,  {
     createWindow: function() {
       _this = Manage.orderWindowLook;
       var manage = _this.app.getDesktop();
-      var win = manage.getWindow('orderWindowLook');
+      var win = manage.getWindow('orderWindowLook_s');
       if(!win) {
             win = manage.createWindow({
-                id: 'orderWindowLook',
-                title: '用户资料查看',
+                id: 'orderWindowLook_s',
+                title: '设置',
                 width: 700,
                 height: 500,
                 iconCls: 'bogus',
