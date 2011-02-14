@@ -1,10 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-
-
-
-
   private
   #ext  默认
   def render_json(result = nil , count = 0)

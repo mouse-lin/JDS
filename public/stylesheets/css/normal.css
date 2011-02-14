@@ -1,0 +1,48 @@
+ body, div, dl, dt, dd, ul, ol, li,  h1, h2, h3, h4, h5, h6, pre, code,  form, fieldset, legend, input, button,  textarea, p, blockquote, th, td { margin: 0; padding: 0; font:normal 14px Arial; }
+fieldset, img { border: 0; }
+ul,li{ list-style:none}
+a{color:#1e50a2; text-decoration:none}
+a:hover{ color:#900; text-decoration:underline}
+.t_center{ text-align:center}
+.none{ display:none}
+.font1{ font-size:12px}
+.font2{ font-size:17px; font-family:Arial; color:#999 ; }
+.font3{ font-size:12px ; color:#999}
+.red{ color:#F00}
+.line1{ border-top:1px  dashed #ccc}
+.m1{ margin-bottom:25px}
+ 
+ 
+.w1,.w2,.w3,.w4{ width:120px; height:19px ; line-height:23px; padding:2px 4px}
+.w2{ width:232px}
+.w3{ width:75px}
+
+.w4{ width:100px; }
+
+ #getmobcheckcode_btn{ width:120px;}
+ 
+.ipt1{ border:1px solid #c4c4c4; background:#f9f9f9}
+.ipt2{ border:1px solid #d59799; background:#fef5f5}
+.ipt3{ border:1px solid #aab9a6; background:#eaffe5}
+
+.sel1{height:25px; width:80px}
+.sel2{height:25px; width:45px}
+
+
+
+
+#main_wrap{ width:802px; margin:15px auto; position:relative}
+#mid{}
+.midCnt{ border:1px solid #c4c4c4; border-bottom:0}
+.midSubCnt{  margin:10px 20px 0 20px;*margin:10px 20px 0 20px; *padding-top:10px;*padding-bottom:10px}
+.midSubCnt table { width:435px; margin-top:10px;}
+.midSubCnt table td{ padding:6px 4px}
+.midSubCnt table th { text-align:right; padding-right:5px; width:160px}
+.midCnt{ border:1px solid #c4c4c4; border-bottom:0}
+.midSubTitle{ background:url(img/midsubtitle.gif) repeat-x ; line-height:37px; height:37px; padding:0 10px; border-bottom:1px solid #e4e4e4}
+.midSubTitleArrow { height:5px; overflow:hidden}
+.midSubTitleArrow b{ display:block; width:9px; height:5px; background:url(img/arrow_bg.gif) #e4e4e4 no-repeat ; float:left; margin-left:64px ;*margin-left:34px;}
+	.midSubCnt table td{ padding:8px 4px}
+
+.star{ color:#F00}
+.star2{ color:#fff}

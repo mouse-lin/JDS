@@ -1,11 +1,63 @@
-<%= form_for :user_part, :url =>{:action => "create_user_part" }, :html => {:multipart => true} do |f| %>
-  用户姓名*: <%= f.text_field :name %> <br>
-  身份证: <%= f.text_field :identity_card %> <br>
-  出生年月：<%= f.date_select :birthday, :start_year => 1960,:end_year => 2000  %><br>
-  性别: <%= f.select :sex, %w{ 男 女 } %> <br>
-  证件类型: <%= f.select :paperwork, %w{ 学生证 工作证 临时证 } %> <br>
-  地址: <%= f.text_area :address %> <br>
-  用户图片选择： <%= f.file_field :image %><br>
-  <%= f.submit :确定 %>
-<% end %>
-
+<div id="main_wrap">
+  <div id="mid">
+    <div class="midCnt">
+      <div class="midSubTitle"><span class="title">请输入添加用户信息</span></div>
+      <div id="notvipframe">
+      <div class="midSubCnt">
+        <table width="200" border="0">
+          <%= form_for :user_part, :url =>{:action => "create_user_part" }, :html => {:multipart => true} do |f| %>
+          <tbody>
+          <tr>
+            <th>用户姓名：<b class="star">*</b></th>
+            <td>
+              <%= f.text_field :name %> 
+            </td>
+          </tr>
+          <tr>
+            <th>身份证号：<b class="star">*</b></th>
+            <td >
+              <%= f.text_field :identity_card %>
+            </td>
+          </tr>
+          <tr>
+            <th>出生年月：</th>
+            <td>
+              <%= f.date_select :birthday, :start_year => 1960,:end_year => 2050  %>
+            </td>
+          </tr>
+          <tr>
+            <th>性别:</th>
+            <td id="password_td">
+              <%= f.select :sex, %w{ 男 女 } %>
+            </td>
+          </tr>
+          <tr>
+            <th>证件类型:</th>
+            <td id="password_td">
+              <%= f.select :paperwork, %w{ 学生证 工作证 临时证 } %>
+            </td>
+          </tr>
+          <tr>
+            <th>地址:</th>
+            <td id="password_td">
+              <%= f.text_field :address %>
+            </td>
+          </tr>
+          <tr>
+            <th>用户图片选择:</th>
+            <td id="password_td">
+              <%= f.file_field :image %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+            <%=blank(19)%>
+            <%= f.submit :确定 %>
+            </td>
+          </tr>
+          <% end %>
+       </tbody></table>
+      </div></div>
+    </div>
+  </div>
+</form>  

@@ -1,0 +1,11 @@
+<%= form_for :user_part, :url =>{:action => "create_user_part" }, :html => {:multipart => true} do |f| %>
+  用户姓名*: <%= f.text_field :name %> <br>
+  身份证: <%= f.text_field :identity_card %> <br>
+  出生年月：<%= f.date_select :birthday, :start_year => 1960,:end_year => 2000  %><br>
+  性别: <%= f.select :sex, %w{ 男 女 } %> <br>
+  证件类型: <%= f.select :paperwork, %w{ 学生证 工作证 临时证 } %> <br>
+  地址: <%= f.text_area :address %> <br>
+  用户图片选择： <%= f.file_field :image %><br>
+  <%= f.submit :确定 %>
+<% end %>
+

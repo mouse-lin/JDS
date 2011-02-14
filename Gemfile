@@ -14,7 +14,11 @@ gem "fastthread"
 gem 'formtastic', '~> 1.1.0'
 #gem "meta_search" 
 #gem "searchlogic"
+
+#use searchlogic 
 gem 'rd_searchlogic', :require => 'searchlogic', :git => 'git://github.com/railsdog/searchlogic.git'
+
+#gem 'magic_encoding'
 
 
 #待用

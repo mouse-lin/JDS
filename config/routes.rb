@@ -1,12 +1,22 @@
 Mytest::Application.routes.draw do
-  get "reports/index"
-  resources :reports
+
+  #报表统计
+  resources :reports do
+    collection do
+      get "index"
+      get "report_statis"
+      get "sex_graph_code"
+      get "age_graph_code"
+      get "card_type_graph_code"
+    end
+  end
 
   #groups
   #get "groups/scaffold"
   #post 'groups/create'
   #post "groups/destroy"
 
+  #用户小组
   resources :groups do
     collection do
       post "delete_all"
@@ -16,7 +26,7 @@ Mytest::Application.routes.draw do
     end
   end
 
-  #log_users
+  #log_users,用户登记信息记录
   resources :log_users
   
   #kindeditor

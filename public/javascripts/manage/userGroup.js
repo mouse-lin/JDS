@@ -54,9 +54,9 @@ Manage.UserGroupWin = Ext.extend(Ext.app.Module,  {
             return link;
         };
 
-        var sm = new Ext.grid.CheckboxSelectionModel();
+        //var sm = new Ext.grid.CheckboxSelectionModel();
         var cm = new Ext.grid.ColumnModel([
-            sm,
+         //   sm,
             { header: '序号'        , sortable: true, dataIndex: 'id', width:50,hidden: true},
             { header: '小组名称'    , sortable: true, dataIndex: 'name'},
             { header: '小组描述'    , sortable: true, dataIndex: 'description'},
@@ -81,7 +81,7 @@ Manage.UserGroupWin = Ext.extend(Ext.app.Module,  {
 　　　　　  }},
             //bbar: pageToolbar,  //  分页tool统一显示在上方
             cm: cm,
-            sm: sm,
+            //sm: sm,
         });
     },
 

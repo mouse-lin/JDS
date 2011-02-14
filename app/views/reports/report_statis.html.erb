@@ -1,0 +1,44 @@
+<%= stylesheet_link_tag "css/style.css" %>
+<div id="wrapper">
+  <div id="body">
+    <div id="content">
+      <h2 class="title">报表统计</h2>
+
+      <!-- begin 会员性别统计 -->
+      <div class="post f">
+        <div class="thumb"><%= @sex_graph %></div>
+        <h2>会员总数统计</h2>
+        <p>Tincidunt varius sequi, integer magna ac, donec curabitur. 
+Rhoncus sed. Lectus vitae augue, mauris tincidunt. Ut nec fermentum, 
+dolor vestibulum. Nunc neque tincidunt, non dictumst tempus. Et id, duis
+ sit arcu, felis porta donec. Proin tincidunt...</p>
+      </div>
+      <!-- end 会员性别统计 -->
+
+      <!-- begin age -->
+      <div class="post f">
+        <div class="thumb"></div>
+        <div class="thumb"><%= @age_graph %></div>
+        <h2>年龄比例统计</a></h2>
+        <p>Tincidunt varius sequi, integer magna ac, donec curabitur. 
+Rhoncus sed. Lectus vitae augue, mauris tincidunt. Ut nec fermentum, 
+dolor vestibulum. Nunc neque tincidunt, non dictumst tempus. Et id, duis
+ sit arcu, felis porta donec. Proin tincidunt...</p>
+      </div>
+      <!-- end age -->
+
+      <!-- begin card_type -->
+      <div class="post f">
+        <div class="thumb"><%= @card_tyoe_graph %></div>
+        <h2>证件类型统计</h2>
+        <p>Tincidunt varius sequi, integer magna ac, donec curabitur. 
+Rhoncus sed. Lectus vitae augue, mauris tincidunt. Ut nec fermentum, 
+dolor vestibulum. Nunc neque tincidunt, non dictumst tempus. Et id, duis
+ sit arcu, felis porta donec. Proin tincidunt...</p>
+      </div>
+      <!-- end card_type -->
+    </div>
+    <!-- END content -->
+  </div>
+  <!-- END body -->
+<!-- END wrapper -->

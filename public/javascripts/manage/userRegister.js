@@ -17,8 +17,8 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
                win = manage.createWindow({
                    id: 'userRegisterWin',
                    title: '用户管理',
-                   width: 750,
-                   height: 530,
+                   width: 850,
+                   height: 500,
                    iconCls: 'bogus',
                    shim: false,
                    animCollapse: false,
@@ -63,20 +63,24 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
         return new Ext.form.FormPanel({ 
             frame: true,
             anchor: '100%, 100%',
+            height: 300,
             viewConfig: { forceFit: true },
-            closeAction:'hide',
             buttons: [{ 
                 text: '保存小组', handler: _this.createPosition}],
             items: [{ 
-                anchor: '100%, 100%',
+                //anchor: '100%, 100%',
+                height:150,
                 layout: 'column',
                 xtype: 'fieldset',
                 title: '带*号为必填信息',
                 items: [{ 
                     layout: 'form',
-                    items:[{ 
-                         xtype: 'textfield', fieldLabel: '一行一列', id:'abc' 
-                    }]
+                    width:400,
+                    height:150,
+                    //html: '<iframe src="user_parts/edit_user_part_index" frameborder="0" width="100%" height="100%"></iframe>'
+                   // items:[{ 
+                   //      xtype: 'textfield', fieldLabel: '一行一列', id:'abc' 
+                   // }]
                 }]
           }]
       })
@@ -100,7 +104,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
             title: '带*号为必填信息',
             //autoHeight: true,
             style: 'margin-left:5px;',
-            width:1000,
+            width:850,
             height:280,
             items:[{ 
                 layout:'form',
@@ -166,7 +170,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
         return grid = new Ext.grid.EditorGridPanel({ 
             viewConfig: { forceFit: true },
             anchor: "100%, 100%",
-            height:400,
+            height:420,
             stripeRows: true,
             region : 'center',
             id:'jobGrid',

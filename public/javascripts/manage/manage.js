@@ -7,11 +7,11 @@ Manage = new Ext.app.App({
 	getModules: function(){
         //Manage.setting  =   new Manage.Setting();
         Manage.userRegisterWin = new Manage.UserRegisterWin();
+        Manage.reportWin = new Manage.ReportWin();
         Manage.userGroupWin = new Manage.UserGroupWin();
 
         Manage.clothPartShow = new Manage.ClothPartShow();
         Manage.purchasingWin = new Manage.PurchasingWin();
-        Manage.processingWin = new Manage.ProcessingWin();
         Manage.orderWindowLook = new Manage.OrderWindowLook();
 //        Manage.outboundWin = new Manage.OutboundWin();
 //        Manage.inboundWin = new Manage.InboundWin();
@@ -23,10 +23,10 @@ Manage = new Ext.app.App({
            //Manage.setting,
            Manage.userRegisterWin,
            Manage.userGroupWin,
+           Manage.reportWin,
 
            Manage.clothPartShow,
            Manage.purchasingWin,
-           Manage.processingWin,
            Manage.orderWindowLook,
 //           Manage.inboundWin,
 //           Manage.storeWin,

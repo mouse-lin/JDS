@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20110128184947
+# Schema version: 20110202144440
 #
 # Table name: user_parts
 #
@@ -16,6 +16,10 @@
 #  image_content_type :string(255)
 #  image_file_size    :integer(4)
 #  image_updated_at   :datetime
+#  up_type            :string(255)
+#  name               :string(255)
+#  paperwork          :string(255)
+#  sex                :string(255)
 #
 
 class UserPart < ActiveRecord::Base
