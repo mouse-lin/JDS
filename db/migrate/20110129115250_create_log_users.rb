@@ -3,6 +3,7 @@ class CreateLogUsers < ActiveRecord::Migration
     create_table :log_users do |t|
       t.integer :user_id
       t.date  :date_time
+      t.text  :remark
       t.timestamps
     end
   end

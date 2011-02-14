@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20110202144440
+# Schema version: 20110129140655
 #
 # Table name: users
 #
@@ -15,13 +15,25 @@
 #  last_sign_in_at      :datetime
 #  current_sign_in_ip   :string(255)
 #  last_sign_in_ip      :string(255)
+#  name                 :string(255)
+#  login                :string(255)
+#  phone                :string(255)
+#  address              :string(255)
+#  identity_card        :string(255)
+#  card_type_id         :integer(4)
+#  birthday             :date
 #  created_at           :datetime
 #  updated_at           :datetime
+#  image_file_name      :string(255)
+#  image_content_type   :string(255)
+#  image_file_size      :integer(4)
+#  image_updated_at     :datetime
 #  type                 :string(255)
 #
 
 class User < ActiveRecord::Base
-  has_one :user_part
+  has_attached_file :image, :styles => { :normal => "150x150" }
+  has_many    :log_users
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
   devise :database_authenticatable, :registerable,
@@ -29,4 +41,13 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
+  validates_presence_of     :login
+  validates_uniqueness_of   :login
+
+  #查找管理员用户
+  #暂时为查找所有用户(包括管理员)
+  def self.find_normal_user page_conditions = nil
+    User.find(:all, page_conditions)
+  end
+
 end

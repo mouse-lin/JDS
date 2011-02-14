@@ -8,9 +8,9 @@ class UserPartsController < ApplicationController
   def index
     #user_parts = UserPart.find_normal_user
     default_params = {:offset => params[:offset].to_i, :limit => params[:limit].to_i}
-    user_parts = UserPart.find_normal_user(default_params)
-    count = UserPart.count
-    render_json user_parts,count
+    user = User.find_normal_user(default_params)
+    count = User.count
+    render_json user,count
   end
 
   #创建个人的资料
