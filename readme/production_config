@@ -1,0 +1,4 @@
+1.克隆之后，执行bundle install vendor/bundler_gems 等待下载
+2.找到本项目 devise文件夹并复制
+3.找到 vendor/bundler_gems/ruby/1.9.1/gems/devise-1.1.5/app/controller/devise
+4.把第2步复制的devise文件到3找到的目录，替换掉原有的devise
