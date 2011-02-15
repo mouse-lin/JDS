@@ -50,10 +50,11 @@ class UserPartsController < ApplicationController
 
   #TODO 暂时用于显示登录用户view
   def edit_user_part_index
+    @card_type = CardType.find_types
   end
 
   #TODO 暂时用于创建普通用户资料
-  def create_user_part
+  def create_user
     params[:user_part][:up_type] = '1'
     @user_part = UserPart.new(params[:user_part])
     @user_part.save

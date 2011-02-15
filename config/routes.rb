@@ -42,7 +42,7 @@ Mytest::Application.routes.draw do
       get "show_kind"
       get "edit_user_part_index"
       post "update_image"
-      post "create_user_part"
+      post "create_user"
       post "index"
       get "index"
       post "search_user_parts"

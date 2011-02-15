@@ -5,7 +5,7 @@
       <div id="notvipframe">
       <div class="midSubCnt">
         <table width="200" border="0">
-          <%= form_for :user_part, :url =>{:action => "create_user_part" }, :html => {:multipart => true} do |f| %>
+          <%= form_for :user, :url =>{:action => "create_user" }, :html => {:multipart => true} do |f| %>
           <tbody>
           <tr>
             <th>用户姓名：<b class="star">*</b></th>
@@ -34,7 +34,7 @@
           <tr>
             <th>证件类型:</th>
             <td id="password_td">
-              <%= f.select :paperwork, %w{ 学生证 工作证 临时证 } %>
+              <%= f.select :card_type_id, @card_type ,{ :prompt => '请选择证件类型' } %>
             </td>
           </tr>
           <tr>
