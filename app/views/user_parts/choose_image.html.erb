@@ -1,18 +1,86 @@
-<div id="flash_error">
-<% if flash[:error] %>
-  <%= flash[:error] %>
-<% end %>
-</div>
-<%= form_for :user, @user, :url =>{:action => "update_image" }, :html => {:multipart => true} do |f| %>
-  身份证*：<%= f.text_field :identity_card %><br>
-  出生年月：<%= f.date_select :birthday, :start_year => 1960,:end_year => 2000  %><br>
-  性别: <%= f.select :sex, %w{ 男 女 } %> <br>
-  用户图片选择： <%= f.file_field :image %>
-  <% if @render %>
-    <%= render :partial => @render %>
-  <%elsif @action == "update_image" %>
-    <%= image_tag @user.image.url(:normal) %>
-  <% end %><br>
-  地址：<%= f.text_area :address %><br>
-  <%= f.submit :确定 %>
-<% end %>
+<div id="main_wrap">
+  <div id="mid">
+    <div class="midCnt">
+      <div id="notvipframe">
+      <div class="midSubCnt">
+        <table width="200" border="0">
+          <%= form_for :user, @user, :url =>{:action => "update_image" }, :html => {:multipart => true} do |f| %>
+          <tbody>
+          <div id="flash_error">
+          <% if flash[:error] %>
+            <%= flash[:error] %>
+          <% end %>
+          <th>用户头像：</th>
+            <td>
+              <div id="user_img">
+                <% if current_user.image.nil? %>
+                  <%= "没有图片" %>
+                <% else %>
+                  <%= image_tag @user.image.url(:normal) %>
+                <%  end %>
+              <div>
+            </td>
+          </tr>
+
+          <tr>
+            <th>用户账号：<b class="star"></b></th>
+            <td>
+              <%= @user.login %> 
+            </td>
+          </tr>
+
+          <tr>
+            <th>姓名：<b class="star">*</b></th>
+            <td>
+              <%= f.text_field :name %> 
+            </td>
+          </tr>
+          <tr>
+          <tr>
+            <th>身份证号：<b class="star">*</b></th>
+            <td >
+              <%= f.text_field :identity_card %>
+            </td>
+          </tr>
+          <tr>
+            <th>出生年月：</th>
+            <td>
+              <%= f.date_select :birthday, :start_year => 1960,:end_year => 2050  %>
+            </td>
+          </tr>
+          <tr>
+            <th>性别:</th>
+            <td id="password_td">
+              <%= f.select :sex, %w{ 男 女 } %>
+            </td>
+          </tr>
+          <tr>
+            <th>证件类型:</th>
+            <td id="password_td">
+              <%= f.select :card_type_id, %w{ 学生证 工作证 临时证 } %>
+            </td>
+          </tr>
+          <tr>
+            <th>地址:</th>
+            <td id="password_td">
+              <%= f.text_field :address %>
+            </td>
+          </tr>
+          <tr>
+            <th>用户图片选择:</th>
+            <td id="password_td">
+              <%= f.file_field :image %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+            <%=blank(19)%>
+            <%= f.submit :确定 %>
+            </td>
+          </tr>
+          <% end %>
+       </tbody></table>
+      </div></div>
+    </div>
+  </div>
+</form>  

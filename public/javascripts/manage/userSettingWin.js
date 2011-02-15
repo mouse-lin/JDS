@@ -1,22 +1,22 @@
-Manage.UserPartWin = Ext.extend(Ext.app.Module,  {
-    id: 'userPartWin',
+Manage.UserSettingWin = Ext.extend(Ext.app.Module,  {
+    id: 'userSettingWin',
     init: function() {
         this.launcher = {
-            text: '个人资料',
-            iconCls: 'bogus',
+            text: '设置',
+            iconCls: 'settings',
             handler: this.createWindow,
             scope: this
         }
     },
 
     createWindow: function() {
-      _this = Manage.userPartWin;
+      _this = Manage.userSettingWin;
       var manage = _this.app.getDesktop();
-      var win = manage.getWindow('userPartWin');
+      var win = manage.getWindow('userSettingWin');
       if(!win) {
             win = manage.createWindow({
-                id: 'userPartWin',
-                title: '个人资料',
+                id: 'userSettingWin',
+                title: '设置',
                 width: 850,
                 height: 600,
                 iconCls: 'bogus',
@@ -48,3 +48,4 @@ Manage.UserPartWin = Ext.extend(Ext.app.Module,  {
     },
 
 })
+

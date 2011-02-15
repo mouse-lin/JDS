@@ -5,14 +5,15 @@ Manage = new Ext.app.App({
 
 
 	getModules: function(){
-        //Manage.setting  =   new Manage.Setting();
         Manage.userRegisterWin = new Manage.UserRegisterWin();
         Manage.reportWin = new Manage.ReportWin();
         Manage.userGroupWin = new Manage.UserGroupWin();
         Manage.userPartWin = new Manage.UserPartWin();
 
-        Manage.clothPartShow = new Manage.ClothPartShow();
-        Manage.orderWindowLook = new Manage.OrderWindowLook();
+       // Manage.clothPartShow = new Manage.ClothPartShow();
+        //Manage.orderWindowLook = new Manage.OrderWindowLook();
+        Manage.userSettingWin  =   new Manage.UserSettingWin();
+
 //        Manage.outboundWin = new Manage.OutboundWin();
 //        Manage.inboundWin = new Manage.InboundWin();
 //        Manage.storeWin = new Manage.StoreWin();
@@ -20,14 +21,13 @@ Manage = new Ext.app.App({
         //Manage.questionBase   = new Manage.QuestionBase();
 
 		return [
-           //Manage.setting,
            Manage.userRegisterWin,
            Manage.userGroupWin,
            Manage.reportWin,
-           Manage.userPartWin,
-
-           Manage.clothPartShow,
-           Manage.orderWindowLook,
+          // Manage.userPartWin,
+           Manage.userSettingWin,
+         //  Manage.clothPartShow,
+           
 //           Manage.inboundWin,
 //           Manage.storeWin,
 //           Manage.outboundWin
@@ -37,8 +37,9 @@ Manage = new Ext.app.App({
     // config for the start menu
     getStartConfig: function(){
         return {
-            title: '图书馆用户管理系统设置',
+            title: '图书馆用户管理系统',
             iconCls: 'user',
+            /*
             toolItems: [{
                 text:'设置',
                 iconCls:'settings',
@@ -50,6 +51,7 @@ Manage = new Ext.app.App({
                 scope:this,
                 //handler: 
             }]
+            */
         };
     }
 });

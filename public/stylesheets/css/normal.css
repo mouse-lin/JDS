@@ -39,10 +39,13 @@ a:hover{ color:#900; text-decoration:underline}
 .midSubCnt table td{ padding:6px 4px}
 .midSubCnt table th { text-align:right; padding-right:5px; width:160px}
 .midCnt{ border:1px solid #c4c4c4; border-bottom:0}
-.midSubTitle{ background:url(img/midsubtitle.gif) repeat-x ; line-height:37px; height:37px; padding:0 10px; border-bottom:1px solid #e4e4e4}
 .midSubTitleArrow { height:5px; overflow:hidden}
 .midSubTitleArrow b{ display:block; width:9px; height:5px; background:url(img/arrow_bg.gif) #e4e4e4 no-repeat ; float:left; margin-left:64px ;*margin-left:34px;}
+
 	.midSubCnt table td{ padding:8px 4px}
 
 .star{ color:#F00}
 .star2{ color:#fff}
+
+/*用户头像*/
+ #user_img { padding: 8px 10px }
