@@ -1,10 +1,14 @@
 <h2>注册</h2>
+<h3><font color="red">以下信息均不能为空</font></h3>
 
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
   <p><%= f.label :登录名 %><br />
   <%= f.text_field :login %></p>
+
+  <p><%= f.label :身份证号 %><br />
+  <%= f.text_field :identity_card %></p>
 
   <p><%= f.label :邮箱 %><br />
   <%= f.text_field :email %></p>

@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
     :identity_card,
     :card_type_id
 
-  validates_presence_of     :login
+  validates_presence_of     :login, :identity_card
   validates_uniqueness_of   :login
 
   #查找管理员用户

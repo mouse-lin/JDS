@@ -3,8 +3,7 @@ class UserPartsController < ApplicationController
   before_filter :authenticate_user!
 
   #protect_from_forgery :except => :upload
-  #skip_before_filter :verify_authenticity_token
-
+  #skip_before_filter :verify_authenticity_token 
   def index
     #user_parts = UserPart.find_normal_user
     default_params = {:offset => params[:offset].to_i, :limit => params[:limit].to_i}
@@ -55,9 +54,10 @@ class UserPartsController < ApplicationController
 
   #TODO 暂时用于创建普通用户资料
   def create_user
-    params[:user_part][:up_type] = '1'
-    @user_part = UserPart.new(params[:user_part])
-    @user_part.save
+    #params[:user][:up_type] = '1'
+    params[:user][:password] = params[:user][:identity_card]
+    @user = User.new(params[:user])
+    @user.save
     redirect_to :controller => "user_parts",:action => "edit_user_part_index"
   end
   
