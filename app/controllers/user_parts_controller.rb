@@ -15,8 +15,8 @@ class UserPartsController < ApplicationController
 
   #创建个人的资料
   def create
-    params[:user_part][:user_id] = current_user.id
-    params[:user_part][:up_type] = '0'
+    params[:user][:user] = current_user.id
+    #params[:user][:up_type] = '0'
     @user_part = UserPart.new(params[:user_part])
     @user_part.save
     redirect_to :controller => "user_parts",:action => "show_image"
@@ -24,18 +24,18 @@ class UserPartsController < ApplicationController
 
   def choose_image
     @action = "create"
-    @user_part = current_user.user_part
+    @user = current_user
   end
 
   def show_image
-    @user_part = current_user.user_part
+    @user = current_user
     @render = "user_parts/show_image"
     render_index
   end
 
   def update_image
-    @user_part = current_user.user_part
-    @user_part.update_attributes!(params[:user_part])
+    @user = current_user
+    @user.update_attributes!(params[:user])
     redirect_to :controller => "user_parts",:action => "show_image"
   rescue ActiveRecord::RecordInvalid => e
     flash[:error] = e.message 

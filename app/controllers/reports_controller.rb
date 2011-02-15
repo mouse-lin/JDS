@@ -1,15 +1,25 @@
 # encoding: utf-8
 class ReportsController < ApplicationController
-  layout"login"
+  layout"report"
 
   def index
   end
 
-  def report_statis
-    @sex_graph = open_flash_chart_object(300,250,"/reports/sex_graph_code").html_safe
-    @age_graph = open_flash_chart_object(300,250,"/reports/age_graph_code").html_safe
-    @card_tyoe_graph = open_flash_chart_object(300,250,"/reports/card_type_graph_code").html_safe
+  #会员总数统计
+  def sex_statis
+    @sex_graph = open_flash_chart_object(350,300,"/reports/sex_graph_code").html_safe
   end
+
+  #年龄总数统计
+  def age_statis
+    @age_graph = open_flash_chart_object(350,300,"/reports/age_graph_code").html_safe
+  end
+
+  #证件类型统计
+  def card_type_statis
+    @card_type_graph = open_flash_chart_object(350,300,"/reports/card_type_graph_code").html_safe
+  end
+
 
   def sex_graph_code
     title = Title.new("会员总数")

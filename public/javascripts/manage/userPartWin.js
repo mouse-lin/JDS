@@ -1,8 +1,8 @@
-Manage.PurchasingWin = Ext.extend(Ext.app.Module,  {
-    id: 'purchasing-win',
+Manage.UserPartWin = Ext.extend(Ext.app.Module,  {
+    id: 'userPartWin',
     init: function() {
         this.launcher = {
-            text: '个人资料填写',
+            text: '个人资料',
             iconCls: 'bogus',
             handler: this.createWindow,
             scope: this
@@ -10,13 +10,13 @@ Manage.PurchasingWin = Ext.extend(Ext.app.Module,  {
     },
 
     createWindow: function() {
-      _this = Manage.purchasingWin;
+      _this = Manage.userPartWin;
       var manage = _this.app.getDesktop();
-      var win = manage.getWindow('purchasing-win');
+      var win = manage.getWindow('userPartWin');
       if(!win) {
             win = manage.createWindow({
                // id: 'orderWindow',
-                title: '个人资料填写',
+                title: '个人资料',
                 width: 700,
                 height: 600,
                 iconCls: 'bogus',

@@ -678,7 +678,7 @@ td.ux-taskButtons-edge {
     background-image: url(../../images/group.png);
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/grid48x48.png', sizingMethod='scale');
 }
-#purchasing-win-shortcut img { 
+#userPartWin-shortcut img { 
     width:48px;
     height:48px;
     background-image: url(../../images/personal_datail.png);

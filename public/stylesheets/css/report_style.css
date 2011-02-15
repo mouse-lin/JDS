@@ -103,13 +103,12 @@ img {
 	border-width: 0 1px;
 	border-style: solid;
 	border-color: #D7D7D7;
-	background: url(images/body.gif) repeat-y 615px 0;
 }
 /** END body **/
 
 /** BEGIN content **/
 #content {
-	width: 820px;
+	width: 790px;
 	float: left;
 	padding-bottom: 20px;
 }

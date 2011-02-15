@@ -2,7 +2,7 @@ Manage.ReportWin = Ext.extend(Ext.app.Module,  {
     id: 'reportWin',
     init: function() {
         this.launcher = {
-            text: '报表查看',
+            text: '报表统计',
             iconCls: 'bogus',
             handler: this.createWindow,
             scope: this
@@ -16,8 +16,8 @@ Manage.ReportWin = Ext.extend(Ext.app.Module,  {
          if(!win) {
                win = manage.createWindow({
                    id: 'reportWin',
-                   title: '报表查看',
-                   width: 850,
+                   title: '报表统计',
+                   width: 800,
                    height: 600,
                    iconCls: 'bogus',
                    shim: false,
@@ -33,23 +33,22 @@ Manage.ReportWin = Ext.extend(Ext.app.Module,  {
      createTabPanel: function(){ 
      return new Ext.TabPanel({ 
        frame: true,
+       //deferredRender: false,
        activeTab: 0,
-       width: 850,
+       width: 800,
        height: 600,
        items: [
        { 
-          title: '报表统计',
-          html: '<iframe src="reports/report_statis" frameborder="0" width="100%" height="100%"></iframe>' 
+          title: '会员总数统计',
+          html: '<iframe src="reports/sex_statis" frameborder="0" width="100%" height="100%"></iframe>' 
      }, 
-     /*
      { 
-         title: '年龄比例',
-         html: '<iframe src="http://chart.apis.google.com/chart?cht=p3&chd=t:50,40,10&chs=250x100&chl=1-19岁|20-39岁|40-59岁" frameborder="0" width="100%" height="100%"></iframe>' 
+         title: '年龄比例统计',
+         html: '<iframe src="reports/age_statis" frameborder="0" width="100%" height="100%"></iframe>' 
      }, { 
-         title: '其他成份',
-         html: '<iframe src="http://chart.apis.google.com/chart?cht=p3&chd=t:60,20,20&chs=250x100&chl=学生证|社会|工作" frameborder="0" width="100%" height="100%"></iframe>' 
+         title: '证件类型统计',
+         html: '<iframe src="reports/card_type_statis" frameborder="0" width="100%" height="100%"></iframe>' 
      }
-     */
      ]
    })
   }

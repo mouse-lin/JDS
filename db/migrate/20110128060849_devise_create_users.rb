@@ -14,6 +14,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string  :identity_card
       t.integer :card_type_id
       t.date  :birthday
+      t.string  :sex
 
 
       # t.confirmable

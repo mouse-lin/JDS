@@ -9,9 +9,9 @@ Manage = new Ext.app.App({
         Manage.userRegisterWin = new Manage.UserRegisterWin();
         Manage.reportWin = new Manage.ReportWin();
         Manage.userGroupWin = new Manage.UserGroupWin();
+        Manage.userPartWin = new Manage.UserPartWin();
 
         Manage.clothPartShow = new Manage.ClothPartShow();
-        Manage.purchasingWin = new Manage.PurchasingWin();
         Manage.orderWindowLook = new Manage.OrderWindowLook();
 //        Manage.outboundWin = new Manage.OutboundWin();
 //        Manage.inboundWin = new Manage.InboundWin();
@@ -24,9 +24,9 @@ Manage = new Ext.app.App({
            Manage.userRegisterWin,
            Manage.userGroupWin,
            Manage.reportWin,
+           Manage.userPartWin,
 
            Manage.clothPartShow,
-           Manage.purchasingWin,
            Manage.orderWindowLook,
 //           Manage.inboundWin,
 //           Manage.storeWin,
@@ -47,9 +47,9 @@ Manage = new Ext.app.App({
             },'-',{
                 text:'注销',
                 iconCls:'logout',
-                scope:this
+                scope:this,
+                //handler: 
             }]
         };
     }
 });
-

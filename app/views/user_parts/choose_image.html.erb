@@ -1,12 +1,9 @@
-<% unless current_user.try(:user_part).try(:image).nil? %>
-  <% @action = "update_image"%>
-<% end %>
 <div id="flash_error">
 <% if flash[:error] %>
   <%= flash[:error] %>
 <% end %>
 </div>
-<%= form_for :user_part, @user_part, :url =>{:action => @action }, :html => {:multipart => true} do |f| %>
+<%= form_for :user, @user, :url =>{:action => "update_image" }, :html => {:multipart => true} do |f| %>
   身份证*：<%= f.text_field :identity_card %><br>
   出生年月：<%= f.date_select :birthday, :start_year => 1960,:end_year => 2000  %><br>
   性别: <%= f.select :sex, %w{ 男 女 } %> <br>
@@ -14,7 +11,7 @@
   <% if @render %>
     <%= render :partial => @render %>
   <%elsif @action == "update_image" %>
-    <%= image_tag @user_part.image.url(:normal) %>
+    <%= image_tag @user.image.url(:normal) %>
   <% end %><br>
   地址：<%= f.text_area :address %><br>
   <%= f.submit :确定 %>

@@ -5,8 +5,7 @@
 #
 #  id                   :integer(4)      not null, primary key
 #  email                :string(255)     default(""), not null
-#  encrypted_password   :string(128)     default(""), not null
-#  password_salt        :string(255)     default(""), not null
+#  encrypted_password   :string(128)     default(""), not null #  password_salt        :string(255)     default(""), not null
 #  reset_password_token :string(255)
 #  remember_token       :string(255)
 #  remember_created_at  :datetime
@@ -36,11 +35,25 @@ class User < ActiveRecord::Base
   has_many    :log_users
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable,
+         :registerable,
+         :recoverable, 
+         :rememberable, 
+         :trackable, 
+         :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :login, :name, 
+    :image,
+    :image_file_name,
+    :image_content_type,
+    :image_file_size,
+    :image_updated_at,
+    :address,
+    :birthday,
+    :sex,
+    :identity_card
+
   validates_presence_of     :login
   validates_uniqueness_of   :login
 

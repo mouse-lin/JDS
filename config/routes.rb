@@ -4,7 +4,9 @@ Mytest::Application.routes.draw do
   resources :reports do
     collection do
       get "index"
-      get "report_statis"
+      get "sex_statis"
+      get "age_statis"
+      get "card_type_statis"
       get "sex_graph_code"
       get "age_graph_code"
       get "card_type_graph_code"
