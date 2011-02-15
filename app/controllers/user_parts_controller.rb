@@ -22,14 +22,17 @@ class UserPartsController < ApplicationController
     redirect_to :controller => "user_parts",:action => "show_image"
   end
 
+  #TODO 重构choose_image 与 show_image 方法，
   def choose_image
     @action = "create"
     @user = current_user
+    @card_type = CardType.find_types
   end
 
   def show_image
     @user = current_user
     @render = "user_parts/show_image"
+    @card_type = CardType.find_types
     render_index
   end
 

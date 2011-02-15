@@ -32,7 +32,12 @@
 
 class User < ActiveRecord::Base
   has_attached_file :image, :styles => { :normal => "150x150" }
-  has_many    :log_users
+  has_many  :log_users
+  belongs_to   :card_type
+
+  #验证select框值的保存
+  validates_inclusion_of :card_type_id,:in => CardType.find_types.map{|disp,value| value}
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
   devise :database_authenticatable,
@@ -52,7 +57,8 @@ class User < ActiveRecord::Base
     :address,
     :birthday,
     :sex,
-    :identity_card
+    :identity_card,
+    :card_type_id
 
   validates_presence_of     :login
   validates_uniqueness_of   :login

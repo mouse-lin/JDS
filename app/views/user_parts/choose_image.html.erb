@@ -57,7 +57,7 @@
           <tr>
             <th>证件类型:</th>
             <td id="password_td">
-              <%= f.select :card_type_id, %w{ 学生证 工作证 临时证 } %>
+              <%= f.select :card_type_id, @card_type ,{ :prompt => '请选择一个部门' }%>
             </td>
           </tr>
           <tr>

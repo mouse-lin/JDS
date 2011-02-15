@@ -31,6 +31,7 @@ Manage.UserSettingWin = Ext.extend(Ext.app.Module,  {
         win.show();
     },
 
+  //TODO 密码修改
     createTabPanel: function(){ 
         return new Ext.TabPanel({ 
             frame: true,
@@ -38,11 +39,14 @@ Manage.UserSettingWin = Ext.extend(Ext.app.Module,  {
             deferredRender: false, // tabpanel 显示切换渲染
             items: [
             { 
-                id: 'userDetails',
                 title: '个人资料',
                 layout: 'anchor',
                 html: '<iframe src="user_parts/choose_image" frameborder="0" width="100%" height="100%"></iframe>' 
-            }, 
+            },{ 
+                title: '密码修改',
+                layout: 'anchor',
+                html: '<iframe src="user_parts/choose_image" frameborder="0" width="100%" height="100%"></iframe>'
+            } 
             ],
       })
     },
