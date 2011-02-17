@@ -7,6 +7,12 @@
         <table width="200" border="0">
           <%= form_for :user, :url =>{:action => "create_user" }, :html => {:multipart => true} do |f| %>
           <tbody>
+          <% if flash[:notice] %>
+          <td>
+            <th><font color="red"><%= flash[:notice]%></font></th>
+          </td>
+          <% end %>
+
           <tr>
             <th>用户姓名：<b class="star">*</b></th>
             <td>

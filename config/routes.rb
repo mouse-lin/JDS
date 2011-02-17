@@ -43,10 +43,11 @@ Mytest::Application.routes.draw do
       get "edit_user_part_index"
       post "update_image"
       post "create_user"
+      #get "create_user"
       post "index"
       get "index"
-      post "search_user_parts"
-      get "search_user_parts"
+      post "search_user"
+      get "search_user"
     end
   end
 

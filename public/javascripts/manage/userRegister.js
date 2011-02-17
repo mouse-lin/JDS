@@ -148,6 +148,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
         var addOperator = function(value, mataData, record, rowIndex, colIndex, store){ 
             var link = String.format('<a href="#" onclick="_this.makeSure( {0} )">确定入馆</a>', record.data.id) + '&nbsp;';
                 link += String.format('<a href="#" onclick="_this.searchDetail({0})">查看入馆信息</a>', record.data.id) + '&nbsp;';
+                link += String.format('<a href="#" onclick="_this.searchDetail({0})">查看详细资料</a>', record.data.id) + '&nbsp;';
             return link;
         };
 
@@ -160,7 +161,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
         var cm = new Ext.grid.ColumnModel([
             { header: '编号'      ,sortable: true, dataIndex: 'id', width:50},
             { header: '姓名'      ,sortable: true, dataIndex: 'name'},
-            { header: '身份证号'  ,sortable: true, dataIndex: 'identity_card'},
+            { header: '身份证号'  ,sortable: true, dataIndex: 'identity_card',width:150},
             { header: '性别'      ,sortable: true, dataIndex: 'sex'},
             { header: '出生年月'  ,sortable: true, dataIndex: 'birthday'},
             { header: '地址'      ,sortable: true, dataIndex: 'address'},
@@ -285,7 +286,11 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
       var id = Ext.getCmp('id').getValue();
       var identity_card = Ext.getCmp('identity_card').getValue();
       var name = Ext.getCmp('name').getValue();
-      var birthday = Ext.getCmp('birthday').getValue();
+      var birthday = Ext.getCmp('birthday').getValue().format('Y-m-d');
+      if(id == "" && identity_card ==  "" && name == "" && birthday == ""){ 
+          Ext.Msg.alert("提示","查询信息不能都为空!");
+      } 
+      else{ 
 
      // var condition = ""
      // //var condition =  {  id_like: id, identity_card_like: identity_card, name_like: name, birthday_like: birthday };
@@ -295,23 +300,23 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
      //         store.proxy = new Ext.data.HttpProxy({url:url});
      //         store.load({ params:{ offset:0,limit:Page.pageSize } });
 
+         Ext.Ajax.request({ 
+             url: '/user_parts/search_user.json',
+             jsonData: { search : { id_like: id, identity_card_like: identity_card, name_like: name, birthday_like: birthday} },
+             success: function(response) { 
+                 questions = Ext.decode(response.responseText);
+                 //Comment: Mouse
+                 //更新修改后台的搜索功能为加上root开头的
+                 //{ "content": Ext.decode(response.responseText)};
+                 store.loadData(questions);
 
-      Ext.Ajax.request({ 
-          url: '/user_parts/search_user_parts.json',
-          jsonData: { search : { id_like: id, identity_card_like: identity_card, name_like: name, birthday_like: birthday} },
-          success: function(response) { 
-              questions = Ext.decode(response.responseText);
-              //Comment: Mouse
-              //更新修改后台的搜索功能为加上root开头的
-              //{ "content": Ext.decode(response.responseText)};
-              store.loadData(questions);
-
-              //store.proxy=new Ext.data.HttpProxy({url:url});
-              //store.reload({ params:{ offset:0,limit:Page.pageSize } });
-          }, 
-          failure: function() { 
-              Ext.Msg.alert('提示', '搜索失败');
-          }
-      });
+                 //store.proxy=new Ext.data.HttpProxy({url:url});
+                 //store.reload({ params:{ offset:0,limit:Page.pageSize } });
+             }, 
+             failure: function() { 
+                 Ext.Msg.alert('提示', '搜索失败');
+             }
+         });
+      }
   }
 })

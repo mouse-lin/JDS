@@ -1,3 +1,4 @@
+# encoding: utf-8
 class UserPartsController < ApplicationController
   layout"login"
   before_filter :authenticate_user!
@@ -54,20 +55,27 @@ class UserPartsController < ApplicationController
 
   #TODO 暂时用于创建普通用户资料
   def create_user
-    #params[:user][:up_type] = '1'
-    params[:user][:password] = params[:user][:identity_card]
+    params[:user][:login] = params[:user][:identity_card].first(10)
+    params[:user][:password] = params[:user][:identity_card].last(6)
+    params[:user][:password_confirmation] = params[:user][:identity_card].last(6)
+    params[:user][:email] = params[:user][:login] + "@#{ params[:user][:name] }.com"
+
     @user = User.new(params[:user])
-    @user.save
+    @user.save!
+    flash[:notice] = "用户 #{ params[:user][:name] } 创建成功!"
+    redirect_to :controller => "user_parts",:action => "edit_user_part_index"
+  rescue ActiveRecord::RecordInvalid => e
+    flash[:notice] = e.message 
     redirect_to :controller => "user_parts",:action => "edit_user_part_index"
   end
   
   #TODO 搜索功能，暂时保留
   #Comment: change the old search action to search_user_parts
-  def search_user_parts
-    result_data = UserPart.search( params[:search]) 
-    user_parts = result_data.current_scope
-    count = user_parts.count
-    render_json  user_parts, count
+  def search_user
+    result_data = User.search( params[:search]) 
+    user = result_data.current_scope
+    count = user.count
+    render_json  user, count
   end
 
   protected

@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   belongs_to   :card_type
 
   #验证select框值的保存
-  validates_inclusion_of :card_type_id,:in => CardType.find_types.map{|disp,value| value}
+  #validates_inclusion_of :card_type_id,:in => CardType.find_types.map{|disp,value| value}
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
     :identity_card,
     :card_type_id
 
-  validates_presence_of     :login, :identity_card
+  validates_presence_of     :login
   validates_uniqueness_of   :login
 
   #查找管理员用户

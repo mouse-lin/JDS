@@ -2,7 +2,7 @@
     <dl id="x-shortcuts">
       <%  if current_user %>
         <div id="current_user">
-          <font size="3" color="white">欢迎<%= current_user.login%>登录本系统</font><br>
+          <font size="5" color="white">欢迎<font color="red"><%= current_user.name%></font>登录<%= blank(3)%>图书馆用户管理系统</font>
           <%= link_to '退出', :controller => "devise/sessions", :action => "destroy" %>
         </div>
       <% end %>
