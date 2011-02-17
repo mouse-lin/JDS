@@ -1,0 +1,61 @@
+<div id="main_wrap">
+  <div id="mid">
+    <div class="midCnt">
+      <div id="notvipframe">
+      <div class="midSubCnt">
+        <table width="700" border="0">
+          <tbody>
+
+         <tr>
+          <th>用户头像：</th>
+            <td>
+              <div id="user_img">
+                <% if @user.image.nil? %>
+                  <%= "没有图片" %>
+                <% else %>
+                  <%= image_tag @user.image.url(:normal) %>
+                <%  end %>
+              <div>
+            </td>
+          </tr>
+
+
+          <tr>
+            <th>账号：</th>
+            <td>
+              <%= @user.login %>
+            </td>
+            <th>姓名: </th>
+            <td>
+              <%= @user.name %>
+            </td>
+          </tr>
+
+          <tr>
+            <th>身份证号：</th>
+            <td >
+              <%= @user.identity_card %>
+            </td>
+            <th>地址：</th>
+            <td >
+              <%= @user.address %>
+            </td>
+
+          </tr>
+
+          <tr>
+            <th>出生年月：</th>
+            <td>
+              <%= @user.birthday %> 
+            </td>
+            <th>证件类型：</th>
+            <td >
+              <%= @user.try(:card_type).try(:name) %>
+            </td>
+          </tr>
+       </tbody></table>
+      </div></div>
+    </div>
+  </div>
+</form>  
+

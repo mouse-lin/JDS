@@ -10,12 +10,12 @@ Manage.UserGroupWin = Ext.extend(Ext.app.Module,  {
     },
 
     createWindow: function() {
-      _this = Manage.userGroupWin;
+      var _this = Manage.userGroupWin;
       var manage = _this.app.getDesktop();
       var win = manage.getWindow('userGroupWin');
       if(!win) {
             win = manage.createWindow({
-                id: 'UserGroupWin',
+                id: 'userGroupWin',
                 title: '用户小组',
                 width: 600,
                 height: 450,
@@ -24,28 +24,29 @@ Manage.UserGroupWin = Ext.extend(Ext.app.Module,  {
                 animCollapse: false,
                 constrainHeader: true,
                 layout: 'anchor',
-                items: _this.createGrid()
+                items: _this.createUserGroupGrid()
             });
           }
         win.show();
     },
 
   // 初始化用户小组grid界面
-    createGrid: function(){ 
+    createUserGroupGrid: function(){ 
         var _this = Manage.userGroupWin;
-        store = new Ext.data.JsonStore({ 
+        UserGroupStore = new Ext.data.JsonStore({ 
             fields: [
                 'id',
                 'name',
                 'description',
             ],
             root: "content",
-            url:'/groups.json',
+            url:'/groups/show_user_groups.json',
+            totalProperty:'total',
             method: 'GET'
         });
-        store.load()
+        UserGroupStore.load({ params:{ offset:0,limit:Page.pageSize }});     
 
-        var pageToolbar = Page.createPagingToolbar(store);
+        var pageToolbar = Page.createPagingToolbar(UserGroupStore);
 
         var addOperator = function(value, mataData, record, rowIndex, colIndex, store){ 
             //var link = String.format('<a href="#" onclick="editJob( {0}, \'edit\' )">查看修改</a>', record.data.id) + '&nbsp;';
@@ -63,21 +64,21 @@ Manage.UserGroupWin = Ext.extend(Ext.app.Module,  {
             { header: '操作'        , dataIndex: '#', renderer: addOperator, width: 120 }
         ]);
 
-        tbar = [ 
+        var tbar = [ 
             { iconCls: 'add', text: '新增', handler: function(){ _this.createUserGroupWin() }}, '-',
             { iconCls: 'drop', text: '全部删除', handler: function(){ _this.deleteAllUserGroup() }}, 
         ];
 
-        return grid =  new Ext.grid.EditorGridPanel({ 
+        return UserGroupGrid =  new Ext.grid.EditorGridPanel({ 
             anchor: '100%,100%',
             height: 420,
             viewConfig: { forceFit: true }, // 布局时候grid的表头适应win的大小
             id:'userGroup',
-            store: store,
+            store: UserGroupStore,
             loadMask: {msg:"读取中..."},
             tbar: tbar, 
             listeners:{  'render'　:　function()　{
-　　　　　　　　　pageToolbar.render(grid.tbar);
+　　　　　　　　　pageToolbar.render(UserGroupGrid.tbar);
 　　　　　  }},
             //bbar: pageToolbar,  //  分页tool统一显示在上方
             cm: cm,
@@ -95,21 +96,21 @@ Manage.UserGroupWin = Ext.extend(Ext.app.Module,  {
             height: 350,
             layout: 'fit',
             frame: true,
-            items: _this.createForm()
+            items: _this.createGroupForm()
       });
       win.show();
   },
 
     //添加新的权限小组
     //TODO 还有权限类型需要添加进去
-    createForm: function(){ 
+    createGroupForm: function(){ 
         // form 的形式
-        return new Ext.form.FormPanel({ 
+        var _this = Manage.userGroupWin;
+        return  createGroupFormPanel =  new Ext.form.FormPanel({ 
             frame: true,
             region: 'center',
             width:640,
             height: 300,
-            closeAction:'hide',
             buttons: [{ 
                 text: '保存小组', handler: _this.saveUserGroup}],
             items: [{ 
@@ -135,28 +136,34 @@ Manage.UserGroupWin = Ext.extend(Ext.app.Module,  {
       })
     },
 
+    //保存权限小组
     saveUserGroup: function(){ 
         var _this = this;
         Ext.Msg.confirm('提示', "是否保存?", function(button){ 
             if(button == 'no') { 
             } else {  
-            var group = { 
-               name : Ext.getCmp("name").getValue(),
-               description : Ext.getCmp("remark").getValue()
-            };
-            Ext.Ajax.request({ 
-                url:  '/groups',
-                method: "POST",
-                jsonData: { group: group },
-                success: function(){
-                    Ext.Msg.alert("提示", "保存成功!");
-                    store.reload();
+                var name = Ext.getCmp("name").getValue();
+                if(name == ""){ 
+                    Ext.Msg.alert("提示","小组名不能为空!");
+                }else{  
+                    var group = { 
+                        name : Ext.getCmp("name").getValue(),
+                        description : Ext.getCmp("remark").getValue()
+                    };
+                    Ext.Ajax.request({ 
+                        url:  '/groups',
+                        method: "POST",
+                        jsonData: { group: group },
+                        success: function(){
+                            Ext.Msg.alert("提示", "保存成功!");
+                            UserGroupStore.reload();
 
-                },
-                failure: function(response, onpts) {
-                    Ext.Msg.alert("提示", "保存失败！");
-                } 
-            });
+                        },
+                        failure: function(response, onpts) {
+                            Ext.Msg.alert("提示", "保存失败！");
+                    } 
+                });
+              }
            }
         }); 
     },
@@ -171,7 +178,7 @@ Manage.UserGroupWin = Ext.extend(Ext.app.Module,  {
                     success: function(response, opts) { 
                     //scope.createGrid().store.load();
                     //暂时用全局
-                    store.load();
+                    UserGroupStore.load();
                     Ext.Msg.alert("提示", "删除成功");
                     },
                     failure: function(response, opts) { 
@@ -190,7 +197,7 @@ Manage.UserGroupWin = Ext.extend(Ext.app.Module,  {
                  url:    '/groups/delete_all',
                  method: 'post',
                  success: function(response, opts) { 
-                 store.load();
+                 UserGroupStore.load();
                  Ext.Msg.alert("提示", "删除成功");
                  },
                  failure: function(response, opts) { 

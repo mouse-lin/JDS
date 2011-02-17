@@ -13,4 +13,9 @@
 
 class LogUser < ActiveRecord::Base
   belongs_to  :user
+
+  #查找对应user的log_users
+  def self.find_user_log_users page_conditions = nil
+    LogUser.find(:all,page_conditions)
+  end
 end

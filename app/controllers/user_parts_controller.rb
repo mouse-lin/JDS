@@ -9,8 +9,11 @@ class UserPartsController < ApplicationController
     #user_parts = UserPart.find_normal_user
     default_params = {:offset => params[:offset].to_i, :limit => params[:limit].to_i}
     user = User.find_normal_user(default_params)
+    users = user.each.collect do |u|
+      u.inject(:card_type_name => u.try(:card_type).try(:name)) 
+    end
     count = User.count
-    render_json user,count
+    render_json users,count
   end
 
   #创建个人的资料
@@ -55,7 +58,7 @@ class UserPartsController < ApplicationController
 
   #TODO 暂时用于创建普通用户资料
   def create_user
-    params[:user][:login] = params[:user][:identity_card].first(10)
+    params[:user][:login] = params[:user][:identity_card].first(12)
     params[:user][:password] = params[:user][:identity_card].last(6)
     params[:user][:password_confirmation] = params[:user][:identity_card].last(6)
     params[:user][:email] = params[:user][:login] + "@#{ params[:user][:name] }.com"
@@ -67,6 +70,12 @@ class UserPartsController < ApplicationController
   rescue ActiveRecord::RecordInvalid => e
     flash[:notice] = e.message 
     redirect_to :controller => "user_parts",:action => "edit_user_part_index"
+  end
+
+  def personality_detail
+    number = params[:id].index("f")
+    user_id = params[:id].first(number)
+    @user = User.find(user_id)
   end
   
   #TODO 搜索功能，暂时保留

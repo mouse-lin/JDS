@@ -65,8 +65,13 @@ class User < ActiveRecord::Base
 
   #查找管理员用户
   #暂时为查找所有用户(包括管理员)
-  def self.find_normal_user page_conditions = nil
+  def self.find_normal_user page_conditions = nil, field = nil
     User.find(:all, page_conditions)
+  end
+
+  acts_as_provider do
+    add.self
+    add.card_type
   end
 
 end

@@ -25,11 +25,20 @@ Mytest::Application.routes.draw do
       post "create"
       post "destroy"
       get "scaffold"
+      get "show_user_groups"
+      post "show_user_groups"
     end
   end
 
   #log_users,用户登记信息记录
-  resources :log_users
+  resources :log_users do
+    collection do
+      get "index"
+      post "index"
+      post "create_log_user"
+      get "create_log_user"
+    end
+  end
   
   #kindeditor
   get 'kindeditor/images_list'
@@ -48,6 +57,8 @@ Mytest::Application.routes.draw do
       get "index"
       post "search_user"
       get "search_user"
+      get "personality_detail"
+      post "personality_detail"
     end
   end
 

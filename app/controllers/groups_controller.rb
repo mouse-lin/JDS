@@ -4,7 +4,7 @@ class GroupsController < ApplicationController
   layout"application", :except => [ :scaffold ]
 
   #显示所有的用户小组 show all the user group
-  def index
+  def show_user_groups
     @group = Group.all
     respond_to do |format|
       format.html  
