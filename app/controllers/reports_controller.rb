@@ -16,6 +16,15 @@ class ReportsController < ApplicationController
   #年龄总数统计
   def age_statis
     @age_graph = open_flash_chart_object(350,300,"/reports/age_graph_code").html_safe
+    @first_age_people_count = 0
+    @second_age_people_count = 0
+    @third_age_people_count = 0
+    User.age.each do |u|
+      @first_age_people_count += 1 if 1 < u[:age] and u[:age] < 20
+      @second_age_people_count += 1 if 19 < u[:age] and u[:age] < 40 
+      @third_age_people_count += 1 if 39 < u[:age] and u[:age] < 51
+    end
+
   end
 
   #证件类型统计
@@ -63,7 +72,17 @@ class ReportsController < ApplicationController
     pie.animate = true
     pie.tooltip = '<br>#percent# of 100%'
     pie.colours = ["#459a89","#9a89f9","#c01f30"]
-    pie.values  = [PieValue.new(4,"1-19岁"), PieValue.new(4,"20-39岁"),PieValue.new(2,"40-50岁")]
+
+    first_age_people_count = 0
+    second_age_people_count = 0
+    third_age_people_count = 0
+    User.age.each do |u|
+      first_age_people_count += 1 if 1 < u[:age] and u[:age] < 20
+      second_age_people_count += 1 if 19 < u[:age] and u[:age] < 40 
+      third_age_people_count += 1 if 39 < u[:age] and u[:age] < 51
+    end
+
+    pie.values  = [PieValue.new(first_age_people_count,"1-19岁"), PieValue.new(second_age_people_count,"20-39岁"),PieValue.new(third_age_people_count,"40-50岁")]
 
     chart = OpenFlashChart.new
     chart.title = title

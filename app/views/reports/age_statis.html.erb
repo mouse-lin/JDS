@@ -7,7 +7,10 @@
         <div class="thumb"></div>
         <div class="thumb"><%= @age_graph %></div>
         <h2>年龄比例统计</a></h2>
-        <p></p>
+        <p>1-19岁: <%= @first_age_people_count%> 人</p>
+        <p>20-39岁: <%=@second_age_people_count%> 人</p>
+        <p>40-50岁:<%=@third_age_people_count%> 人</p>
+        <p><a href="age_statis">刷新</a></p>
       </div>
       <!-- end age -->
     </div>

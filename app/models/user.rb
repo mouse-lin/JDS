@@ -64,6 +64,18 @@ class User < ActiveRecord::Base
   validates_presence_of     :login
   validates_uniqueness_of   :login
 
+  #转换年龄
+  def change_age
+    birthday.year
+  end
+
+  def self.age
+    users = User.all.collect do |u|
+      age = Time.now.year - u.change_age 
+      u.inject(:age => age )
+    end
+  end
+
   #查找管理员用户
   #暂时为查找所有用户(包括管理员)
   def self.find_normal_user page_conditions = nil, field = nil
