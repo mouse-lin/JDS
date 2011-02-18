@@ -11,7 +11,8 @@ Mytest::Application.configure do
 
   #北京时区显示
   config.time_zone = 'Beijing'  
-  config.active_record.default_timezone = :Beijing
+  #config.active_record.default_timezone = :Beijing
+  config.active_record.default_timezone = :local
 
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = "X-Sendfile"

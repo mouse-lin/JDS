@@ -8,6 +8,9 @@ class ReportsController < ApplicationController
   #会员总数统计
   def sex_statis
     @sex_graph = open_flash_chart_object(350,300,"/reports/sex_graph_code").html_safe
+    @girls_count = User.find_girls.count
+    @boys_count = User.find_boys.count
+    @all_count =  @boys_count + @girls_count
   end
 
   #年龄总数统计
@@ -18,6 +21,9 @@ class ReportsController < ApplicationController
   #证件类型统计
   def card_type_statis
     @card_type_graph = open_flash_chart_object(350,300,"/reports/card_type_graph_code").html_safe
+    @card_type_name = CardType.find_card_type_name
+    @card_type_value = CardType.find_card_type_value
+    @user_all_count = User.all.count
   end
 
 
@@ -29,7 +35,15 @@ class ReportsController < ApplicationController
     pie.animate = true
     pie.tooltip = '<br>#percent# of 100%'
     pie.colours = ["#356aa0","#d01f3c"]
-    pie.values  = [PieValue.new(4,"男生"), PieValue.new(6,"女生")]
+    
+    #统计男女生人数
+    @girls_count = User.find_girls.count
+    @boys_count = User.find_boys.count
+    @all_count =  @boys_count + @girls_count
+    @girls_percent = @girls_count/@all_count.to_f
+    @boys_percent = @boys_count/@all_count.to_f
+
+    pie.values  = [PieValue.new(@boys_percent,"男生"), PieValue.new(@girls_percent,"女生")]
 
     chart = OpenFlashChart.new
     chart.title = title
@@ -65,12 +79,19 @@ class ReportsController < ApplicationController
   def card_type_graph_code
     title = Title.new("证件类型统计")
     bar = BarGlass.new
-    y_axis = YAxis.new
-    y_axis.set_range(0, 100, 10)
-    x_axis = XAxis.new
-    x_axis.labels = ["学习证", "社会证","工作证"]
 
-    bar.set_values([10,20,30])
+    #证件类型统计
+    card_type_name = CardType.find_card_type_name
+    all_user_count = User.count
+    card_type_value = CardType.find_card_type_value
+
+    y_axis = YAxis.new
+    y_axis.set_range(0, User.count, User.count/10)
+
+    x_axis = XAxis.new
+    x_axis.labels = card_type_name
+
+    bar.set_values(card_type_value)
 
     chart = OpenFlashChart.new
     chart.bg_colour = '#ffffff'

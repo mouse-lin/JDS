@@ -59,6 +59,8 @@ Mytest::Application.routes.draw do
       get "search_user"
       get "personality_detail"
       post "personality_detail"
+      get "update_pw_win"
+      post "update_pw"
     end
   end
 

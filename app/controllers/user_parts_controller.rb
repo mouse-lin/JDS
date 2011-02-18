@@ -72,12 +72,28 @@ class UserPartsController < ApplicationController
     redirect_to :controller => "user_parts",:action => "edit_user_part_index"
   end
 
+  #用户详细资料
   def personality_detail
     number = params[:id].index("f")
     user_id = params[:id].first(number)
     @user = User.find(user_id)
   end
   
+  #用户密码修改界面
+  def update_pw_win
+  end
+
+  def update_pw
+    user = current_user
+    user.update_attributes!(params[:user])
+    flash[:notice] = "密码修改成功"
+    redirect_to :controller => "user_parts",:action => "update_pw_win"
+  rescue ActiveRecord::RecordInvalid => e
+    flash[:notice] = e.message 
+    redirect_to :controller => "user_parts",:action => "update_pw_win"
+
+  end
+
   #TODO 搜索功能，暂时保留
   #Comment: change the old search action to search_user_parts
   def search_user

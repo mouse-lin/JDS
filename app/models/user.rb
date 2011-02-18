@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 # Schema version: 20110129140655
 #
@@ -67,6 +68,16 @@ class User < ActiveRecord::Base
   #暂时为查找所有用户(包括管理员)
   def self.find_normal_user page_conditions = nil, field = nil
     User.find(:all, page_conditions)
+  end
+
+  #查找女生人数
+  def self.find_girls
+    User.find(:all,:conditions => "sex = '女'")
+  end
+
+  #查找男生人数
+  def self.find_boys
+    User.find(:all,:conditions => "sex = '男'")
   end
 
   acts_as_provider do

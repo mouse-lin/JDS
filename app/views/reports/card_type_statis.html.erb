@@ -6,9 +6,16 @@
       <div class="post f">
         <div class="thumb"><%= @card_type_graph %></div>
         <h2>证件类型统计</h2>
-        <p>学生证：</p>
-        <p>工作证：</p>
-        <p>社会证：</p>
+        <%number = 0%>
+        <%sum = 0%>
+        <% @card_type_name.each do |c|%>
+          <p><%=c %>：<%=@card_type_value[number]%> 人</p>
+          <%sum += @card_type_value[number] %>
+          <%number += 1%>
+        <% end %>
+        <p>总人数: <%=@user_all_count%>人</p>
+        <p>没有证件类型人数: <font color="red"><%=@user_all_count - sum%></font>人</p>
+        <p><a href="card_type_statis">刷新</a></p>
       </div>
       <!-- end card_type -->
     </div>

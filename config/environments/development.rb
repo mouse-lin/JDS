@@ -22,7 +22,10 @@ Mytest::Application.configure do
   config.active_support.deprecation = :log
 
   config.time_zone = 'Beijing'  
-  config.active_record.default_timezone = :Beijing
+  config.active_record.default_timezone = :local
+
+  #时区
+  #config.active_record.default_timezone = :beijing
   #config.i18n.default_locale = :zh
 
 

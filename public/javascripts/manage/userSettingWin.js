@@ -45,7 +45,7 @@ Manage.UserSettingWin = Ext.extend(Ext.app.Module,  {
             },{ 
                 title: '密码修改',
                 layout: 'anchor',
-                html: '<iframe src="user_parts/choose_image" frameborder="0" width="100%" height="100%"></iframe>'
+                html: '<iframe src="user_parts/update_pw_win" frameborder="0" width="100%" height="100%"></iframe>'
             } 
             ],
       })

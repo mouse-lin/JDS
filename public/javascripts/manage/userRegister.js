@@ -18,7 +18,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
                    id: 'userRegisterWin',
                    title: '用户管理',
                    width: 900,
-                   height: 500,
+                   height: 560,
                    iconCls: 'bogus',
                    shim: false,
                    animCollapse: false,
@@ -106,7 +106,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
         return userRegisterGrid = new Ext.grid.EditorGridPanel({ 
             viewConfig: { forceFit: true },
             anchor: "100%, 100%",
-            height:420,
+            height:380,
             stripeRows: true,
             region : 'center',
             store: userRegisterstore,

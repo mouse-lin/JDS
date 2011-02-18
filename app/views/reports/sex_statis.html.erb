@@ -7,8 +7,10 @@
       <div class="post f">
         <div class="thumb"><%= @sex_graph %></div>
         <h2>会员总数统计</h2>
-        <p>男生：</p>
-        <p>女生：</p>
+        <p>总人数: 共 <%= @all_count %> 人</p>
+        <p>男生：共 <%= @boys_count %> 人</p>
+        <p>女生：共 <%= @girls_count %> 人</p>
+        <p><a href="sex_statis">刷新</a></p>
       </div>
       <!-- end 会员性别统计 -->
     </div>

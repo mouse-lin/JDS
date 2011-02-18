@@ -1,0 +1,46 @@
+<div id="main_wrap">
+  <div id="mid">
+    <div class="midCnt">
+      <div id="notvipframe">
+      <div class="midSubCnt">
+        <table width="200" border="0">
+          <%= form_for :user, @user, :url =>{:action => "update_pw" }, :html => {:multipart => true} do |f| %>
+          <tbody>
+          <div id="flash_error">
+
+            <%= blank(30)%>
+            <font color="red">
+              <% if flash[:notice] %>
+                <%= flash[:notice] %>
+              <% end %>
+            </font>
+          </div>
+
+          <tr>
+            <th>新密码：<b class="star">*</b></th>
+            <td>
+              <%= f.password_field :password %> 
+            </td>
+          </tr>
+
+          <tr>
+            <th>新密码确认：<b class="star">*</b></th>
+            <td>
+              <%= f.password_field :password_confirmation %> 
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+            <%=blank(30)%>
+            <%= f.submit :确定 %>
+            </td>
+          </tr>
+          <% end %>
+       </tbody></table>
+      </div></div>
+    </div>
+  </div>
+</form>  
+
+
