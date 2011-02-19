@@ -59,7 +59,8 @@ class User < ActiveRecord::Base
     :birthday,
     :sex,
     :identity_card,
-    :card_type_id
+    :card_type_id,
+    :bg_picture
 
   validates_presence_of     :login
   validates_uniqueness_of   :login
@@ -90,11 +91,6 @@ class User < ActiveRecord::Base
   #查找男生人数
   def self.find_boys
     User.find(:all,:conditions => "sex = '男'")
-  end
-
-  acts_as_provider do
-    add.self
-    add.card_type
   end
 
 end
