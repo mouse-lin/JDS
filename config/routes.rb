@@ -13,6 +13,14 @@ Mytest::Application.routes.draw do
     end
   end
 
+  resources :card_types do
+    collection do
+      get "show_card_type"
+      post "show_card_type"
+      post "create"
+    end
+  end
+
   #groups
   #get "groups/scaffold"
   #post 'groups/create'

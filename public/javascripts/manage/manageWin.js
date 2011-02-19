@@ -40,7 +40,7 @@ Manage.ManageWin = Ext.extend(Ext.app.Module,  {
                 'remark',
             ],
             root: "content",
-            url:'/groups/show_user_groups.json',
+            url:'/card_types/show_card_type.json',
             totalProperty:'total',
             method: 'GET'
         });
@@ -55,18 +55,16 @@ Manage.ManageWin = Ext.extend(Ext.app.Module,  {
             return link;
         };
 
-        //var sm = new Ext.grid.CheckboxSelectionModel();
         var cm = new Ext.grid.ColumnModel([
-         //   sm,
             { header: '序号'        , sortable: true, dataIndex: 'id', width:50,hidden: true},
-            { header: '小组名称'    , sortable: true, dataIndex: 'name'},
-            { header: '小组描述'    , sortable: true, dataIndex: 'description'},
-            { header: '操作'        , dataIndex: '#', renderer: addOperator, width: 120 }
+            { header: '证件类型名'    , sortable: true, dataIndex: 'name'},
+            { header: '证件描述描述'    , sortable: true, dataIndex: 'remark'},
+            //{ header: '操作'        , dataIndex: '#', renderer: addOperator, width: 120 }
         ]);
 
         var tbar = [ 
             { iconCls: 'add', text: '新增', handler: function(){ _this.createCardTypeWin() }}, '-',
-            { iconCls: 'drop', text: '全部删除', handler: function(){ _this.deleteAllCardType() }}, 
+            //{ iconCls: 'drop', text: '全部删除', handler: function(){ _this.deleteAllCardType() }}, 
         ];
 
         return cardTypeGrid =  new Ext.grid.EditorGridPanel({ 
@@ -126,7 +124,7 @@ Manage.ManageWin = Ext.extend(Ext.app.Module,  {
                           width: 300,
                           height: 70,
                           xtype: "textarea",
-                          fieldLabel: '小组描述', id: 'card_type_remark' },
+                          fieldLabel: '证件类型描述', id: 'card_type_remark' },
                     ]
                 }]
           }]
@@ -135,7 +133,7 @@ Manage.ManageWin = Ext.extend(Ext.app.Module,  {
 
     //保存权限小组
     saveCardtype: function(){ 
-        var _this = this;
+        var _this = Manage.manageWin;
         Ext.Msg.confirm('提示', "是否保存?", function(button){ 
             if(button == 'no') { 
             } else {  
@@ -145,10 +143,10 @@ Manage.ManageWin = Ext.extend(Ext.app.Module,  {
                 }else{  
                     var card_type = { 
                         name : Ext.getCmp("card_type_name").getValue(),
-                        description : Ext.getCmp("card_type_remark").getValue()
+                        remark : Ext.getCmp("card_type_remark").getValue()
                     };
                     Ext.Ajax.request({ 
-                        url:  '/groups',
+                        url:  '/card_types',
                         method: "POST",
                         jsonData: { card_type: card_type },
                         success: function(){

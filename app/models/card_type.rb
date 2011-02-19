@@ -1,6 +1,10 @@
 class CardType < ActiveRecord::Base
   has_one :user
   
+  def self.find_normal_card_types page_conditions = nil, field = nil
+    CardType.find(:all, page_conditions)
+  end
+
   #查询证件类型
   def self.find_types
     CardType.all.collect{ |c| [c.name,c.id] }

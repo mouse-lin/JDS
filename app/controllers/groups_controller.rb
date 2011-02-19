@@ -1,6 +1,7 @@
 class GroupsController < ApplicationController
   #comment this ation scaffold for a while. 
   #TODO find a new way to instead
+  before_filter :authenticate_user!
   layout"application", :except => [ :scaffold ]
 
   #显示所有的用户小组 show all the user group
