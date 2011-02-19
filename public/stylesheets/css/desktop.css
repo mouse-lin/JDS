@@ -696,10 +696,10 @@ td.ux-taskButtons-edge {
     background-image: url(../../images/入库.png);
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/grid48x48.png', sizingMethod='scale');
 }
-#outbound-win-shortcut img { 
+#manageWin-shortcut img { 
     width:48px;
     height:48px;
-    background-image: url(../../images/出库.png);
+    background-image: url(../../images/manage.png);
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/grid48x48.png', sizingMethod='scale');
 }
 #store-win-shortcut img { 

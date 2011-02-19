@@ -9,11 +9,11 @@ Manage = new Ext.app.App({
         Manage.reportWin = new Manage.ReportWin();
         Manage.userGroupWin = new Manage.UserGroupWin();
         Manage.userPartWin = new Manage.UserPartWin();
-
+        Manage.userSettingWin  =   new Manage.UserSettingWin();
+        Manage.manageWin  =   new Manage.ManageWin();
+        
        // Manage.clothPartShow = new Manage.ClothPartShow();
         //Manage.orderWindowLook = new Manage.OrderWindowLook();
-        Manage.userSettingWin  =   new Manage.UserSettingWin();
-
 //        Manage.outboundWin = new Manage.OutboundWin();
 //        Manage.inboundWin = new Manage.InboundWin();
 //        Manage.storeWin = new Manage.StoreWin();
@@ -26,7 +26,7 @@ Manage = new Ext.app.App({
            Manage.reportWin,
           // Manage.userPartWin,
            Manage.userSettingWin,
-         //  Manage.clothPartShow,
+           Manage.manageWin,
            
 //           Manage.inboundWin,
 //           Manage.storeWin,
