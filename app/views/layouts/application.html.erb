@@ -35,9 +35,9 @@
   
 </head>
   <!-- 可以不同的用户修改不同的背景图 -->
-  <% desktop = "desk.jpg"%>
+  <% desktop = "bg0.jpg"%>
   <%if current_user.bg_picture.nil? %>
-    <body scroll="no" style="background:#3d71b8 url(../images/wallpapers/<%= desktop %>) no-repeat left top ";>
+    <body scroll="no" style="background:#3d71b8 url(../images/wallpapers/<%= desktop %>)  no-repeat left top"   ;>
   <%else%>
     <body scroll="no" style="background:#3d71b8 url(../images/wallpapers/<%= current_user.bg_picture%>.jpg) no-repeat left top ";>
   <%end%>

@@ -58,18 +58,20 @@ class UserPartsController < ApplicationController
 
   #TODO 暂时用于创建普通用户资料
   def create_user
+    #默认生成用户时候都是执行 账号12位 密码6位,TODO:待封装
     params[:user][:login] = params[:user][:identity_card].first(12)
     params[:user][:password] = params[:user][:identity_card].last(6)
     params[:user][:password_confirmation] = params[:user][:identity_card].last(6)
     params[:user][:email] = params[:user][:login] + "@#{ params[:user][:name] }.com"
+    #============================
 
     @user = User.new(params[:user])
     @user.save!
     flash[:notice] = "用户 #{ params[:user][:name] } 创建成功!"
-    redirect_to :controller => "user_parts",:action => "edit_user_part_index"
+    redirect_to :action => "edit_user_part_index"
   rescue ActiveRecord::RecordInvalid => e
     flash[:notice] = e.message 
-    redirect_to :controller => "user_parts",:action => "edit_user_part_index"
+    redirect_to :action => "edit_user_part_index"
   end
 
   #用户详细资料
@@ -91,8 +93,16 @@ class UserPartsController < ApplicationController
   rescue ActiveRecord::RecordInvalid => e
     flash[:notice] = e.message 
     redirect_to :controller => "user_parts",:action => "update_pw_win"
-
   end
+
+  def update_bg_image_win
+    
+  end
+
+  def update_bg_image
+    
+  end
+
 
   #TODO 搜索功能，暂时保留
   #Comment: change the old search action to search_user_parts

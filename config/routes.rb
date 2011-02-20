@@ -58,17 +58,20 @@ Mytest::Application.routes.draw do
       get "show_image"
       get "show_kind"
       get "edit_user_part_index"
+      get "index"
+      get "search_user"
+      get "personality_detail"
+      get "update_pw_win"
+      get "update_bg_image_win"
+
       post "update_image"
       post "create_user"
       #get "create_user"
       post "index"
-      get "index"
       post "search_user"
-      get "search_user"
-      get "personality_detail"
       post "personality_detail"
-      get "update_pw_win"
       post "update_pw"
+      post "update_bg_image"
     end
   end
 

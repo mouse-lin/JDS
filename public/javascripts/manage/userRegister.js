@@ -105,7 +105,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
 
         return userRegisterGrid = new Ext.grid.EditorGridPanel({ 
             viewConfig: { forceFit: true },
-            anchor: "100%, 100%",
+            anchor: "100% 100%",
             height:380,
             stripeRows: true,
             region : 'center',
