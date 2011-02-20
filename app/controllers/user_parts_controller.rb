@@ -100,7 +100,9 @@ class UserPartsController < ApplicationController
   end
 
   def update_bg_image
-    
+    flash[:image_notice] = "背景图片选择成功,请刷新页面查看!"
+    current_user.update_attributes!(:bg_picture => params[:name])
+    redirect_to :action => "update_bg_image_win"
   end
 
 

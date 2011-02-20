@@ -63,6 +63,7 @@ Mytest::Application.routes.draw do
       get "personality_detail"
       get "update_pw_win"
       get "update_bg_image_win"
+      get "update_bg_image"
 
       post "update_image"
       post "create_user"
