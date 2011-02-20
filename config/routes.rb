@@ -64,6 +64,8 @@ Mytest::Application.routes.draw do
       get "update_pw_win"
       get "update_bg_image_win"
       get "update_bg_image"
+      get "update_theme_win"
+      get "update_theme"
 
       post "update_image"
       post "create_user"
@@ -73,6 +75,7 @@ Mytest::Application.routes.draw do
       post "personality_detail"
       post "update_pw"
       post "update_bg_image"
+      post "update_theme"
     end
   end
 

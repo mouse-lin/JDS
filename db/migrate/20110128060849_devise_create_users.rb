@@ -15,6 +15,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.integer :card_type_id
       t.date  :birthday
       t.string  :sex
+      t.string  :theme
+      t.string  :bg_picture
 
 
       # t.confirmable

@@ -657,55 +657,55 @@ td.ux-taskButtons-edge {
 #userRegisterWin-shortcut img {
     width:48px;
     height:48px;
-    background-image: url(../../images/im48x48.png);
+    /*background-image: url(../../images/theme/t0/register.png);*/
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/im48x48.png', sizingMethod='scale');
 }
 #userSettingWin-shortcut img {
     width:48px;
     height:48px;
-    background-image: url(../../images/usersetting.png);
+    /*background-image: url(../../images/theme/t0/usersetting.png);*/
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/grid48x48.png', sizingMethod='scale');
 }
 #userGroupWin-shortcut img {
     width:48px;
     height:48px;
-    background-image: url(../../images/group.png);
+   /* background-image: url(../../images/theme/t0/group.png);*/
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/grid48x48.png', sizingMethod='scale');
 }
 #clothPartShow-shortcut img {
     width:48px;
     height:48px;
-    background-image: url(../../images/group.png);
+    /*background-image: url(../../images/theme/t0/group.png);*/
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/grid48x48.png', sizingMethod='scale');
 }
-#userPartWin-shortcut img { 
+#userManageWin-shortcut img { 
     width:48px;
     height:48px;
-    background-image: url(../../images/personal_datail.png);
+    /*background-image: url(../../images/theme/t0/user_manage.png);*/
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/grid48x48.png', sizingMethod='scale');
 }
 #reportWin-shortcut img { 
     width:48px;
     height:48px;
-    background-image: url(../../images/report.png);
+   /* background-image: url(../../images/theme/t0/report.png);*/
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/grid48x48.png', sizingMethod='scale');
 }
 #inbound-win-shortcut img { 
     width:48px;
     height:48px;
-    background-image: url(../../images/入库.png);
+    /*background-image: url(../../images/入库.png);*/
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/grid48x48.png', sizingMethod='scale');
 }
 #manageWin-shortcut img { 
     width:48px;
     height:48px;
-    background-image: url(../../images/manage.png);
+    /*background-image: url(../../images/manage.png);*/
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/grid48x48.png', sizingMethod='scale');
 }
 #store-win-shortcut img { 
     width:48px;
     height:48px;
-    background-image: url(../../images/grid48x48.png);
+    /*background-image: url(../../images/grid48x48.png);*/
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/grid48x48.png', sizingMethod='scale');
 }
 #user { 

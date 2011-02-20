@@ -1,8 +1,8 @@
-Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
-    id: 'userRegisterWin',
+Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
+    id: 'userManageWin',
     init: function() {
         this.launcher = {
-            text: '用户登记',
+            text: '用户管理',
             iconCls: 'bogus',
             handler: this.createWindow,
             scope: this
@@ -10,13 +10,13 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
     },
 
     createWindow: function() {
-         var _this = Manage.userRegisterWin;
+         var _this = Manage.userManageWin;
          var manage = _this.app.getDesktop();
-         var win = manage.getWindow('userRegisterWin');
+         var win = manage.getWindow('userManageWin');
          if(!win) {
                win = manage.createWindow({
-                   id: 'userRegisterWin',
-                   title: '用户登记',
+                   id: 'userManageWin',
+                   title: '用户管理',
                    width: 900,
                    height: 560,
                    iconCls: 'bogus',
@@ -27,11 +27,11 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
                    items:this.createUserRegisterTabpanel()
                });
              }
-           win.show();
+           win.show()
     },
 
     createUserRegisterTabpanel: function(){ 
-        var _this = Manage.userRegisterWin;
+        var _this = Manage.userManageWin;
         return new Ext.TabPanel({ 
             frame: true,
             activeTab: 0,
@@ -51,7 +51,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
                 title: '设置',
                 html: '<iframe src="user_parts/edit_user_part_index" frameborder="0" width="100%" height="100%"></iframe>'
             }*/
-            ],
+            ]
       })
   },
 
@@ -59,7 +59,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
   //Comment: Mouse
   //user detail view 
       createUserRegisterGrid: function(){ 
-        var _this = Manage.userRegisterWin;
+        var _this = Manage.userManageWin;
         userRegisterstore = new Ext.data.JsonStore({ 
             fields: [
                 'id',
@@ -80,9 +80,9 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
         userRegisterstore.load({ params:{ offset:0,limit:Page.pageSize }});     
 
         var addOperator = function(value, mataData, record, rowIndex, colIndex, store){ 
-            var link = String.format('<a href="#" onclick="Manage.userRegisterWin.makeSure( {0} )">确定入馆</a>', record.data.id) + '&nbsp;';
-                link += String.format('<a href="#" onclick="Manage.userRegisterWin.searchDetail({0})">查看入馆信息</a>', record.data.id) + '&nbsp;';
-                link += String.format('<a href="#" onclick="Manage.userRegisterWin.personalityDetail({0})">查看详细资料</a>', record.data.id) + '&nbsp;';
+            var link = String.format('<a href="#" onclick="Manage.userManageWin.makeSure( {0} )">确定入馆</a>', record.data.id) + '&nbsp;';
+                link += String.format('<a href="#" onclick="Manage.userManageWin.searchDetail({0})">查看入馆信息</a>', record.data.id) + '&nbsp;';
+                link += String.format('<a href="#" onclick="Manage.userManageWin.personalityDetail({0})">查看详细资料</a>', record.data.id) + '&nbsp;';
             return link;
         };
 
@@ -150,7 +150,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
                 }
             }]
 */
-        });
+        })
     },
 
     //用来响应确认按钮
@@ -170,13 +170,14 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
                  } 
              });
          }
-       });
+       })
     },
 
     createSearchForm: function(){ 
         return createSearchFormPanel = new Ext.form.FormPanel({ 
             frame: true,
             layout: 'form',
+            //keys:[  {  key: [10,13],  fn:Manage.userManageWin.searchUserPartsData() }],
             //此处button 的两个功能移到下面 grid 的 tabr
             // buttons: [{ 
             //     text: '查询', handler: _this.searchUserPartsData
@@ -203,12 +204,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
                         { anchor: '100%', xtype: 'datefield', fieldLabel: '出生年月', id: "user_birthday",format: "Y-m-d" }
                     ]}
               ]
-          }],
-          keys:[{ 
-                key: 13,  
-                fn: Manage.userRegisterWin.searchUserPartsData,
-                scope:this 
-            }]
+          }]
       })
   },
 
@@ -217,7 +213,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
       Ext.getCmp('user_id').setValue('');
       Ext.getCmp('user_identity_card').setValue('');
       Ext.getCmp('user_name').setValue('');
-      Ext.getCmp('user_birthday').setValue('');
+      Ext.getCmp('user_birthday').setValue('')
   },
 
   //search for user_parts data
@@ -229,7 +225,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
       if(birthday != "" )
         birthday = birthday.format('Y-m-d');
       if(id == "" && identity_card ==  "" && name == "" && birthday == ""){ 
-          Ext.Msg.alert("提示","查询信息不能都为空!");
+          Ext.Msg.alert("提示","查询信息不能都为空!")
       } 
       else{ 
 
@@ -257,14 +253,14 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
              failure: function() { 
                  Ext.Msg.alert('提示', '搜索失败');
              }
-         });
+         })
       }
   },
 
   //入馆记录窗口
   searchDetail: function(id){ 
       var user_id = id;
-      var _this = Manage.userRegisterWin;
+      var _this = Manage.userManageWin;
       var win = new Ext.Window({
           title: '入馆记录',
           id: 'userInfoDetail',
@@ -278,7 +274,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
   },
 
  createUserInfoDetailGrid: function(user_id){
-        var _this = Manage.UserRegisterWin;
+        var _this = Manage.userManageWin;
         Info_store = new Ext.data.JsonStore({ 
             fields: [
                 'id',
@@ -312,7 +308,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
 
   personalityDetail: function(id){ 
       var user_id = id;
-      var _this = Manage.userRegisterWin;
+      var _this = Manage.userManageWin;
        url = 'user_parts/personality_detail?id=' + user_id ;
       var win = new Ext.Window({
           title: '详细资料',
@@ -328,3 +324,4 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
   },
 
 })
+

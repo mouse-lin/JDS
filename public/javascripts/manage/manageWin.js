@@ -2,7 +2,7 @@ Manage.ManageWin = Ext.extend(Ext.app.Module,  {
     id: 'manageWin',
     init: function() {
         this.launcher = {
-            text: '管理',
+            text: '主档管理',
             iconCls: 'bogus',
             handler: this.createWindow,
             scope: this
@@ -16,7 +16,7 @@ Manage.ManageWin = Ext.extend(Ext.app.Module,  {
       if(!win) {
             win = manage.createWindow({
                 id: 'manageWin',
-                title: '管理',
+                title: '主档管理',
                 width: 600,
                 height: 450,
                 iconCls: 'bogus',

@@ -37,7 +37,7 @@ a:hover{ color:#900; text-decoration:underline}
 .midSubCnt{  margin:10px 20px 0 20px;*margin:10px 20px 0 20px; *padding-top:10px;*padding-bottom:10px}
 .midSubCnt table { width:435px; margin-top:10px;}
 .midSubCnt table td{ padding:6px 4px}
-.midSubCnt table th { text-align:right; padding-right:5px; width:160px}
+.midSubCnt table th { text-align:right; padding-right:5px; width:180px}
 .midCnt{ border:1px solid #c4c4c4; border-bottom:0}
 .midSubTitleArrow { height:5px; overflow:hidden}
 .midSubTitleArrow b{ display:block; width:9px; height:5px; background:url(img/arrow_bg.gif) #e4e4e4 no-repeat ; float:left; margin-left:64px ;*margin-left:34px;}

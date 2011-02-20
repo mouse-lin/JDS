@@ -2,7 +2,7 @@ Manage.UserSettingWin = Ext.extend(Ext.app.Module,  {
     id: 'userSettingWin',
     init: function() {
         this.launcher = {
-            text: '设置',
+            text: '基础设置',
             iconCls: 'settings',
             handler: this.createWindow,
             scope: this
@@ -16,7 +16,7 @@ Manage.UserSettingWin = Ext.extend(Ext.app.Module,  {
       if(!win) {
             win = manage.createWindow({
                 id: 'userSettingWin',
-                title: '设置',
+                title: '基础设置',
                 width: 850,
                 height: 600,
                 iconCls: 'bogus',
@@ -49,6 +49,11 @@ Manage.UserSettingWin = Ext.extend(Ext.app.Module,  {
                 html: '<iframe src="user_parts/update_pw_win" frameborder="0" width="100%" height="100%"></iframe>'
             },{ 
                 title: '主题选择',
+                layout: 'anchor',
+                html: '<iframe src="user_parts/update_theme_win" frameborder="0" width="100%" height="100%"></iframe>'
+                //items: _this.createImagePanel()
+            },{ 
+                title: '背景图选择',
                 layout: 'anchor',
                 html: '<iframe src="user_parts/update_bg_image_win" frameborder="0" width="100%" height="100%"></iframe>'
                 //items: _this.createImagePanel()

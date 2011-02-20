@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
   has_attached_file :image, :styles => { :normal => "150x150" }
   has_many  :log_users
   belongs_to   :card_type
+  after_create  :add_theme
 
   #验证select框值的保存
   #validates_inclusion_of :card_type_id,:in => CardType.find_types.map{|disp,value| value}
@@ -60,11 +61,16 @@ class User < ActiveRecord::Base
     :sex,
     :identity_card,
     :card_type_id,
-    :bg_picture
+    :bg_picture,
+    :theme
 
   validates_presence_of     :login
   validates_uniqueness_of   :login
 
+  #添加默认的主题
+  def add_theme
+    User.last.update_attributes!(:theme => "t0")
+  end
   #转换年龄
   def change_age
     birthday.year
@@ -92,5 +98,4 @@ class User < ActiveRecord::Base
   def self.find_boys
     User.find(:all,:conditions => "sex = '男'")
   end
-
 end

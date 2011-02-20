@@ -95,6 +95,8 @@ class UserPartsController < ApplicationController
     redirect_to :controller => "user_parts",:action => "update_pw_win"
   end
 
+#===============  用户界面个性化设计 ==================================
+
   def update_bg_image_win
     
   end
@@ -104,6 +106,18 @@ class UserPartsController < ApplicationController
     current_user.update_attributes!(:bg_picture => params[:name])
     redirect_to :action => "update_bg_image_win"
   end
+
+  def update_theme_win
+  end
+
+  def update_theme
+    flash[:image_notice] = "主题选择成功,请刷新页面查看!"
+    current_user.update_attributes!(:theme => params[:theme])
+    redirect_to :action => "update_theme_win"
+
+  end
+
+#=====================================================================
 
 
   #TODO 搜索功能，暂时保留

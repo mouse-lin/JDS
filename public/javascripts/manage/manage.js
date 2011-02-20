@@ -1,6 +1,6 @@
 Manage = new Ext.app.App({
 	init:function(){
-		Ext.QuickTips.init();
+		Ext.QuickTips.init()
 	},
 
 
@@ -11,26 +11,14 @@ Manage = new Ext.app.App({
         Manage.userPartWin = new Manage.UserPartWin();
         Manage.userSettingWin  =   new Manage.UserSettingWin();
         Manage.manageWin  =   new Manage.ManageWin();
-        
-       // Manage.clothPartShow = new Manage.ClothPartShow();
-        //Manage.orderWindowLook = new Manage.OrderWindowLook();
-//        Manage.outboundWin = new Manage.OutboundWin();
-//        Manage.inboundWin = new Manage.InboundWin();
-//        Manage.storeWin = new Manage.StoreWin();
-        //Manage.purchasingWin = new Manage.PurchasingWin();
-        //Manage.questionBase   = new Manage.QuestionBase();
-
+        Manage.userManageWin  =   new Manage.UserManageWin()
 		return [
            Manage.userRegisterWin,
            Manage.userGroupWin,
            Manage.reportWin,
-          // Manage.userPartWin,
            Manage.userSettingWin,
            Manage.manageWin,
-           
-//           Manage.inboundWin,
-//           Manage.storeWin,
-//           Manage.outboundWin
+           Manage.userManageWin
 		];
 	},
 
@@ -38,7 +26,7 @@ Manage = new Ext.app.App({
     getStartConfig: function(){
         return {
             title: '图书馆用户管理系统',
-            iconCls: 'user',
+            iconCls: 'user'
             /*
             toolItems: [{
                 text:'设置',
