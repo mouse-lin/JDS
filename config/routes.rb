@@ -56,7 +56,7 @@ Mytest::Application.routes.draw do
     collection do 
       get "choose_image"
       get "show_image"
-      get "show_kind"
+      get "print_user_details"
       get "edit_user_part_index"
       get "index"
       get "search_user"
@@ -76,6 +76,7 @@ Mytest::Application.routes.draw do
       post "update_pw"
       post "update_bg_image"
       post "update_theme"
+      post "print_user_details"
     end
   end
 

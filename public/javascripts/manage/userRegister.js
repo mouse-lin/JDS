@@ -17,7 +17,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
                win = manage.createWindow({
                    id: 'userRegisterWin',
                    title: '用户登记',
-                   width: 900,
+                   width: 1000,
                    height: 560,
                    iconCls: 'bogus',
                    shim: false,
@@ -27,8 +27,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
                    items:this.createUserRegisterTabpanel()
                });
              }
-           win.show();
-    },
+           win.show(); },
 
     createUserRegisterTabpanel: function(){ 
         var _this = Manage.userRegisterWin;
@@ -83,6 +82,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
             var link = String.format('<a href="#" onclick="Manage.userRegisterWin.makeSure( {0} )">确定入馆</a>', record.data.id) + '&nbsp;';
                 link += String.format('<a href="#" onclick="Manage.userRegisterWin.searchDetail({0})">查看入馆信息</a>', record.data.id) + '&nbsp;';
                 link += String.format('<a href="#" onclick="Manage.userRegisterWin.personalityDetail({0})">查看详细资料</a>', record.data.id) + '&nbsp;';
+                link += String.format('<a href="#" onclick="Manage.userRegisterWin.printUserDetail({0})">资料打印</a>', record.data.id) + '&nbsp;';
             return link;
         };
 
@@ -99,7 +99,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
             { header: '性别'      ,sortable: true, dataIndex: 'sex'},
             { header: '出生年月'  ,sortable: true, dataIndex: 'birthday'},
             { header: '证件类型'  ,sortable: true, dataIndex: 'card_type_name'},
-            { header: '地址'      ,sortable: true, dataIndex: 'address'},
+            //{ header: '地址'      ,sortable: true, dataIndex: 'address'},
             { header: '操作'        , dataIndex: '#', renderer: addOperator, width: 200 }
         ]);
 
@@ -324,7 +324,23 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
           //items: _this.createUserInfoDetailGrid(user_id)
           items: { html:'<iframe src='+ url + "frameborder='0' frameborder='0'  width='100%' height='100%'></iframe>"}
       });
-      win.show();
+      win.show()
   },
+
+  printUserDetail: function(id){ 
+      var user_id = id;
+      var _this = Manage.userRegisterWin;
+      url = 'user_parts/print_user_details?id=' + user_id ;
+      var win = new Ext.Window({
+          title: '资料打印',
+          id: 'personalityDetail',
+          width: 700,
+          height: 600,
+          layout: 'fit',
+          frame: true,
+          items: { html:'<iframe src='+ url + "frameborder='0' frameborder='0'  width='100%' height='100%'></iframe>"}
+      });
+      win.show();
+  }
 
 })

@@ -48,7 +48,8 @@ class UserPartsController < ApplicationController
     redirect_to :controller => "user_parts",:action => "show_image"
   end
 
-  def show_kind
+  def print_user_details
+    @user = User.find(params[:id])
   end
 
   #TODO 暂时用于显示登录用户view

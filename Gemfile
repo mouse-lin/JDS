@@ -25,7 +25,7 @@ gem 'rd_searchlogic', :require => 'searchlogic', :git => 'git://github.com/rails
 gem 'annotate-models'
 
 #文件上传gems
-#gem 'kindeditor'  
+gem 'kindeditor'  
 gem 'paperclip'
 # Use unicorn as the web server
 # gem 'unicorn'
