@@ -1,0 +1,2 @@
+class LogOptionsController < ApplicationController
+end

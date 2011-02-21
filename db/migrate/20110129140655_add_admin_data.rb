@@ -4,6 +4,7 @@ class AddAdminData < ActiveRecord::Migration
     User.create(
       :password => "000000", 
       :password_confirmation => "000000", 
+      :identity_card => "0000000000",
       :birthday => "1990-01-01",
       :email => "admin@admin.com",
       :name => "admin",

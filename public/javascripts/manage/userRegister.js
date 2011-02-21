@@ -40,7 +40,9 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
                 title: '用户登记',
                 layout: 'anchor',
                 items: [{ anchor: '100%,10%',items:_this.createSearchForm()},{ anchor: '100%,90%',layout: 'anchor', items: _this.createUserRegisterGrid()}]
-            }, { 
+            }
+            /*
+            , { 
                 title: '用户添加',
                 //layout: 'anchor',
                 html: '<iframe src="user_parts/edit_user_part_index" frameborder="0" width="100%" height="100%"></iframe>'

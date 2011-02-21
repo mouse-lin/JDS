@@ -68,6 +68,12 @@ class UserPartsController < ApplicationController
 
     @user = User.new(params[:user])
     @user.save!
+    
+    #保存记录
+    new_user = User.last
+    LogOption.create_new_record new_user,current_user
+    #======
+
     flash[:notice] = "用户 #{ params[:user][:name] } 创建成功!"
     redirect_to :action => "edit_user_part_index"
   rescue ActiveRecord::RecordInvalid => e

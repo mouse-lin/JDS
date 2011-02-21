@@ -24,13 +24,13 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
                    animCollapse: false,
                    constrainHeader: true,
                    layout: 'fit',
-                   items:this.createUserRegisterTabpanel()
+                   items:this.createUserManageTabpanel()
                });
              }
            win.show()
     },
 
-    createUserRegisterTabpanel: function(){ 
+    createUserManageTabpanel: function(){ 
         var _this = Manage.userManageWin;
         return new Ext.TabPanel({ 
             frame: true,
@@ -38,9 +38,9 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
             deferredRender: false, // tabpanel 显示切换渲染
             items: [
             { 
-                title: '用户登记',
+                title: '用户信息修改',
                 layout: 'anchor',
-                items: [{ anchor: '100%,10%',items:_this.createSearchForm()},{ anchor: '100%,90%',layout: 'anchor', items: _this.createUserRegisterGrid()}]
+                items: [{ anchor: '100%,10%',items:_this.createSearchForm()},{ anchor: '100%,90%',layout: 'anchor', items: _this.createUserManageGrid()}]
             }, { 
                 title: '用户添加',
                 //layout: 'anchor',
@@ -58,9 +58,9 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
 
   //Comment: Mouse
   //user detail view 
-      createUserRegisterGrid: function(){ 
+      createUserManageGrid: function(){ 
         var _this = Manage.userManageWin;
-        userRegisterstore = new Ext.data.JsonStore({ 
+        userManagestore = new Ext.data.JsonStore({ 
             fields: [
                 'id',
                 'name',
@@ -77,16 +77,15 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
             url:'/user_parts.json',
             method: 'GET'
         });
-        userRegisterstore.load({ params:{ offset:0,limit:Page.pageSize }});     
+        userManagestore.load({ params:{ offset:0,limit:Page.pageSize }});     
 
         var addOperator = function(value, mataData, record, rowIndex, colIndex, store){ 
-            var link = String.format('<a href="#" onclick="Manage.userManageWin.makeSure( {0} )">确定入馆</a>', record.data.id) + '&nbsp;';
-                link += String.format('<a href="#" onclick="Manage.userManageWin.searchDetail({0})">查看入馆信息</a>', record.data.id) + '&nbsp;';
-                link += String.format('<a href="#" onclick="Manage.userManageWin.personalityDetail({0})">查看详细资料</a>', record.data.id) + '&nbsp;';
+            var link = String.format('<a href="#" onclick="Manage.userManageWin.makeSure( {0} )">编辑</a>', record.data.id) + '&nbsp;';
+                link += String.format('<a href="#" onclick="Manage.userManageWin.searchDetail({0})">删除</a>', record.data.id) + '&nbsp;';
             return link;
         };
 
-        var pageToolbar = Page.createPagingToolbar(userRegisterstore);
+        var pageToolbar = Page.createPagingToolbar(userManagestore);
         var tbar = [ 
             { iconCls: 'search', text: '查询', handler: function(){ _this.searchUserPartsData() }}, '-',
             { iconCls: 'drop', text: '重置', handler: function(){ _this.resetData() }}, 
@@ -109,7 +108,7 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
             height:380,
             stripeRows: true,
             region : 'center',
-            store: userRegisterstore,
+            store: userManagestore,
             loadMask: {msg:"读取中..."},
             cm: cm,
             tbar: tbar ,
@@ -245,7 +244,7 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
                  //Comment: Mouse
                  //更新修改后台的搜索功能为加上root开头的
                  //{ "content": Ext.decode(response.responseText)};
-                 userRegisterstore.loadData(questions);
+                 userManagestore.loadData(questions);
 
                  //store.proxy=new Ext.data.HttpProxy({url:url});
                  //store.reload({ params:{ offset:0,limit:Page.pageSize } });
