@@ -38,20 +38,17 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
             deferredRender: false, // tabpanel 显示切换渲染
             items: [
             { 
-                title: '用户信息修改',
+                title: '资料修改',
                 layout: 'anchor',
                 items: [{ anchor: '100%,10%',items:_this.createSearchForm()},{ anchor: '100%,90%',layout: 'anchor', items: _this.createUserManageGrid()}]
             }, { 
                 title: '用户添加',
-                //layout: 'anchor',
                 html: '<iframe src="user_parts/edit_user_part_index" frameborder="0" width="100%" height="100%"></iframe>'
-            },
-            /*{ 
-                id: 'newPaper',
-                title: '设置',
-                html: '<iframe src="user_parts/edit_user_part_index" frameborder="0" width="100%" height="100%"></iframe>'
-            }*/
-            ]
+            },{ 
+                title: '记录查看',
+                //html: '<iframe src="user_parts/edit_user_part_index" frameborder="0" width="100%" height="100%"></iframe>'
+                items: [{ _this.createRecordGrid()}]
+            }]
       })
   },
 
@@ -151,6 +148,90 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
 */
         })
     },
+    createRecordGrid: function(){ 
+        var _this = Manage.userManageWin;
+        recordStore = new Ext.data.JsonStore({ 
+            fields: [
+                'id',
+                'user_name',
+                'ip',
+                'user_operte_id',
+                'user_operate_name',
+                'user_operate_id_card',
+                'operation',
+                'created_at',
+            ],
+            remoteSort:true,
+            root: "content",
+            totalProperty:'total',          //support pagetool
+            url:'/log_options.json',
+            method: 'GET'
+        });
+        recordStore.load({ params:{ offset:0,limit:Page.pageSize }});     
+
+        var pageToolbar = Page.createPagingToolbar(recordStore);
+
+        var cm = new Ext.grid.ColumnModel([
+            //{ header: '编号'      ,sortable: true, dataIndex: 'id', width:50},
+            { header: '姓名'      ,sortable: true, dataIndex: 'name'},
+            { header: '身份证号'  ,sortable: true, dataIndex: 'identity_card',width:150},
+            { header: '性别'      ,sortable: true, dataIndex: 'sex'},
+            { header: '出生年月'  ,sortable: true, dataIndex: 'birthday'},
+            { header: '证件类型'  ,sortable: true, dataIndex: 'card_type_name'},
+            { header: '地址'      ,sortable: true, dataIndex: 'address'},
+            { header: '操作'        , dataIndex: '#', renderer: addOperator, width: 200 }
+        ]);
+
+        return recordGrid = new Ext.grid.EditorGridPanel({ 
+            viewConfig: { forceFit: true },
+            anchor: "100% 100%",
+            height:380,
+            stripeRows: true,
+            region : 'center',
+            store: recordStore,
+            loadMask: {msg:"读取中..."},
+            cm: cm,
+            tbar: pageToolbar ,
+       //     listeners:{  'render'　:　function()　{
+　　　 //　　　　pageToolbar.render(recordGrid.tbar);
+       //     }}
+/*
+           listeners: { 
+               cellclick: function(grid, rowIndex, columnIndex) { 
+                   var store = Manage.positionManage.grid.getStore();
+                   var record = store.getAt(rowIndex);
+                   row_id = record.get("id");
+               }
+           }
+
+            tbar: [
+            { 
+                xtype: 'textfield', 
+                id: 'id'  
+            },{ 
+                text: '查找',  
+                handler: function() { 
+                    var value = Ext.getCmp('id').getValue();
+                    Ext.Ajax.request({ 
+                        url: '/user_parts/search_by_id.json',
+                        jsonData: { id: value },
+                        success: function(response) { 
+                            questions = Ext.decode(response.responseText);
+                            //Comment: Mouse
+                            //更新修改后台的搜索功能为加上root开头的
+                            //{ "content": Ext.decode(response.responseText)};
+                            store.loadData(questions);
+                        }, 
+                        failure: function() { 
+                            Ext.Msg.alert('提示', '搜索失败');
+                        }
+                    });
+                }
+            }]
+*/
+        })
+    },
+
 
     //用来响应确认按钮
     makeSure: function(id) { 
@@ -321,6 +402,4 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
       });
       win.show();
   },
-
 })
-
