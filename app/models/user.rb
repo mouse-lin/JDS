@@ -38,6 +38,7 @@ class User < ActiveRecord::Base
   belongs_to   :card_type
   belongs_to   :group
   after_create  :add_theme
+  after_create  :add_group
 
   #验证select框值的保存
   #validates_inclusion_of :card_type_id,:in => CardType.find_types.map{|disp,value| value}
@@ -70,9 +71,15 @@ class User < ActiveRecord::Base
   validates_presence_of     :login
   validates_uniqueness_of   :login
 
+
+  #添加用户小组
+  def add_group
+    self.update_attributes(:group_id => 3) if self.group_id.nil?
+  end
+
   #添加默认的主题
   def add_theme
-    User.last.update_attributes!(:theme => "t0")
+    self.update_attributes!(:theme => "t0")
   end
   #转换年龄
   def change_age
