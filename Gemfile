@@ -18,6 +18,11 @@ gem 'formtastic', '~> 1.1.0'
 #use searchlogic 
 gem 'rd_searchlogic', :require => 'searchlogic', :git => 'git://github.com/railsdog/searchlogic.git'
 
+#测试
+#gem "randexp", "0.1.5"
+#gem "faker"
+
+
 #gem 'magic_encoding'
 
 

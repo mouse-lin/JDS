@@ -338,7 +338,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
           title: '资料打印',
           id: 'personalityDetail',
           width: 700,
-          height: 600,
+          height: 450,
           layout: 'fit',
           frame: true,
           items: { html:'<iframe src='+ url + "frameborder='0' frameborder='0'  width='100%' height='100%'></iframe>"}

@@ -1,39 +1,15 @@
 <%= kindeditor_javacript_include_tag%>
-<%= stylesheet_link_tag "css/bg_image_style.css" %>
-<div id="wrap">
-  <div class="center_content">
-    <div class="left_content">
-      <div class="new_products">
-    <textarea id="kindeditor" class="print_user_data" name="user_defined_plate" rows="35" cols="80" >
+  <textarea id="kindeditor"  rows="27" cols="94" >
+      <h1><%=blank(20)%>全 国 文 化 信 息 资 源 图 书 馆(借阅证)</h1>
       <%=blank(70)%>
-      <font size="4">头像:</font><%= image_tag @user.image.url(:normal) %><br>
+      <%= image_tag @user.image.url(:normal) %><br>
       <br>
       <%=blank(70)%>
-     <font size="4">姓名:<%= @user.name%></font><br>
+     <font size="4">姓名:<%=blank(4)%><%= @user.name%></font><br>
      <br>
      <%=blank(70)%>
-     <font size="4">身份证号:<%= @user.identity_card %></font><br>
+     <font size="4">性别:<%=blank(6)%><%= @user.sex %></font><br>
      <br>
      <%=blank(70)%>
-     <font size="4">编号:<%= @user.id %></font><br>
-     <br>
-     <%=blank(70)%>
-     <font size="4">性别:<%= @user.sex %></font><br>
-     <br>
-     <%=blank(70)%>
-     <font size="4">出生年月:<%= @user.birthday %></font><br>
-     <br>
-     <%=blank(70)%>
-     <font size="4">地址:<%= @user.address %></font><br>
-     <br>
-     <%=blank(70)%>
-     <font size="4">证件类型:<%= @user.try(:card_type).try(:name) %></font><br>
-     <br>
-    </textarea>
-      </div>
-      <div class="clear"></div>
-    </div>
-    <!--end of left content-->
-    <div class="clear"></div>
-  </div>
-  <!--end of center content-->
+     <font size="4">编号:<%=blank(6)%><%= @user.id %></font><br>
+ </textarea>
