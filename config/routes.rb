@@ -1,5 +1,11 @@
 Mytest::Application.routes.draw do
 
+  resources :log_options do
+    collection do
+      get "show_log_options"
+      post "show_log_options"
+    end
+  end
   #报表统计
   resources :reports do
     collection do
@@ -66,6 +72,8 @@ Mytest::Application.routes.draw do
       get "update_bg_image"
       get "update_theme_win"
       get "update_theme"
+      get "edit_user"
+      get "edit_user_win"
 
       post "update_image"
       post "create_user"
@@ -77,6 +85,9 @@ Mytest::Application.routes.draw do
       post "update_bg_image"
       post "update_theme"
       post "print_user_details"
+      post "delete_user"
+      post "edit_user"
+      post "edit_user_win"
     end
   end
 

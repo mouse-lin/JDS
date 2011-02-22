@@ -57,6 +57,7 @@ class UserPartsController < ApplicationController
     @card_type = CardType.find_types
   end
 
+  #===================    创建 修改 删除 用户 =============================
   #TODO 暂时用于创建普通用户资料
   def create_user
     #默认生成用户时候都是执行 账号12位 密码6位,TODO:待封装
@@ -69,7 +70,7 @@ class UserPartsController < ApplicationController
     @user = User.new(params[:user])
     @user.save!
     
-    #保存记录
+    #保存创建记录
     new_user = User.last
     LogOption.create_new_record new_user,current_user
     #======
@@ -80,6 +81,50 @@ class UserPartsController < ApplicationController
     flash[:notice] = e.message 
     redirect_to :action => "edit_user_part_index"
   end
+
+  def delete_user
+    operate_user = User.find(params[:user_id])
+    operate_user_name = operate_user.name
+    operate_user_id = operate_user.id
+    operate_user_id_card = operate_user.id
+
+    User.find(params[:user_id]).image.destroy
+    User.destroy(params[:user_id])
+
+    #保存删除记录
+    LogOption.delete_user operate_user_name,operate_user_id,operate_user_id_card,current_user
+
+    render :json => "success"
+ rescue ActiveRecord::RecordInvalid => e
+    render :json => { :message => error.message }, :status => 400
+  end
+
+  def edit_user_win
+    unless params[:id].nil?
+      number = params[:id].index("f")
+      user_id = params[:id].first(number)
+      @user = User.find(user_id)
+    else
+      @user = User.find(params[:user_id])
+    end
+      @card_type = CardType.find_types
+  end
+
+  def edit_user
+    @user = User.find(params[:id])
+    @user.update_attributes!(params[:user])
+
+    #保存更新记录
+    LogOption.edit_user @user,current_user
+
+    flash[:error] = "更新成功,请刷新表格查看数据！"
+    redirect_to :controller => "user_parts",:action => "edit_user_win",:user_id => params[:id]
+  rescue ActiveRecord::RecordInvalid => e
+    flash[:error] = e.message 
+    redirect_to :controller => "user_parts",:action => "edit_user_win"
+
+  end
+  #========================================================================
 
   #用户详细资料
   def personality_detail

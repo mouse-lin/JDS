@@ -44,10 +44,9 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
             }, { 
                 title: '用户添加',
                 html: '<iframe src="user_parts/edit_user_part_index" frameborder="0" width="100%" height="100%"></iframe>'
-            },{ 
+            }, { 
                 title: '记录查看',
-                //html: '<iframe src="user_parts/edit_user_part_index" frameborder="0" width="100%" height="100%"></iframe>'
-                items: [{ _this.createRecordGrid()}]
+                items: { anchor: '100%,100%', layout: 'anchor', items:_this.createRecordGrid()}
             }]
       })
   },
@@ -77,8 +76,8 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
         userManagestore.load({ params:{ offset:0,limit:Page.pageSize }});     
 
         var addOperator = function(value, mataData, record, rowIndex, colIndex, store){ 
-            var link = String.format('<a href="#" onclick="Manage.userManageWin.makeSure( {0} )">编辑</a>', record.data.id) + '&nbsp;';
-                link += String.format('<a href="#" onclick="Manage.userManageWin.searchDetail({0})">删除</a>', record.data.id) + '&nbsp;';
+            var link = String.format('<a href="#" onclick="Manage.userManageWin.editUser( {0} )">更新</a>', record.data.id) + '&nbsp;';
+                link += String.format('<a href="#" onclick="Manage.userManageWin.deleteuser({0})">删除</a>', record.data.id) + '&nbsp;';
             return link;
         };
 
@@ -148,6 +147,7 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
 */
         })
     },
+
     createRecordGrid: function(){ 
         var _this = Manage.userManageWin;
         recordStore = new Ext.data.JsonStore({ 
@@ -164,7 +164,7 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
             remoteSort:true,
             root: "content",
             totalProperty:'total',          //support pagetool
-            url:'/log_options.json',
+            url:'/log_options/show_log_options.json',
             method: 'GET'
         });
         recordStore.load({ params:{ offset:0,limit:Page.pageSize }});     
@@ -173,80 +173,44 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
 
         var cm = new Ext.grid.ColumnModel([
             //{ header: '编号'      ,sortable: true, dataIndex: 'id', width:50},
-            { header: '姓名'      ,sortable: true, dataIndex: 'name'},
-            { header: '身份证号'  ,sortable: true, dataIndex: 'identity_card',width:150},
-            { header: '性别'      ,sortable: true, dataIndex: 'sex'},
-            { header: '出生年月'  ,sortable: true, dataIndex: 'birthday'},
-            { header: '证件类型'  ,sortable: true, dataIndex: 'card_type_name'},
-            { header: '地址'      ,sortable: true, dataIndex: 'address'},
-            { header: '操作'        , dataIndex: '#', renderer: addOperator, width: 200 }
+            { header: '姓名'      ,sortable: true, dataIndex: 'user_name',width:150},
+            { header: 'ip'  ,sortable: true, dataIndex: 'ip',width:150},
+            { header: '被操作用户'      ,sortable: true, dataIndex: 'user_operate_name',width:150},
+            { header: '操作方式'  ,sortable: true, dataIndex: 'operation',width:150},
+            { header: '操作时间'  ,sortable: true, dataIndex: 'created_at',width:150},
+           // { header: '操作'        , dataIndex: '#', renderer: addOperator, width: 200 }
         ]);
 
         return recordGrid = new Ext.grid.EditorGridPanel({ 
             viewConfig: { forceFit: true },
             anchor: "100% 100%",
-            height:380,
+            height: 480,
             stripeRows: true,
-            region : 'center',
+            //region : 'center',
             store: recordStore,
             loadMask: {msg:"读取中..."},
             cm: cm,
             tbar: pageToolbar ,
-       //     listeners:{  'render'　:　function()　{
-　　　 //　　　　pageToolbar.render(recordGrid.tbar);
-       //     }}
-/*
-           listeners: { 
-               cellclick: function(grid, rowIndex, columnIndex) { 
-                   var store = Manage.positionManage.grid.getStore();
-                   var record = store.getAt(rowIndex);
-                   row_id = record.get("id");
-               }
-           }
-
-            tbar: [
-            { 
-                xtype: 'textfield', 
-                id: 'id'  
-            },{ 
-                text: '查找',  
-                handler: function() { 
-                    var value = Ext.getCmp('id').getValue();
-                    Ext.Ajax.request({ 
-                        url: '/user_parts/search_by_id.json',
-                        jsonData: { id: value },
-                        success: function(response) { 
-                            questions = Ext.decode(response.responseText);
-                            //Comment: Mouse
-                            //更新修改后台的搜索功能为加上root开头的
-                            //{ "content": Ext.decode(response.responseText)};
-                            store.loadData(questions);
-                        }, 
-                        failure: function() { 
-                            Ext.Msg.alert('提示', '搜索失败');
-                        }
-                    });
-                }
-            }]
-*/
         })
     },
 
 
     //用来响应确认按钮
-    makeSure: function(id) { 
-        Ext.Msg.confirm("提示", "确认记录入馆时间？", function(btn) {
+    deleteuser: function(id) { 
+        Ext.Msg.confirm("提示", "是否确认删除用户？", function(btn) {
          if (btn == 'yes') {
-             var user_id = { user_id : id}
+             var user_id =  id
              Ext.Ajax.request({ 
-                 url:    '/log_users/create_log_user.json' ,
-                 method: 'POST',
-                 jsonData: { log_user: user_id },
+                 url:    '/user_parts/delete_user.json' ,
+                 method: 'post',
+                 jsonData: { user_id: user_id },
                  success: function(response, opts) { 
-                     Ext.Msg.alert("提示", "保存成功");
+                     userManagestore.reload();
+                     recordStore.reload();
+                     Ext.Msg.alert("提示", "删除成功")
                  },
                  failure: function(response, opts) { 
-                     Ext.Msg.alert("提示", "保存失败");
+                     Ext.Msg.alert("提示", "删除失败");
                  } 
              });
          }
@@ -338,17 +302,18 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
   },
 
   //入馆记录窗口
-  searchDetail: function(id){ 
+  editUser: function(id){ 
       var user_id = id;
       var _this = Manage.userManageWin;
+      var url = 'user_parts/edit_user_win?id=' + user_id ;
       var win = new Ext.Window({
-          title: '入馆记录',
-          id: 'userInfoDetail',
-          width: 640,
-          height: 350,
+          title: '更新用户',
+          id: 'editUser',
+          width: 700,
+          height: 500,
           layout: 'fit',
           frame: true,
-          items: _this.createUserInfoDetailGrid(user_id)
+          items: { html:'<iframe src='+ url + "frameborder='0' frameborder='0'  width='100%' height='100%'></iframe>"}
       });
       win.show();
   },
@@ -389,7 +354,7 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
   personalityDetail: function(id){ 
       var user_id = id;
       var _this = Manage.userManageWin;
-       url = 'user_parts/personality_detail?id=' + user_id ;
+      var url = 'user_parts/personality_detail?id=' + user_id ;
       var win = new Ext.Window({
           title: '详细资料',
           id: 'personalityDetail',

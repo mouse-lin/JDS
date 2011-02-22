@@ -24,6 +24,6 @@ Ext.apply(Page, {
         return bar;
     },
 
-    pageSize : 15
+    pageSize :  23
 
 })
