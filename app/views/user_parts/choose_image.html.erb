@@ -40,7 +40,11 @@
           <tr>
             <th>身份证号：<b class="star">*</b></th>
             <td >
-              <%= @user.identity_card %>
+              <% if current_user.group_id == 3%>
+                <%= @user.identity_card %>
+              <%else%>
+                <%= f.text_field :identity_card %> 
+              <%end%>
             </td>
           </tr>
           <tr>
@@ -58,7 +62,11 @@
           <tr>
             <th>证件类型:</th>
             <td id="password_td">
-              <%= f.select :card_type_id, @card_type ,{ :prompt => '请选择证件类型' }%>
+              <%if current_user.group_id != 3 %>
+                <%= f.select :card_type_id, @card_type ,{ :prompt => '请选择证件类型' }%>
+              <%else%>
+                <%= @user.try(:card_type).try(:name)%>
+              <%end%>
             </td>
           </tr>
           <tr>
