@@ -1,6 +1,8 @@
 //Comment: Mouse
 // Using  Page to instead pageToolbar
 Page = { base: {}, records: {} };
+//权限控制全局变量
+Group = 0
 
 Ext.apply(Page, { 
     createPagingToolbar: function(store, items) {  

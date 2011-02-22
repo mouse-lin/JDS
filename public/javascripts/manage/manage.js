@@ -12,14 +12,30 @@ Manage = new Ext.app.App({
         Manage.userSettingWin  =   new Manage.UserSettingWin();
         Manage.manageWin  =   new Manage.ManageWin();
         Manage.userManageWin  =   new Manage.UserManageWin()
-		return [
-           Manage.userRegisterWin,
-           Manage.userGroupWin,
-           Manage.reportWin,
-           Manage.userSettingWin,
-           Manage.manageWin,
-           Manage.userManageWin
-		];
+        if(Group == 1){  
+		        return [
+                Manage.userRegisterWin,
+                Manage.userGroupWin,
+                Manage.reportWin,
+                Manage.userSettingWin,
+                Manage.manageWin,
+                Manage.userManageWin
+          ]
+       }
+       else if(Group == 2){ 
+           return[
+               Manage.userRegisterWin,
+               Manage.reportWin,
+               Manage.userSettingWin,
+               Manage.manageWin,
+               Manage.userManageWin
+           ]
+       } 
+       else{ 
+          return[
+              Manage.userSettingWin,
+          ]
+       }
 	},
 
     // config for the start menu

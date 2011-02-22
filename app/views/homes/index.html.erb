@@ -7,6 +7,9 @@
         </div>
       <% end %>
       <% if current_user.group_id == 1 %>
+        <script type="text/javascript" charset="utf-8">
+          Group = 1
+        </script>
         <dt id="userRegisterWin-shortcut">
             <a href="#"><img src="images/theme/<%= current_user.theme %>/register.png" /><div>用户登记</div></a>
         </dt>
@@ -26,6 +29,9 @@
              <a href="#"><img src="images/theme/<%= current_user.theme %>/user_manage.png" /><div>用户管理</div></a>
          </dt>
       <%elsif current_user.group_id == 2%>
+        <script type="text/javascript" charset="utf-8">
+          Group = 2
+        </script>
         <dt id="userRegisterWin-shortcut">
             <a href="#"><img src="images/theme/<%= current_user.theme %>/register.png" /><div>用户登记</div></a>
         </dt>
@@ -42,6 +48,9 @@
              <a href="#"><img src="images/theme/<%= current_user.theme %>/user_manage.png" /><div>用户管理</div></a>
          </dt>
       <% else %>
+        <script type="text/javascript" charset="utf-8">
+          Group = 3
+        </script>
         <dt id="userSettingWin-shortcut">
             <a href="#"><img src="images/theme/<%= current_user.theme %>/setting.png" /><div>基础设置</div></a>
         </dt>
