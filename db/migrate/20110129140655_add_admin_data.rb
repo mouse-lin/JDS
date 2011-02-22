@@ -9,7 +9,8 @@ class AddAdminData < ActiveRecord::Migration
       :email => "admin@admin.com",
       :name => "admin",
       :login  => "admin",
-      :sex => "男"
+      :sex => "男",
+      :group_id => 1
     )
   end
 

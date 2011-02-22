@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
   has_many  :log_users
   has_many  :log_options
   belongs_to   :card_type
+  belongs_to   :group
   after_create  :add_theme
 
   #验证select框值的保存
@@ -63,7 +64,8 @@ class User < ActiveRecord::Base
     :identity_card,
     :card_type_id,
     :bg_picture,
-    :theme
+    :theme,
+    :group_id
 
   validates_presence_of     :login
   validates_uniqueness_of   :login

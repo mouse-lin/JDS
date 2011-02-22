@@ -121,8 +121,7 @@ class UserPartsController < ApplicationController
     redirect_to :controller => "user_parts",:action => "edit_user_win",:user_id => params[:id]
   rescue ActiveRecord::RecordInvalid => e
     flash[:error] = e.message 
-    redirect_to :controller => "user_parts",:action => "edit_user_win"
-
+    redirect_to :controller => "user_parts",:action => "edit_user_win",:user_id => params[:id]
   end
   #========================================================================
 

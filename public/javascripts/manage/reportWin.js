@@ -48,6 +48,9 @@ Manage.ReportWin = Ext.extend(Ext.app.Module,  {
      }, { 
          title: '证件类型统计',
          html: '<iframe src="reports/card_type_statis" frameborder="0" width="100%" height="100%"></iframe>' 
+     }, { 
+         title: '访问总量统计',
+         //html: '<iframe src="reports/card_type_statis" frameborder="0" width="100%" height="100%"></iframe>' 
      }
      ]
    })
