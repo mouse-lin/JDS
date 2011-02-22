@@ -6,11 +6,12 @@ class AddAdminData < ActiveRecord::Migration
       :password_confirmation => "000000", 
       :identity_card => "0000000000",
       :birthday => "1990-01-01",
-      :email => "admin@admin.com",
+      :email => "000000@admin.com",
       :name => "admin",
       :login  => "admin",
       :sex => "男",
-      :group_id => 1
+      :group_id => 1,
+      :user => "1"
     )
   end
 

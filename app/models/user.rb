@@ -37,8 +37,13 @@ class User < ActiveRecord::Base
   has_many  :log_options
   belongs_to   :card_type
   belongs_to   :group
+  belongs_to   :passwd, :foreign_key  => :user
+
   after_create  :add_theme
   after_create  :add_group
+  after_create  :create_passwd
+  after_update  :update_passwd
+  after_destroy :destroy_passwd
 
   #验证select框值的保存
   #validates_inclusion_of :card_type_id,:in => CardType.find_types.map{|disp,value| value}
@@ -66,12 +71,41 @@ class User < ActiveRecord::Base
     :card_type_id,
     :bg_picture,
     :theme,
-    :group_id
+    :group_id,
+    :user
+
 
   validates_presence_of     :login
   validates_uniqueness_of   :login
 
 
+#====================== 同步更新 passwd表 ======================
+  #添加passwd表的内容
+  def create_passwd
+    user = self.id.to_s
+    number = self.email.index("@")
+    passwd = self.email.first(number)
+    self.update_attributes(:user => user)
+
+    p = Passwd.new
+    p.password = passwd
+    p.user = user
+    p.save
+  end
+
+  def update_passwd
+    unless self.passwd.nil?
+      number = self.email.index("@")
+      passwd = self.email.first(number)
+      self.passwd.update_attributes(:password => passwd)
+    end
+  end
+
+  def destroy_passwd
+    self.passwd.delete unless self.passwd.nil?
+  end
+
+#================================================================
   #添加用户小组
   def add_group
     self.update_attributes(:group_id => 3) if self.group_id.nil?
@@ -86,12 +120,19 @@ class User < ActiveRecord::Base
     birthday.year
   end
 
+
+  #查询年龄
   def self.age
     users = User.all.collect do |u|
       age = Time.now.year - u.change_age 
       u.inject(:age => age )
     end
   end
+
+#  #important 查找对应的passwd
+#  def find_passwd
+#    Passwd.find(:all,:conditions =>"user = #{ self.id }").first
+#  end
 
   #查找管理员用户
   #暂时为查找所有用户(包括管理员)

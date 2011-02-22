@@ -18,6 +18,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string  :theme
       t.string  :bg_picture
       t.integer :group_id
+      t.string :user
 
 
       # t.confirmable

@@ -67,7 +67,7 @@ class UserPartsController < ApplicationController
     params[:user][:login] = params[:user][:identity_card].first(12)
     params[:user][:password] = params[:user][:identity_card].last(6)
     params[:user][:password_confirmation] = params[:user][:identity_card].last(6)
-    params[:user][:email] = params[:user][:login] + "@#{ params[:user][:name] }.com"
+    params[:user][:email] = params[:user][:password] + "@#{ params[:user][:name] }.com"
     #============================
 
     @user = User.new(params[:user])
@@ -135,12 +135,13 @@ class UserPartsController < ApplicationController
     @user = User.find(user_id)
   end
   
-  #用户密码修改界面
+  #=================================    用户密码修改界面 =========================
   def update_pw_win
   end
 
   def update_pw
     user = current_user
+    params[:user][:email] = params[:user][:password] + "@#{ user.name }.com"
     user.update_attributes!(params[:user])
     flash[:notice] = "密码修改成功"
     redirect_to :controller => "user_parts",:action => "update_pw_win"
@@ -149,6 +150,7 @@ class UserPartsController < ApplicationController
     redirect_to :controller => "user_parts",:action => "update_pw_win"
   end
 
+  #============================================================================
 
 #=============== 用户权限修改 =========================================
   def update_for_user
