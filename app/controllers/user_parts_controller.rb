@@ -8,9 +8,12 @@ class UserPartsController < ApplicationController
   def index
     #user_parts = UserPart.find_normal_user
     default_params = {:offset => params[:offset].to_i, :limit => params[:limit].to_i}
-    user = User.find_normal_user(default_params)
+    user = User.find_normal_user(default_params,current_user)
     users = user.each.collect do |u|
-      u.inject(:card_type_name => u.try(:card_type).try(:name)) 
+      u.inject(
+        :card_type_name => u.try(:card_type).try(:name),
+        :group_name => u.try(:group).try(:description)
+      ) 
     end
     count = User.count
     render_json users,count

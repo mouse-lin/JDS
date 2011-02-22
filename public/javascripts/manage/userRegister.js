@@ -27,7 +27,8 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
                    items:this.createUserRegisterTabpanel()
                });
              }
-           win.show(); },
+           win.show(); 
+    },
 
     createUserRegisterTabpanel: function(){ 
         var _this = Manage.userRegisterWin;

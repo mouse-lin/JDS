@@ -38,7 +38,7 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
             deferredRender: false, // tabpanel 显示切换渲染
             items: [
             { 
-                title: '资料修改',
+                title: '资料更新',
                 layout: 'anchor',
                 items: [{ anchor: '100%,10%',items:_this.createSearchForm()},{ anchor: '100%,90%',layout: 'anchor', items: _this.createUserManageGrid()}]
             }, { 
@@ -218,14 +218,9 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
     },
 
     createSearchForm: function(){ 
-        return createSearchFormPanel = new Ext.form.FormPanel({ 
+        return createManageSearchFormPanel = new Ext.form.FormPanel({ 
             frame: true,
             layout: 'form',
-            //keys:[  {  key: [10,13],  fn:Manage.userManageWin.searchUserPartsData() }],
-            //此处button 的两个功能移到下面 grid 的 tabr
-            // buttons: [{ 
-            //     text: '查询', handler: _this.searchUserPartsData
-            // },{ text: '重置', handler: _this.resetData }],
             items: [{ 
                 layout: 'column',
                 xtype: 'fieldset',
@@ -237,35 +232,40 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
                     defaultType:'textfield',
                     columnWidth: .3,
                     items:[
-                        { anchor: '100%', fieldLabel: '编号', id: "user_id" },
-                        { anchor: '100%', fieldLabel: '身份证号', id: "user_identity_card" },
+                        { anchor: '100%', fieldLabel: '编号', id: "user_manage_id" },
+                        { anchor: '100%', fieldLabel: '身份证号', id: "user_manage_identity_card" },
                     ]},{ 
                     layout:'form',
                     defaultType:'textfield',
                     columnWidth: .3,
                     items:[
-                        {anchor: '100%', fieldLabel: '姓名', id: 'user_name' },
-                        { anchor: '100%', xtype: 'datefield', fieldLabel: '出生年月', id: "user_birthday",format: "Y-m-d" }
+                        {anchor: '100%', fieldLabel: '姓名', id: 'user_manage_name' },
+                        { anchor: '100%', xtype: 'datefield', fieldLabel: '出生年月', id: "user_manage_birthday",format: "Y-m-d" }
                     ]}
               ]
-          }]
+          }],
+          keys:[{ 
+                key: 13,  
+                fn: Manage.userManageWin.searchUserPartsData,
+                scope:this 
+            }]
       })
   },
 
   //reset the textfield values
   resetData: function(){ 
-      Ext.getCmp('user_id').setValue('');
-      Ext.getCmp('user_identity_card').setValue('');
-      Ext.getCmp('user_name').setValue('');
-      Ext.getCmp('user_birthday').setValue('')
+      Ext.getCmp('user_manage_id').setValue('');
+      Ext.getCmp('user_manage_identity_card').setValue('');
+      Ext.getCmp('user_manage_name').setValue('');
+      Ext.getCmp('user_manage_birthday').setValue('')
   },
 
   //search for user_parts data
   searchUserPartsData: function(){ 
-      var id = Ext.getCmp('user_id').getValue();
-      var identity_card = Ext.getCmp('user_identity_card').getValue();
-      var name = Ext.getCmp('user_name').getValue();
-      var birthday = Ext.getCmp('user_birthday').getValue();
+      var id = Ext.getCmp('user_manage_id').getValue();
+      var identity_card = Ext.getCmp('user_manage_identity_card').getValue();
+      var name = Ext.getCmp('user_manage_name').getValue();
+      var birthday = Ext.getCmp('user_manage_birthday').getValue();
       if(birthday != "" )
         birthday = birthday.format('Y-m-d');
       if(id == "" && identity_card ==  "" && name == "" && birthday == ""){ 
