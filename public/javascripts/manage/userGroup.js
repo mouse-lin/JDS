@@ -79,9 +79,9 @@ Manage.UserGroupWin = Ext.extend(Ext.app.Module,  {
         userGroupstore.load({ params:{ offset:0,limit:Page.pageSize }});     
 
         var addOperator = function(value, mataData, record, rowIndex, colIndex, store){ 
-            var link = String.format('<a href="#" onclick="Manage.userManageWin.editUser( {0} )">普通用户</a>', record.data.id) + '&nbsp;';
-                link += String.format('<a href="#" onclick="Manage.userManageWin.deleteuser({0})">普通管理员</a>', record.data.id) + '&nbsp;';
-                link += String.format('<a href="#" onclick="Manage.userManageWin.deleteuser({0})">超级管理员</a>', record.data.id) + '&nbsp;';
+            var link = String.format('<a href="#" onclick="Manage.userGroupWin.updateForUser( {0} )">普通用户</a>', record.data.id) + '&nbsp;';
+                link += String.format('<a href="#" onclick="Manage.userGroupWin.updateForAdmin( {0} )">普通管理员</a>', record.data.id) + '&nbsp;';
+                link += String.format('<a href="#" onclick="Manage.userGroupWin.updateForSystem( {0} )">超级管理员</a>', record.data.id) + '&nbsp;';
             return link;
         };
 
@@ -154,6 +154,67 @@ Manage.UserGroupWin = Ext.extend(Ext.app.Module,  {
     },
 
 
+//=========================  更新用户权限 ===================================
+  updateForUser: function(id,group){ 
+      Ext.Msg.confirm("提示", "是否确认更新用户权限？", function(btn) {
+         if (btn == 'yes') {
+             var user_id =  id
+             Ext.Ajax.request({ 
+                 url:    '/user_parts/update_for_user.json' ,
+                 method: 'post',
+                 jsonData: { user_id: user_id },
+                 success: function(response, opts) { 
+                     userGroupstore.reload();
+                     Ext.Msg.alert("提示", "更新成功")
+                 },
+                 failure: function(response, opts) { 
+                     Ext.Msg.alert("提示", "更新失败");
+                 } 
+             });
+         }
+       })
+  },
+
+  updateForAdmin: function(id,group){ 
+      Ext.Msg.confirm("提示", "是否确认更新用户权限？", function(btn) {
+         if (btn == 'yes') {
+             var user_id =  id
+             Ext.Ajax.request({ 
+                 url:    '/user_parts/update_for_admin.json' ,
+                 method: 'post',
+                 jsonData: { user_id: user_id },
+                 success: function(response, opts) { 
+                     userGroupstore.reload();
+                     Ext.Msg.alert("提示", "更新成功")
+                 },
+                 failure: function(response, opts) { 
+                     Ext.Msg.alert("提示", "更新失败");
+                 } 
+             });
+         }
+       })
+  },
+
+  updateForSystem: function(id,group){ 
+      Ext.Msg.confirm("提示", "是否确认更新用户权限？", function(btn) {
+         if (btn == 'yes') {
+             var user_id =  id
+             Ext.Ajax.request({ 
+                 url:    '/user_parts/update_for_system.json' ,
+                 method: 'post',
+                 jsonData: { user_id: user_id },
+                 success: function(response, opts) { 
+                     userGroupstore.reload();
+                     Ext.Msg.alert("提示", "更新成功")
+                 },
+                 failure: function(response, opts) { 
+                     Ext.Msg.alert("提示", "更新失败");
+                 } 
+             });
+         }
+       })
+  },
+//=========================================================================
   //创建搜索窗口
   createSearchForm: function(){ 
         return  createGroupSearchFormPanel = new Ext.form.FormPanel({ 
@@ -355,7 +416,9 @@ Manage.UserGroupWin = Ext.extend(Ext.app.Module,  {
       })
     },
 
-    //保存权限小组
+
+
+   //保存权限小组
     saveUserGroup: function(){ 
         var _this = this;
         Ext.Msg.confirm('提示', "是否保存?", function(button){ 

@@ -149,6 +149,32 @@ class UserPartsController < ApplicationController
     redirect_to :controller => "user_parts",:action => "update_pw_win"
   end
 
+
+#=============== 用户权限修改 =========================================
+  def update_for_user
+    update_user = User.find(params[:user_id])
+    update_user.update_attributes!(:group_id => 3)
+    render :json => "success"
+ rescue ActiveRecord::RecordInvalid => e
+    render :json => { :message => error.message }, :status => 400
+  end
+
+  def update_for_admin
+    update_user = User.find(params[:user_id])
+    update_user.update_attributes!(:group_id => 2)
+    render :json => "success"
+ rescue ActiveRecord::RecordInvalid => e
+    render :json => { :message => error.message }, :status => 400
+  end
+
+  def update_for_system
+    update_user = User.find(params[:user_id])
+    update_user.update_attributes!(:group_id => 1)
+    render :json => "success"
+ rescue ActiveRecord::RecordInvalid => e
+    render :json => { :message => error.message }, :status => 400
+  end
+#======================================================================
 #===============  用户界面个性化设计 ==================================
 
   def update_bg_image_win

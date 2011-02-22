@@ -77,7 +77,6 @@ Mytest::Application.routes.draw do
 
       post "update_image"
       post "create_user"
-      #get "create_user"
       post "index"
       post "search_user"
       post "personality_detail"
@@ -88,6 +87,9 @@ Mytest::Application.routes.draw do
       post "delete_user"
       post "edit_user"
       post "edit_user_win"
+      post "update_for_user"
+      post "update_for_admin"
+      post "update_for_system"
     end
   end
 
