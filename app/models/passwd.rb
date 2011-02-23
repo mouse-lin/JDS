@@ -3,4 +3,6 @@ class Passwd < ActiveRecord::Base
   set_primary_key :user  
   #validates_uniqueness_of   :user
   has_many :users 
+  #自定义表名
+  set_table_name :passwd
 end
