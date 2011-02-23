@@ -16,6 +16,10 @@ Mytest::Application.routes.draw do
       get "sex_graph_code"
       get "age_graph_code"
       get "card_type_graph_code"
+      get "web_statis_f"
+      get "web_statis_f_code"
+      get "web_statis_s"
+      get "web_statis_s_code"
     end
   end
 

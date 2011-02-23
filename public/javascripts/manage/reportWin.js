@@ -45,12 +45,15 @@ Manage.ReportWin = Ext.extend(Ext.app.Module,  {
      { 
          title: '年龄比例统计',
          html: '<iframe src="reports/age_statis" frameborder="0" width="100%" height="100%"></iframe>' 
-     }, { 
+     },{ 
          title: '证件类型统计',
          html: '<iframe src="reports/card_type_statis" frameborder="0" width="100%" height="100%"></iframe>' 
-     }, { 
+     },{ 
          title: '访问总量统计',
-         //html: '<iframe src="reports/card_type_statis" frameborder="0" width="100%" height="100%"></iframe>' 
+         html: '<iframe src="reports/web_statis_f" frameborder="0" width="100%" height="100%"></iframe>' 
+     },{ 
+         title: '当天访问总量统计',
+         html: '<iframe src="reports/web_statis_s" frameborder="0" width="100%" height="100%"></iframe>' 
      }
      ]
    })

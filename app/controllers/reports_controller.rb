@@ -35,6 +35,72 @@ class ReportsController < ApplicationController
     @user_all_count = User.all.count
   end
 
+  def web_statis_f
+    @web_statis_f = open_flash_chart_object(500,400,"/reports/web_statis_f_code").html_safe
+  end
+
+
+  def web_statis_f_code
+    title = Title.new("查看访问量最大网站")
+    bar = BarGlass.new
+
+    #证件类型统计
+    host_name =  [] 
+    host_value = []
+    Host.order("total desc").limit(20).each do |h |
+      host_name << h.name
+      host_value << h.total
+    end
+    y_axis = YAxis.new
+    y_axis.set_range(0,Host.order("total desc").limit(1).first.total , Host.order("total desc").limit(1).first.total/10)
+
+    x_axis = XAxis.new
+    x_axis.labels = host_name
+
+    bar.set_values(host_value)
+
+    chart = OpenFlashChart.new
+    chart.bg_colour = '#ffffff'
+    chart.y_axis = y_axis
+    chart.x_axis = x_axis
+    chart.set_title(title)
+    chart.add_element(bar)
+    render :text => chart.to_s
+  end
+
+  def web_statis_s
+    @web_statis_s = open_flash_chart_object(500,400,"/reports/web_statis_s_code").html_safe
+  end
+
+
+  def web_statis_s_code
+    title = Title.new("查看当天访问量最大网站")
+    bar = BarGlass.new
+
+    #证件类型统计
+    host_name =  [] 
+    host_value = []
+    Host.order("count desc").limit(20).each do |h |
+      host_name << h.name
+      host_value << h.count
+    end
+    y_axis = YAxis.new
+    y_axis.set_range(0,Host.order("count desc").limit(1).first.count, Host.order("count desc").limit(1).first.count/10)
+
+    x_axis = XAxis.new
+    x_axis.labels = host_name
+
+    bar.set_values(host_value)
+
+    chart = OpenFlashChart.new
+    chart.bg_colour = '#ffffff'
+    chart.y_axis = y_axis
+    chart.x_axis = x_axis
+    chart.set_title(title)
+    chart.add_element(bar)
+    render :text => chart.to_s
+  end
+
 
   def sex_graph_code
     title = Title.new("会员总数")
