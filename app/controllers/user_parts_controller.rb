@@ -63,10 +63,12 @@ class UserPartsController < ApplicationController
   #===================    创建 修改 删除 用户 =============================
   #TODO 暂时用于创建普通用户资料
   def create_user
-    #默认生成用户时候都是执行 账号12位 密码6位,TODO:待封装
+    #默认生成用户时候都是执行 账号12位 密码123456,TODO:待封装
     params[:user][:login] = params[:user][:identity_card].first(12)
-    params[:user][:password] = params[:user][:identity_card].last(6)
-    params[:user][:password_confirmation] = params[:user][:identity_card].last(6)
+   # params[:user][:password] = params[:user][:identity_card].last(6)
+   # params[:user][:password_confirmation] = params[:user][:identity_card].last(6)
+    params[:user][:password] = "123456"
+    params[:user][:password_confirmation] = "123456"
     params[:user][:email] = params[:user][:password] + "@#{ params[:user][:name] }.com"
     #============================
 

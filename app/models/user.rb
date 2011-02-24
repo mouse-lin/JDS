@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
 #====================== 同步更新 passwd表 ======================
   #添加passwd表的内容
   def create_passwd
-    user = self.id.to_s
+    user = self.name
     number = self.email.index("@")
     passwd = self.email.first(number)
     self.update_attributes(:user => user)

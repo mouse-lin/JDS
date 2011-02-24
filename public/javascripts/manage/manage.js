@@ -41,7 +41,7 @@ Manage = new Ext.app.App({
     // config for the start menu
     getStartConfig: function(){
         return {
-            title: '图书馆用户管理系统',
+            title: '广东省电子公共阅览室综合应用系统',
             iconCls: 'user'
             /*
             toolItems: [{
