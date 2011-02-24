@@ -1,15 +1,15 @@
 <%= kindeditor_javacript_include_tag%>
   <textarea id="kindeditor"  rows="26" cols="91" >
-      <h1><%=blank(10)%>全 国 文 化 信 息 资 源 图 书 馆(借阅证)</h1>
-      <%=blank(70)%>
-      <%= image_tag @user.image.url(:normal) %><br>
-      <br>
-      <%=blank(70)%>
+     <h1><%=blank(10)%>全 国 文 化 信 息 资 源 图 书 馆(借阅证)</h1>
+     <%=blank(70)%>
+     <%= image_tag @user.image.url(:normal) %><br>
+     <br>
+     <%=blank(70)%>
      <font size="4">姓名:<%=blank(4)%><%= @user.name%></font><br>
      <br>
      <%=blank(70)%>
      <font size="4">性别:<%=blank(6)%><%= @user.sex %></font><br>
      <br>
      <%=blank(70)%>
-     <font size="4">编号:<%=blank(6)%><%= @user.id %></font><br>
+     <font size="4">编号:<%=blank(6)%><%= @user.try(:passwd).try(:user) %></font><br>
  </textarea>

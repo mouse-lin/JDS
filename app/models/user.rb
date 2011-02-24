@@ -79,10 +79,11 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :login
 
 
-#====================== 同步更新 passwd表 ======================
+#===================== 同步更新 passwd表 ======================
   #添加passwd表的内容
   def create_passwd
-    user = self.name
+    user = get_number(self.id)
+    #user = self.name
     number = self.email.index("@")
     passwd = self.email.first(number)
     self.update_attributes(:user => user)
@@ -92,6 +93,16 @@ class User < ActiveRecord::Base
     p.user = user
     p.save
   end
+
+#==================== 获取编号 ===========================
+  def get_number id
+    zero = ""
+    (8-id.to_s.length).times do
+      zero += "0"
+    end
+    return zero + id.to_s
+  end
+#=========================================================
 
   def update_passwd
     unless self.passwd.nil?
