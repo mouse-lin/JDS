@@ -98,7 +98,7 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
         var cm = new Ext.grid.ColumnModel([
             { header: '编号'      ,sortable: true, dataIndex: 'id', width:50},
             { header: '姓名'      ,sortable: true, dataIndex: 'name'},
-            { header: '身份证号'  ,sortable: true, dataIndex: 'identity_card',width:150},
+            { header: '证件号码'  ,sortable: true, dataIndex: 'identity_card',width:150},
             { header: '性别'      ,sortable: true, dataIndex: 'sex'},
             { header: '出生年月'  ,sortable: true, dataIndex: 'birthday'},
             { header: '证件类型'  ,sortable: true, dataIndex: 'card_type_name'},
