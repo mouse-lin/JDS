@@ -78,6 +78,7 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
         var addOperator = function(value, mataData, record, rowIndex, colIndex, store){ 
             var link = String.format('<a href="#" onclick="Manage.userManageWin.editUser( {0} )">更新</a>', record.data.id) + '&nbsp;';
                 link += String.format('<a href="#" onclick="Manage.userManageWin.deleteuser({0})">删除</a>', record.data.id) + '&nbsp;';
+                link += String.format('<a href="#" onclick="Manage.userManageWin.searchLogAccess({0})">访问量查看</a>', record.data.id) + '&nbsp;';
             return link;
         };
 
@@ -111,40 +112,6 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
             listeners:{  'render'　:　function()　{
 　　　　　　　　　pageToolbar.render(userRegisterGrid.tbar);
             }}
-/*
-           listeners: { 
-               cellclick: function(grid, rowIndex, columnIndex) { 
-                   var store = Manage.positionManage.grid.getStore();
-                   var record = store.getAt(rowIndex);
-                   row_id = record.get("id");
-               }
-           }
-
-            tbar: [
-            { 
-                xtype: 'textfield', 
-                id: 'id'  
-            },{ 
-                text: '查找',  
-                handler: function() { 
-                    var value = Ext.getCmp('id').getValue();
-                    Ext.Ajax.request({ 
-                        url: '/user_parts/search_by_id.json',
-                        jsonData: { id: value },
-                        success: function(response) { 
-                            questions = Ext.decode(response.responseText);
-                            //Comment: Mouse
-                            //更新修改后台的搜索功能为加上root开头的
-                            //{ "content": Ext.decode(response.responseText)};
-                            store.loadData(questions);
-                        }, 
-                        failure: function() { 
-                            Ext.Msg.alert('提示', '搜索失败');
-                        }
-                    });
-                }
-            }]
-*/
         })
     },
 
@@ -317,6 +284,65 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
       });
       win.show();
   },
+
+  searchLogAccess: function(id){ 
+      var user_id = id;
+      var _this = Manage.userManageWin;
+      var url = 'reports/edit_user_win?id=' + user_id ;
+      var win = new Ext.Window({
+          title: '访问量查看',
+          id: 'searchLogAccess',
+          width: 700,
+          height: 500,
+          layout: 'fit',
+          frame: true,
+          items: _this.createReportGrid(id)
+      });
+      win.show();
+  },
+
+   createReportGrid: function(id){ 
+        var _this = Manage.userRegisterWin;
+        LogReportstore = new Ext.data.JsonStore({ 
+            fields: [
+                'id',
+                'host_id',
+                'user_id',
+                'ip_id',
+                'date_time',
+            ],
+            remoteSort:true,
+            root: "content",
+            totalProperty:'total',          //support pagetool
+            url:'/reports/log_access_date_for_user?id=' + id,
+            method: 'GET'
+        });
+
+        LogReportstore.load({ params:{ offset:0,limit:Page.pageSize }});     
+
+        var pageToolbar = Page.createPagingToolbar(LogReportstore);
+
+        var cm = new Ext.grid.ColumnModel([
+            { header: '编号'      ,sortable: true, dataIndex: 'id', width:50},
+            { header: '用户编号'      ,sortable: true, dataIndex: 'user_id'},
+            { header: 'ip的编号'  ,sortable: true, dataIndex: 'ip_id'},
+            { header: 'host编号'      ,sortable: true, dataIndex: 'host_id'},
+            { header: '时间'  ,sortable: true, dataIndex: 'date_time'},
+        ]);
+
+        return ReportGrid = new Ext.grid.EditorGridPanel({ 
+            viewConfig: { forceFit: true },
+            anchor: "100% 100%",
+            height:600,
+            stripeRows: true,
+            region : 'center',
+            store: LogReportstore,
+            loadMask: {msg:"读取中..."},
+            cm: cm,
+            tbar: pageToolbar ,
+        });
+    },
+
 
  createUserInfoDetailGrid: function(user_id){
         var _this = Manage.userManageWin;

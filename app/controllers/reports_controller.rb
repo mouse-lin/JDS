@@ -187,4 +187,22 @@ class ReportsController < ApplicationController
     render :text => chart.to_s
   end
 
+  #============= 访问量统计 ===================
+  def log_access_date
+    default_params = {:offset => params[:offset].to_i, :limit => params[:limit].to_i}
+    log_access = LogAccess.find_log_access_date(default_params)
+    count = LogAccess.count
+    render_json log_access,count
+  end
+  #============================================
+
+  #============= 用户特定访问量查看 ============
+  def log_access_date_for_user
+    default_params = {:offset => params[:offset].to_i, :limit => params[:limit].to_i,:order => "date_time desc"}
+    log_access = LogAccess.find_log_access_date_for_user(default_params,params[:id])
+    count = log_access.count
+    render_json log_access,count
+  end
+  #=============================================
+
 end

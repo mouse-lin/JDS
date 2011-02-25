@@ -6,6 +6,7 @@ Mytest::Application.routes.draw do
       post "show_log_options"
     end
   end
+
   #报表统计
   resources :reports do
     collection do
@@ -20,6 +21,10 @@ Mytest::Application.routes.draw do
       get "web_statis_f_code"
       get "web_statis_s"
       get "web_statis_s_code"
+      get "log_access_date"
+      get "log_access_date_for_user"
+      post "log_access_date"
+      post "log_access_date_for_user"
     end
   end
 
@@ -78,6 +83,7 @@ Mytest::Application.routes.draw do
       get "update_theme"
       get "edit_user"
       get "edit_user_win"
+      
 
       post "update_image"
       post "create_user"
