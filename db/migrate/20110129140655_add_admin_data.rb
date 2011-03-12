@@ -7,7 +7,7 @@ class AddAdminData < ActiveRecord::Migration
       :identity_card => "0000000000",
       :birthday => "1990-01-01",
       :email => "000000@admin.com",
-      :name => "admin",
+      :name => "俊东",
       :login  => "admin",
       :sex => "男",
       :group_id => 1,

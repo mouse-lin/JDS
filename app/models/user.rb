@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
   has_attached_file :image, :styles => { :normal => "150x150" }
   has_many  :log_users
   has_many  :log_options
+  has_many  :records
   belongs_to   :card_type
   belongs_to   :group
   belongs_to   :passwd, :foreign_key  => :user

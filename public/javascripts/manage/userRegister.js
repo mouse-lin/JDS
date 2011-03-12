@@ -235,27 +235,12 @@ Manage.UserRegisterWin = Ext.extend(Ext.app.Module,  {
           Ext.Msg.alert("提示","查询信息不能都为空!");
       } 
       else{ 
-
-     // var condition = ""
-     // //var condition =  {  id_like: id, identity_card_like: identity_card, name_like: name, birthday_like: birthday };
-     // condition += "identity_card_like =>" +identity_card
-     // var url =  '/user_parts/search_user_parts.json?search='+condition ;
-     //         store.removeAll();
-     //         store.proxy = new Ext.data.HttpProxy({url:url});
-     //         store.load({ params:{ offset:0,limit:Page.pageSize } });
-
          Ext.Ajax.request({ 
              url: '/user_parts/search_user.json',
              jsonData: { search : { id_like: id, identity_card_like: identity_card, name_like: name, birthday_like: birthday} },
              success: function(response) { 
                  questions = Ext.decode(response.responseText);
-                 //Comment: Mouse
-                 //更新修改后台的搜索功能为加上root开头的
-                 //{ "content": Ext.decode(response.responseText)};
                  userRegisterstore.loadData(questions);
-
-                 //store.proxy=new Ext.data.HttpProxy({url:url});
-                 //store.reload({ params:{ offset:0,limit:Page.pageSize } });
              }, 
              failure: function() { 
                  Ext.Msg.alert('提示', '搜索失败');

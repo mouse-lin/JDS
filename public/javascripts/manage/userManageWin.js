@@ -2,7 +2,7 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
     id: 'userManageWin',
     init: function() {
         this.launcher = {
-            text: '用户管理',
+            text: '每日统计',
             iconCls: 'bogus',
             handler: this.createWindow,
             scope: this
@@ -16,9 +16,9 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
          if(!win) {
                win = manage.createWindow({
                    id: 'userManageWin',
-                   title: '用户管理',
-                   width: 900,
-                   height: 560,
+                   title: '每日统计',
+                   width: 1000,
+                   height: 650,
                    iconCls: 'bogus',
                    shim: false,
                    animCollapse: false,
@@ -34,118 +34,225 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
         var _this = Manage.userManageWin;
         return new Ext.TabPanel({ 
             frame: true,
-            activeTab: 0,
+            activeTab: 1,
             deferredRender: false, // tabpanel 显示切换渲染
             items: [
             { 
-                title: '资料更新',
+                title: '输入出炉数量',
                 layout: 'anchor',
                 items: [{ anchor: '100%,10%',items:_this.createSearchForm()},{ anchor: '100%,90%',layout: 'anchor', items: _this.createUserManageGrid()}]
             }, { 
-                title: '用户添加',
-                html: '<iframe src="user_parts/edit_user_part_index" frameborder="0" width="100%" height="100%"></iframe>'
+                title: '数量统计',
+                items: [{ anchor: '100%,10%',items:_this.createMoneySearchForm()},{ anchor: '100%,90%',layout: 'anchor', items: _this.createMoneyStatistc()}]
             }, { 
-                title: '记录查看',
-                items: { anchor: '100%,100%', layout: 'anchor', items:_this.createRecordGrid()}
+                title: '金额统计',
+                items: [{ anchor: '100%,10%',items:_this.createAccountForm()},{ anchor: '100%,100%', layout: 'anchor', items:_this.createRecordGrid()}]
             }]
       })
   },
 
-
-  //Comment: Mouse
-  //user detail view 
-      createUserManageGrid: function(){ 
+  createMoneyStatistc: function(){ 
         var _this = Manage.userManageWin;
-        userManagestore = new Ext.data.JsonStore({ 
+        PRcordsStatisticStore = new Ext.data.JsonStore({ 
             fields: [
                 'id',
                 'name',
-                'sex',
-                'identity_card',
-                'paperwork',
-                'address',
-                'birthday',
-                'card_type_name'
+                'remain_quantity',
+                'price',
+                'fail_quantity',
+                'p_quantity',
+                'all_money'
             ],
-            remoteSort:true,
+            pruneModifiedRecords: true, //每次都会刷新掉commit的信息
+            //remoteSort:true,
             root: "content",
             totalProperty:'total',          //support pagetool
-            url:'/user_parts.json',
+            url:'/materials/show_statistic_materials.json',
             method: 'GET'
         });
-        userManagestore.load({ params:{ offset:0,limit:Page.pageSize }});     
+        PRcordsStatisticStore.load({ params:{ offset:0,limit:Page.pageSize }});     
 
-        var addOperator = function(value, mataData, record, rowIndex, colIndex, store){ 
-            var link = String.format('<a href="#" onclick="Manage.userManageWin.editUser( {0} )">更新</a>', record.data.id) + '&nbsp;';
-                link += String.format('<a href="#" onclick="Manage.userManageWin.deleteuser({0})">删除</a>', record.data.id) + '&nbsp;';
-                link += String.format('<a href="#" onclick="Manage.userManageWin.searchLogAccess({0})">访问量查看</a>', record.data.id) + '&nbsp;';
-            return link;
+        function lookAllMoney(value,metaData){ 
+            metaData.attr = 'style="background-color:rgb(235,235,235)"';
+            var money = 0.0
+            Ext.each(PRcordsStatisticStore.getRange(),function(item){ money += item.data.all_money})
+            return money
         };
 
-        var pageToolbar = Page.createPagingToolbar(userManagestore);
+        var pageToolbar = Page.createPagingToolbar(PRcordsStatisticStore);
+
         var tbar = [ 
-            { iconCls: 'search', text: '查询', handler: function(){ _this.searchUserPartsData() }}, '-',
-            { iconCls: 'drop', text: '重置', handler: function(){ _this.resetData() }}, 
+            { iconCls: 'search', text: '查询', handler: function(){ _this.searchMaterialPRecords() }}, '-',
         ];
 
         var cm = new Ext.grid.ColumnModel([
-            { header: '编号'      ,sortable: true, dataIndex: 'id', width:50},
-            { header: '姓名'      ,sortable: true, dataIndex: 'name'},
-            { header: '证件号码'  ,sortable: true, dataIndex: 'identity_card',width:150},
-            { header: '性别'      ,sortable: true, dataIndex: 'sex'},
-            { header: '出生年月'  ,sortable: true, dataIndex: 'birthday'},
-            { header: '证件类型'  ,sortable: true, dataIndex: 'card_type_name'},
-            { header: '地址'      ,sortable: true, dataIndex: 'address'},
-            { header: '操作'        , dataIndex: '#', renderer: addOperator, width: 200 }
+            new Ext.grid.RowNumberer(),
+            { header: '物料'      ,sortable: true, dataIndex: 'name',renderer: Page.renderers.disable},
+            { header: '单价'      ,sortable: true, dataIndex: 'price',renderer: Page.renderers.disable},
+            { header: '今天总共出炉'  ,sortable: true, dataIndex: 'p_quantity',renderer: Page.renderers.disable},
+            { header: '坏掉'  ,sortable: true, dataIndex: 'fail_quantity',renderer: Page.renderers.disable},
+            { header: '剩余'  ,sortable: true, dataIndex: 'remain_quantity',renderer: Page.renderers.disable},
+            { header: '单物料总价格(元)'   , dataIndex: 'all_money',renderer: Page.renderers.disable},
+            { header: '所有物料总价格(元)'   , dataIndex: 'all_money',renderer: lookAllMoney}
         ]);
 
-        return userRegisterGrid = new Ext.grid.EditorGridPanel({ 
+        return moneyStatisticGrid = new Ext.grid.EditorGridPanel({ 
             viewConfig: { forceFit: true },
             anchor: "100% 100%",
-            height:380,
+            height:505,
             stripeRows: true,
             region : 'center',
-            store: userManagestore,
+            store: PRcordsStatisticStore,
             loadMask: {msg:"读取中..."},
             cm: cm,
-            tbar: tbar ,
+            tbar: tbar,
             listeners:{  'render'　:　function()　{
-　　　　　　　　　pageToolbar.render(userRegisterGrid.tbar);
+　　　　　　　　　pageToolbar.render(moneyStatisticGrid.tbar);
             }}
         })
     },
 
-    createRecordGrid: function(){ 
+    //按照时间查询物料数量统计
+    searchMaterialPRecords: function(){ 
+        var date_time = Ext.getCmp("material_p_records_time").getValue().format('Y-m-d');
+        Ext.Ajax.request({ 
+            url: '/materials/show_statistic_materials.json',
+            jsonData: { offset :0, limit: 45, date_time: date_time },
+            success: function(response) { 
+                questions = Ext.decode(response.responseText);
+                PRcordsStatisticStore.loadData(questions);
+            }, 
+            failure: function() { 
+                Ext.Msg.alert('提示', '搜索失败');
+            }
+       });
+    },
+
+    createUserManageGrid: function(){ 
         var _this = Manage.userManageWin;
-        recordStore = new Ext.data.JsonStore({ 
+        recordMaterialStore = new Ext.data.JsonStore({ 
             fields: [
                 'id',
-                'user_name',
-                'ip',
-                'user_operte_id',
-                'user_operate_name',
-                'user_operate_id_card',
-                'operation',
-                'created_at',
+                'name',
+            ],
+            pruneModifiedRecords: true, //每次都会刷新掉commit的信息
+            remoteSort:true,
+            root: "content",
+            totalProperty:'total',          //support pagetool
+            url:'/materials/show_materials.json',
+            method: 'GET'
+        });
+        recordMaterialStore.load({ params:{ offset:0,limit:Page.pageSize }});     
+
+
+        var pageToolbar = Page.createPagingToolbar(recordMaterialStore);
+
+        var tbar = [ 
+            { iconCls: 'add', text: '保存', handler: function(){ _this.addPRecords() }}, '-',
+        ];
+
+        var cm = new Ext.grid.ColumnModel([
+            new Ext.grid.RowNumberer(),
+            { header: '物料'      ,sortable: true, dataIndex: 'name',renderer: Page.renderers.disable},
+            { header: '出炉数量'      ,sortable: true, dataIndex: 'quantity',editor:new Ext.form.NumberField()},
+            { header: '坏掉'  ,sortable: true, dataIndex: 'fail_quantity',editor:new Ext.form.NumberField()},
+            { header: '剩余'  ,sortable: true, dataIndex: 'remain_quantity',editor:new Ext.form.NumberField()},
+            { header: '备注'   , dataIndex: 'remark',editor:new Ext.form.NumberField()}
+        ]);
+
+        return materialAddNewGrid = new Ext.grid.EditorGridPanel({ 
+            viewConfig: { forceFit: true },
+            anchor: "100% 100%",
+            height:450,
+            stripeRows: true,
+            region : 'center',
+            store: recordMaterialStore,
+            loadMask: {msg:"读取中..."},
+            cm: cm,
+            tbar: tbar ,
+            listeners:{  'render'　:　function()　{
+　　　　　　　　　pageToolbar.render(materialAddNewGrid.tbar);
+            }}
+        })
+    },
+
+    addPRecords: function(){ 
+        var _this = Manage.userManageWin;
+        var m = recordMaterialStore.modified.slice(0);
+        jsonArray = [];
+        Ext.each(m,function(item){ 
+          item.data.date_time = Ext.getCmp("p_record_time").getValue();
+          jsonArray.push(item.data)
+        });
+
+        if(jsonArray == "")
+        { Ext.Msg.alert('提示','没有被修改过的物料!') }
+        else{  
+            Ext.Msg.confirm('提示', "是否确定保存?", function(button){ 
+                if(button == 'no') { 
+                } else {  
+                     Ext.Ajax.request({ 
+                         url:  '/p_records',
+                         method: "post",
+                         jsonData: { p_records: jsonArray },
+                         success: function(){
+                             Ext.Msg.alert("提示", "保存成功!");
+                             recordMaterialStore.reload();
+
+                         },
+                         failure: function(response, onpts) {
+                             Ext.Msg.alert("提示", "保存失败！");
+                         } 
+                    });
+                  }
+            });
+        } 
+    },
+
+    createRecordGrid: function(){ 
+        var _this = Manage.userManageWin;
+        AccountStore = new Ext.data.JsonStore({ 
+            fields: [
+                'id',
+                'out',
+                'in',
+                'date_time',
+                'all_money'
             ],
             remoteSort:true,
             root: "content",
             totalProperty:'total',          //support pagetool
-            url:'/log_options/show_log_options.json',
+            url:'/account/show_accounts.json',
             method: 'GET'
         });
-        recordStore.load({ params:{ offset:0,limit:Page.pageSize }});     
+        AccountStore.load({ params:{ offset:0,limit:Page.pageSize }});     
 
-        var pageToolbar = Page.createPagingToolbar(recordStore);
+        var tbar = [ 
+            { iconCls: 'search', text: '查询', handler: function(){ _this.searchAccount() }}, '-',
+            { iconCls: 'add', text: '添加出入帐', handler: function(){ _this.createAccount() }}
+        ];
+
+        var factIn = function(value, mataData, record, rowIndex, colIndex, store){ 
+            return record.data.in - record.data.out
+        };
+
+
+        var spreadAccount = function(value, mataData, record, rowIndex, colIndex, store){ 
+          spreadVaule = record.data.in - record.data.out - record.data.all_money;
+          return  spreadVaule < 0? '<div style = "color:red">' +  spreadVaule + '</div>' : spreadVaule
+        };
+
+        var pageToolbar = Page.createPagingToolbar(AccountStore);
+
 
         var cm = new Ext.grid.ColumnModel([
-            //{ header: '编号'      ,sortable: true, dataIndex: 'id', width:50},
-            { header: '姓名'      ,sortable: true, dataIndex: 'user_name',width:150},
-            { header: 'ip'  ,sortable: true, dataIndex: 'ip',width:150},
-            { header: '被操作用户'      ,sortable: true, dataIndex: 'user_operate_name',width:150},
-            { header: '操作方式'  ,sortable: true, dataIndex: 'operation',width:150},
-            { header: '操作时间'  ,sortable: true, dataIndex: 'created_at',width:150},
-           // { header: '操作'        , dataIndex: '#', renderer: addOperator, width: 200 }
+            new Ext.grid.RowNumberer(),
+            { header: '出帐'      ,sortable: true, dataIndex: 'out',width:150},
+            { header: '入账'  ,sortable: true, dataIndex: 'in',width:150},
+            { header: '实际收入'      ,sortable: true,dataIndex:'#', renderer:factIn, width:150},
+            { header: '理论收入'  ,sortable: true, dataIndex: 'all_money',width:150},
+            { header: '差额'  ,sortable: true, dataIndex: '#',width:150, renderer: spreadAccount},
+            { header: '时间'  ,sortable: true, dataIndex: 'date_time',width:150},
         ]);
 
         return recordGrid = new Ext.grid.EditorGridPanel({ 
@@ -154,13 +261,106 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
             height: 480,
             stripeRows: true,
             //region : 'center',
-            store: recordStore,
+            store: AccountStore,
             loadMask: {msg:"读取中..."},
             cm: cm,
-            tbar: pageToolbar ,
+            tbar: tbar, 
+            listeners:{  'render'　:　function()　{
+　　　　　　　　　pageToolbar.render(recordGrid.tbar);
+            }}
+
         })
     },
 
+    searchAccount: function(){ 
+        var date_time = Ext.getCmp("account_date_time").getValue().format('Y-m-d');
+        Ext.Ajax.request({ 
+            url: '/account/show_accounts.json',
+            jsonData: { offset :0, limit: 45, date_time: date_time },
+            success: function(response) { 
+                questions = Ext.decode(response.responseText);
+                AccountStore.loadData(questions);
+            }, 
+            failure: function() { 
+                Ext.Msg.alert('提示', '搜索失败');
+            }
+       });
+    },
+
+    createAccount: function(){ 
+        if(!Ext.getCmp('createAccount')){  
+            var _this = Manage.userManageWin;
+            var win = new Ext.Window({
+                title: '新建出入帐记录',
+                id: 'createAccount',
+                width: 400,
+                height: 350,
+                layout: 'fit',
+                frame: true,
+                items: _this.createNewAccountForm()
+            });
+            win.show();
+        }
+    },
+
+    createNewAccountForm: function(){ 
+        var _this = Manage.userManageWin;
+        return   new Ext.form.FormPanel({ 
+            frame: true,
+            region: 'center',
+            width:400,
+            height: 300,
+            buttons: [{ 
+                text: '保存', handler: _this.saveAccount}],
+            items: [{ 
+                layout: 'column',
+                xtype: 'fieldset',
+                title: '带*号为必填信息',
+                style: 'margin-left:5px;',
+                width:1000,
+                height:280,
+                items:[{ 
+                    layout:'form',
+                    defaultType:'textfield',
+                    items:[
+                        { fieldLabel: '*出帐', id: 'out',xtype: 'numberfield',allowBlank: false },
+                        { fieldLabel: '*入账', id: 'in',xtype: 'numberfield',allowBlank: false },
+                        { fieldLabel: '日期', id: 'date_time',xtype: 'datefield',width: 150,format: 'Y-m-d',value:new Date},
+                    ]
+                }]
+          }]
+      })
+    },
+
+    saveAccount: function(){ 
+        var _this = Manage.userManageWin;
+        Ext.Msg.confirm('提示', "是否保存?", function(button){ 
+            if(button == 'no') { 
+            } else {  
+                var out = Ext.getCmp("out").getValue();
+                var in_in = Ext.getCmp("in").getValue();
+                var date_time = Ext.getCmp("date_time").getValue();
+                var accounts = { 
+                        out : out,
+                        in : in_in,
+                        date_time: date_time
+                    };
+                    Ext.Ajax.request({ 
+                        url:  '/account',
+                        method: "POST",
+                        jsonData: { accounts: accounts },
+                        success: function(){
+                            Ext.Msg.alert("提示", "保存成功!");
+                            AccountStore.reload();
+
+                        },
+                        failure: function(response, onpts) {
+                            Ext.Msg.alert("提示", "保存失败！");
+                    } 
+                });
+              }
+        }); 
+    },
 
     //用来响应确认按钮
     deleteuser: function(id) { 
@@ -172,8 +372,8 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
                  method: 'post',
                  jsonData: { user_id: user_id },
                  success: function(response, opts) { 
-                     userManagestore.reload();
-                     recordStore.reload();
+                     recordMaterialStore.reload();
+                     AccountStore.reload();
                      Ext.Msg.alert("提示", "删除成功")
                  },
                  failure: function(response, opts) { 
@@ -184,6 +384,64 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
        })
     },
 
+   createAccountForm: function(){ 
+        return createManageSearchFormPanel = new Ext.form.FormPanel({ 
+            frame: true,
+            layout: 'form',
+            items: [{ 
+                layout: 'column',
+                xtype: 'fieldset',
+                title: '金额统计信息选择',
+                style: 'margin-left:5px;',
+                height:48,
+                columnWidth: .3,
+                items:[{ 
+                    layout:'form',
+                    defaultType:'textfield',
+                    columnWidth: .3,
+                    items:[
+                        {  xtype: 'datefield', fieldLabel: '时间选择', id: "account_date_time",format: "Y-m-d",value: new Date },
+                        {anchor: '100%', fieldLabel: '姓名', id: 'hello' }
+                    ]}]
+          }],
+          keys:[{ 
+                key: 13,  
+                fn: Manage.userManageWin.searchUserPartsData,
+                scope:this 
+            }]
+      })
+  },
+
+
+    createMoneySearchForm: function(){ 
+        return createManageSearchFormPanel = new Ext.form.FormPanel({ 
+            frame: true,
+            layout: 'form',
+            items: [{ 
+                layout: 'column',
+                xtype: 'fieldset',
+                title: '数量统计信息选择',
+                style: 'margin-left:5px;',
+                height:60,
+                items:[{ 
+                    layout:'form',
+                    defaultType:'textfield',
+                    columnWidth: .3,
+                    items:[
+                        {  xtype: 'datefield', fieldLabel: '时间选择', id: "material_p_records_time",format: "Y-m-d",value: new Date },
+                        {anchor: '100%', fieldLabel: '姓名', id: 'cod' }
+                    ]}
+              ]
+          }],
+          keys:[{ 
+                key: 13,  
+                fn: Manage.userManageWin.searchUserPartsData,
+                scope:this 
+            }]
+      })
+  },
+
+
     createSearchForm: function(){ 
         return createManageSearchFormPanel = new Ext.form.FormPanel({ 
             frame: true,
@@ -191,23 +449,16 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
             items: [{ 
                 layout: 'column',
                 xtype: 'fieldset',
-                title: '查询信息',
+                title: '输入统计信息选择',
                 style: 'margin-left:5px;',
-                height:100,
+                height:48,
                 items:[{ 
                     layout:'form',
                     defaultType:'textfield',
                     columnWidth: .3,
                     items:[
-                        { anchor: '100%', fieldLabel: '编号', id: "user_manage_id" },
-                        { anchor: '100%', fieldLabel: '身份证号', id: "user_manage_identity_card" },
-                    ]},{ 
-                    layout:'form',
-                    defaultType:'textfield',
-                    columnWidth: .3,
-                    items:[
-                        {anchor: '100%', fieldLabel: '姓名', id: 'user_manage_name' },
-                        { anchor: '100%', xtype: 'datefield', fieldLabel: '出生年月', id: "user_manage_birthday",format: "Y-m-d" }
+                        {  xtype: 'datefield', fieldLabel: '录入时间', id: "p_record_time",format: "Y-m-d",value: new Date },
+                        {anchor: '100%', fieldLabel: '姓名', id: 'user_manage_name' }
                     ]}
               ]
           }],
@@ -256,7 +507,7 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
                  //Comment: Mouse
                  //更新修改后台的搜索功能为加上root开头的
                  //{ "content": Ext.decode(response.responseText)};
-                 userManagestore.loadData(questions);
+                 recordMaterialStore.loadData(questions);
 
                  //store.proxy=new Ext.data.HttpProxy({url:url});
                  //store.reload({ params:{ offset:0,limit:Page.pageSize } });
@@ -360,6 +611,12 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
 
         var pageToolbar = Page.createPagingToolbar(Info_store);
 
+        var tbar = [ 
+            //{ iconCls: 'add', text: '添加出入帐记录', handler: function(){ _this.addPRecords() }}, '-',
+            //{ iconCls: 'search', text: '查询', handler: function(){ _this.addPRecords() }}, '-',
+        ];
+
+
         var cm = new Ext.grid.ColumnModel([
             { header: '序号'        , sortable: true, dataIndex: 'id', width:50},
             { header: '入馆时间'    , sortable: true, dataIndex: 'date_time'},
@@ -372,8 +629,11 @@ Manage.UserManageWin = Ext.extend(Ext.app.Module,  {
             id:'Info_grid',
             store: Info_store,
             loadMask: {msg:"读取中..."},
-            tbar: pageToolbar, 
             cm: cm,
+            tbar: tbar, 
+            listeners:{  'render'　:　function()　{
+　　　　　　　　　pageToolbar.render(Info_grid.tbar);
+            }}
         });
  },
 

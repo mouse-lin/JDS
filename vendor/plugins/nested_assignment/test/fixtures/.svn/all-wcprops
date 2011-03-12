@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/wando/!svn/ver/580/rails/vendor/plugins/nested_assignment/test/fixtures
+END
+groups.yml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/wando/!svn/ver/580/rails/vendor/plugins/nested_assignment/test/fixtures/groups.yml
+END
+groups_users.yml
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/wando/!svn/ver/580/rails/vendor/plugins/nested_assignment/test/fixtures/groups_users.yml
+END
+avatars.yml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/wando/!svn/ver/580/rails/vendor/plugins/nested_assignment/test/fixtures/avatars.yml
+END
+users.yml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/wando/!svn/ver/580/rails/vendor/plugins/nested_assignment/test/fixtures/users.yml
+END
+tasks.yml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/wando/!svn/ver/580/rails/vendor/plugins/nested_assignment/test/fixtures/tasks.yml
+END
+managers.yml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/wando/!svn/ver/580/rails/vendor/plugins/nested_assignment/test/fixtures/managers.yml
+END
+tags.yml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/wando/!svn/ver/580/rails/vendor/plugins/nested_assignment/test/fixtures/tags.yml
+END

@@ -38,24 +38,27 @@ Manage.ReportWin = Ext.extend(Ext.app.Module,  {
        width: 800,
        height: 600,
        items: [
-       { 
-          title: '会员总数统计',
-          html: '<iframe src="reports/sex_statis" frameborder="0" width="100%" height="100%"></iframe>' 
-     }, 
-     { 
-         title: '年龄比例统计',
-         html: '<iframe src="reports/age_statis" frameborder="0" width="100%" height="100%"></iframe>' 
-     },{ 
-         title: '证件类型统计',
+ //      { 
+ //         title: '会员总数统计',
+ //         html: '<iframe src="reports/sex_statis" frameborder="0" width="100%" height="100%"></iframe>' 
+ //    }, 
+ //    { 
+ //        title: '年龄比例统计',
+ //        html: '<iframe src="reports/age_statis" frameborder="0" width="100%" height="100%"></iframe>' 
+ //    },
+    { 
+         title: '最畅销物料统计',
          html: '<iframe src="reports/card_type_statis" frameborder="0" width="100%" height="100%"></iframe>' 
-     },{ 
-         title: '访问总量统计',
-         html: '<iframe src="reports/web_statis_f" frameborder="0" width="100%" height="100%"></iframe>' 
-     },{ 
-         title: '当天访问总量统计',
-         html: '<iframe src="reports/web_statis_s" frameborder="0" width="100%" height="100%"></iframe>' 
-     },{ 
-          title: '访问量统计',
+     },
+  //   { 
+  //       title: '访问总量统计',
+  //       html: '<iframe src="reports/web_statis_f" frameborder="0" width="100%" height="100%"></iframe>' 
+  //   },{ 
+  //       title: '当天访问总量统计',
+  //       html: '<iframe src="reports/web_statis_s" frameborder="0" width="100%" height="100%"></iframe>' 
+  //   },
+    { 
+          title: '库存修改记录查看',
           layout: 'anchor',
           items: [{ anchor: '100%,90%',layout: 'anchor', items: _this.createReportGrid()}]
      }]
@@ -67,15 +70,15 @@ Manage.ReportWin = Ext.extend(Ext.app.Module,  {
         LogReportstore = new Ext.data.JsonStore({ 
             fields: [
                 'id',
-                'host_id',
-                'user_id',
-                'ip_id',
+                'user_name',
+                'quantity',
                 'date_time',
+                'material_name'
             ],
             remoteSort:true,
             root: "content",
             totalProperty:'total',          //support pagetool
-            url:'/reports/log_access_date.json',
+            url:'/records/show_records.json',
             method: 'GET'
         });
         LogReportstore.load({ params:{ offset:0,limit:Page.pageSize }});     
@@ -83,11 +86,11 @@ Manage.ReportWin = Ext.extend(Ext.app.Module,  {
         var pageToolbar = Page.createPagingToolbar(LogReportstore);
 
         var cm = new Ext.grid.ColumnModel([
-            { header: '编号'      ,sortable: true, dataIndex: 'id', width:50},
-            { header: '用户编号'      ,sortable: true, dataIndex: 'user_id'},
-            { header: 'ip的编号'  ,sortable: true, dataIndex: 'ip_id'},
-            { header: 'host编号'      ,sortable: true, dataIndex: 'host_id'},
-            { header: '时间'  ,sortable: true, dataIndex: 'date_time'},
+            new Ext.grid.RowNumberer(),
+            { header: '用户名'      ,sortable: true, dataIndex: 'user_name',renderer: Page.renderers.disable},
+            { header: '物料名'      ,sortable: true, dataIndex: 'material_name',renderer: Page.renderers.disable},
+            { header: '修改数量'      ,sortable: true, dataIndex: 'quantity',renderer: Page.renderers.disable},
+            { header: '时间'  ,sortable: true, dataIndex: 'date_time',renderer: Page.renderers.disable}
         ]);
 
         return userRegisterGrid = new Ext.grid.EditorGridPanel({ 

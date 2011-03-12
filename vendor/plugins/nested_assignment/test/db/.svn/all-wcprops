@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/wando/!svn/ver/580/rails/vendor/plugins/nested_assignment/test/db
+END
+schema.rb
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/wando/!svn/ver/580/rails/vendor/plugins/nested_assignment/test/db/schema.rb
+END
+database.yml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/wando/!svn/ver/580/rails/vendor/plugins/nested_assignment/test/db/database.yml
+END
+models.rb
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/wando/!svn/ver/580/rails/vendor/plugins/nested_assignment/test/db/models.rb
+END

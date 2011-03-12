@@ -1,0 +1,4 @@
+bob:
+  id: 1
+  name: Bob
+  manager_id: 1

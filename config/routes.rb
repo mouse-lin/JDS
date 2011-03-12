@@ -1,4 +1,44 @@
 Mytest::Application.routes.draw do
+    
+  resources :records do
+    collection do
+      get "show_records"
+      post "show_records"
+    end
+  end
+  
+  resources :account do
+    collection do
+      get "show_accounts"
+      post "show_accounts"
+    end
+  end
+  
+
+  resources :p_records do
+    collection do
+      get "show_p_records"
+    end
+  end
+  
+  resources :materials do
+    collection do
+      get "show_materials" 
+      post "show_materials" 
+      post "update_materials_quantity" 
+      get "show_statistic_materials" 
+      post "show_statistic_materials" 
+    end
+  end
+    
+  resources :units do
+    collection do
+      get "show_units"
+      post "show_units"
+    end
+  end
+  
+  
 
   resources :log_options do
     collection do

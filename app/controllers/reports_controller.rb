@@ -29,10 +29,15 @@ class ReportsController < ApplicationController
 
   #证件类型统计
   def card_type_statis
-    @card_type_graph = open_flash_chart_object(350,300,"/reports/card_type_graph_code").html_safe
-    @card_type_name = CardType.find_card_type_name
-    @card_type_value = CardType.find_card_type_value
-    @user_all_count = User.all.count
+    @card_type_graph = open_flash_chart_object(600,400,"/reports/card_type_graph_code").html_safe
+   # Material.all.each.collect do |m|
+   #   sum = 0.0
+   #   unless m.p_records
+   #     m.p_records.each do |p|
+   #       sum += p.quantity
+   #     end
+   #   end
+   # end
   end
 
   def web_statis_f
@@ -161,22 +166,27 @@ class ReportsController < ApplicationController
 
   end
   
+    
+  #最大数量的物料统计
   def card_type_graph_code
-    title = Title.new("证件类型统计")
+    title = Title.new("前五种物料")
     bar = BarGlass.new
 
-    #证件类型统计
-    card_type_name = CardType.find_card_type_name
-    all_user_count = User.count
-    card_type_value = CardType.find_card_type_value
+    material = Material.find(:all,:order => "sum desc", :limit => 5)
+    material_name = []
+    material_quantity = []
+    material.each do |m|
+      material_name << m.name
+      material_quantity << m.sum
+    end
 
     y_axis = YAxis.new
-    y_axis.set_range(0, User.count, User.count/10)
+    y_axis.set_range(0, material.first.sum, material.first.sum/10)
 
     x_axis = XAxis.new
-    x_axis.labels = card_type_name
+    x_axis.labels = material_name
 
-    bar.set_values(card_type_value)
+    bar.set_values(material_quantity)
 
     chart = OpenFlashChart.new
     chart.bg_colour = '#ffffff'

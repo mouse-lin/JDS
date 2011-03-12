@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   #ext  默认
   def render_json(result = nil , count = 0)
     render :json => "(#{{ :success => true, :content => result, :total => count }.to_json})"
+    a =  "div "
+    a.html_safe
   end
 
   

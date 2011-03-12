@@ -1,0 +1,71 @@
+9
+
+dir
+2246
+http://172.17.21.108/svn/wando/rails/vendor/plugins/nested_assignment/test
+http://172.17.21.108/svn/wando
+
+
+
+2009-09-03T06:59:05.223234Z
+580
+sxlee
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+1bd3bd47-e7b3-447c-9709-79ee2133771e
+
+unit
+dir
+
+test_helper.rb
+file
+
+
+
+
+2009-12-04T07:42:38.916901Z
+d5f926566f2f6fd828490b08b25fa749
+2009-09-03T06:59:05.223234Z
+580
+sxlee
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1063
+
+db
+dir
+
+fixtures
+dir
+
